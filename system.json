@@ -2,7 +2,7 @@
   "id": "mothership-fr",
   "title": "Mothership - Français",
   "description": "Le système Mothership complet en français avec tous les modules intégrés - un jeu de rôle de science-fiction d'horreur.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "esmodules": [
     "module/mothership-fr.js"
   ],
