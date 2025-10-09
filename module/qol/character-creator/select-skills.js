@@ -64,7 +64,7 @@ export async function selectSkills(actor, selectedClass) {
     return map;
   }
   
-  const compendiumSkills = await game.packs.get('mothership-fr.items_skills_1e')?.getDocuments() ?? [];
+  const compendiumSkills = await game.packs.get('mothership-fr.competences_1e')?.getDocuments() ?? [];
   const worldSkills = game.items.filter(item => item.type === 'skill');
   const allSkills = [...worldSkills, ...compendiumSkills].map(skill => {
     // Normalisation des rangs français vers anglais pour compatibilité

@@ -26,7 +26,7 @@
         <div class="remaining-points">Entraîné [ <span class="point-count" data-rank="trained">{{basePoints.trained}}</span> ]</div>
         <div class="pill-list">
           {{#each sortedSkills}}
-            {{#if (or (eq this.system.rank 'trained') (eq this.system.rank 'Formé'))}}
+            {{#if (or (eq this.system.rank 'trained') (eq this.system.rank 'Trained') (eq this.system.rank 'Formé'))}}
               <div class="pill interactive skill-card{{#each ../granted}}{{#if (eq this ../this.id)}} default-skill selected locked{{/if}}{{/each}}"
                 data-rank="trained"
                 data-uuid="{{this.uuid}}"
@@ -64,7 +64,7 @@
         <div class="remaining-points">Maître [ <span class="point-count" data-rank="master">{{basePoints.master}}</span> ]</div>
         <div class="pill-list">
           {{#each sortedSkills}}
-            {{#if (or (eq this.system.rank 'master') (eq this.system.rank 'Maître'))}}
+            {{#if (or (eq this.system.rank 'master') (eq this.system.rank 'Master') (eq this.system.rank 'Maître'))}}
               <div class="pill interactive skill-card{{#each ../granted}}{{#if (eq this ../this.id)}} default-skill selected locked{{/if}}{{/each}}"
                 data-rank="master"
                 data-uuid="{{this.uuid}}"
