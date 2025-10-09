@@ -1,4 +1,4 @@
-# Mothership - Système Unifié Français
+# MotherShip 1e - Français
 
 ![Mothership](https://img.shields.io/badge/Foundry-v12%20|%20v13-green) ![License](https://img.shields.io/badge/license-MIT-blue)
 
