@@ -19,7 +19,7 @@ export async function selectClass(actor, applyStats = true) {
 
   // Load all the classes
   const compendiumPacks = [
-    "fvtt_mosh_1e_psg.items_classes_1e",
+    "mothership-fr.items_classes_1e",
     ...game.packs.filter(p => p.metadata.type === "Item" && p.metadata.label.toLowerCase().includes("class")).map(p => p.metadata.id)
   ];
   const worldClasses = game.items.filter(cls => cls.type === "class");
