@@ -120,7 +120,7 @@ export async function selectSkills(actor, selectedClass) {
     };
   });
 
-  const html = await foundry.applications.handlebars.renderTemplate("modules/mosh-greybearded-qol/templates/character-creator/select-skills.html", {
+  const html = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-skills.html", {
     themeColor: getThemeColor(),
     actor,
     selectedClass,

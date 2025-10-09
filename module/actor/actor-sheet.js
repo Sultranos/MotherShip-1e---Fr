@@ -1,4 +1,4 @@
-import { DLActorGenerator } from "../windows/actor-generator.js";
+import { startCharacterCreation } from "../qol/character-creator/character-creator.js";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -652,9 +652,6 @@ export class MothershipActorSheet extends foundry.appv1.sheets.ActorSheet {
   }
   _onConfigureCreature(event) {
     event.preventDefault();
-    new DLActorGenerator(this.actor, {
-        top: this.position.top + 40,
-        left: this.position.left + (this.position.width - 400) / 2
-    }).render({force: true});
+    startCharacterCreation(this.actor);
   }
 }

@@ -102,7 +102,7 @@ export async function selectClass(actor, applyStats = true) {
     gridColumns,
     classes: processedClasses
   };
-  const content = await foundry.applications.handlebars.renderTemplate("modules/mosh-greybearded-qol/templates/character-creator/select-class.html", templateData);
+  const content = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
 
   return new Promise(resolve => {
     const dlg = new Dialog({

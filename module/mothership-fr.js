@@ -41,7 +41,8 @@ Hooks.once('init', async function () {
     initRollCheck,
     initModifyActor,
     initModifyItem,
-    noCharSelected
+    noCharSelected,
+    startCharacterCreation
   };
 
   registerSettings();
