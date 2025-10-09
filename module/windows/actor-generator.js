@@ -104,6 +104,10 @@ export class DLActorGenerator extends FormApplication {
       if (html.find(`img[id="` + id + `.value"]`).prop('hidden') == false && html.find(`img[id="system.class.value"]`).prop('value') != "") {
 
          let table = await fromUuid(tableId);
+         if (!table) {
+            console.warn(`Table not found for UUID: ${tableId}`);
+            return;
+         }
          let tableResult = await table.draw({ displayChat: true });
 
          let tableRoll = tableResult.results[0].range[0];
@@ -322,7 +326,7 @@ export class DLActorGenerator extends FormApplication {
          }
       }
 
-      let popUpContent = await renderTemplate(template, skillPopupData);
+      let popUpContent = await foundry.applications.handlebars.foundry.applications.handlebars.renderTemplate(template, skillPopupData);
 
       return new Promise((resolve) => {
          let d = new foundry.applications.api.DialogV2({
@@ -363,7 +367,7 @@ export class DLActorGenerator extends FormApplication {
    async showOptionsDialog(list_option_skills_or) {
       let popupData = {options:list_option_skills_or};
 
-      let popUpContent = await renderTemplate("systems/mothership-fr/templates/dialogs/actor-generator/actor-generator-skill-option-choice-dialog.html", popupData);
+      let popUpContent = await foundry.applications.handlebars.renderTemplate("systems/mothership-fr/templates/dialogs/actor-generator/actor-generator-skill-option-choice-dialog.html", popupData);
       
       return new Promise((resolve) => {
          
@@ -480,6 +484,10 @@ export class DLActorGenerator extends FormApplication {
          if (option_stats_and_saves.modification) {
             let buttons_options = [];
             for (let j = 0; j < option_stats_and_saves.stats.length; j++) {
+               if (!this._element) {
+                  console.warn("Element not found in actor generator");
+                  continue;
+               }
                let prev_bonus = this._element.find(`input[name="system.stats.${option_stats_and_saves.stats[j]}.bonus"]`).prop("value");
                buttons_options.push({
                   icon: '<i class="fas fa-check"></i>',

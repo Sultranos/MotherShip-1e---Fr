@@ -849,7 +849,7 @@ export class MothershipActor extends Actor {
       //prepare template
       messageTemplate = 'systems/mothership-fr/templates/chat/rollTable.html';
       //render template
-      messageContent = await renderTemplate(messageTemplate, messageData);
+      messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
       //make message
       let macroMsg = await rollResult.toMessage({
         id: chatId,
@@ -890,7 +890,7 @@ export class MothershipActor extends Actor {
       let buttonDesc = ``;
       //create HTML for this window
         //header
-      let dialogDesc = await renderTemplate('systems/mothership-fr/templates/dialogs/skill-check-stat-selection-dialog.html');
+      let dialogDesc = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/skill-check-stat-selection-dialog.html');
         //create button header if needed
         if (!rollString) {
         buttonDesc = `<h4>` + game.i18n.localize("Mosh.SelectYourRollType") + `:</h4>`;
@@ -977,7 +977,7 @@ export class MothershipActor extends Actor {
       let buttonDesc = ``;
       //create HTML for this window
         //header
-        let skillHeader = await renderTemplate('systems/mothership-fr/templates/dialogs/choose-skill-dialog-header.html');
+        let skillHeader = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/choose-skill-dialog-header.html');
         //skill template
         let skillRow = `
         <label for="[RADIO_ID]">
@@ -1391,7 +1391,7 @@ export class MothershipActor extends Actor {
           }
         };
         let template = 'systems/mothership-fr/templates/chat/rollCheck.html';
-        renderTemplate(template, messageData).then(content => {
+        foundry.applications.handlebars.renderTemplate(template, messageData).then(content => {
           chatData.content = content;
           ChatMessage.create(chatData);
         });
@@ -1772,7 +1772,7 @@ export class MothershipActor extends Actor {
       //prepare template
       messageTemplate = 'systems/mothership-fr/templates/chat/rollCheck.html';
       //render template
-      messageContent = await renderTemplate(messageTemplate, messageData);
+      messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
       //make message
       let macroMsg = await rollResult.toMessage({
         id: chatId,
@@ -1972,7 +1972,7 @@ export class MothershipActor extends Actor {
             //prepare template
             messageTemplate = 'systems/mothership-fr/templates/chat/modifyActor.html';
             //render template
-            messageContent = await renderTemplate(messageTemplate, messageData);
+            messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
             //push message
             ChatMessage.create({
               id: chatId,
@@ -2113,7 +2113,7 @@ export class MothershipActor extends Actor {
                 //prepare template
                 messageTemplate = 'systems/mothership-fr/templates/chat/modifyActor.html';
                 //render template
-                messageContent = await renderTemplate(messageTemplate, messageData);
+                messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
                 //make message
                 let macroMsg = await rollResult.toMessage({
                   id: chatId,
@@ -2237,7 +2237,7 @@ export class MothershipActor extends Actor {
       //prepare template
       messageTemplate = 'systems/mothership-fr/templates/chat/modifyItem.html';
       //render template
-      messageContent = await renderTemplate(messageTemplate, messageData);
+      messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
       //make message
       ChatMessage.create({
         id: chatId,
@@ -2373,7 +2373,7 @@ export class MothershipActor extends Actor {
       //prepare template
       messageTemplate = 'systems/mothership-fr/templates/chat/reload.html';
       //render template
-      messageContent = await renderTemplate(messageTemplate, messageData);
+      messageContent = await foundry.applications.handlebars.renderTemplate(messageTemplate, messageData);
       //push message
       ChatMessage.create({
         id: chatId,
@@ -2578,7 +2578,7 @@ export class MothershipActor extends Actor {
       }  
 
       //create pop-up HTML
-      let msgContent = await renderTemplate('systems/mothership-fr/templates/dialogs/choose-cover-dialog.html', {
+      let msgContent = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/choose-cover-dialog.html', {
           curDR:curDR, 
           curAP:curAP, 
           none_checked: none_checked,
@@ -2619,7 +2619,7 @@ export class MothershipActor extends Actor {
     //wrap the whole thing in a promise, so that it waits for the form to be interacted with
     return new Promise(async (resolve) => {
       //create pop-up HTML
-      let msgContent = await renderTemplate('systems/mothership-fr/templates/dialogs/distres-signal-dialog.html');
+      let msgContent = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/distres-signal-dialog.html');
       
       //create final dialog data
       const dialogData = {
@@ -2877,7 +2877,7 @@ export class MothershipActor extends Actor {
     if (["gmroll", "blindroll"].includes(rollMode)) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
 
     let template = 'systems/mothership-fr/templates/chat/itemRoll.html';
-    renderTemplate(template, templateData).then(content => {
+    foundry.applications.handlebars.renderTemplate(template, templateData).then(content => {
       chatData.content = content;
       ChatMessage.create(chatData);
     });
