@@ -175,11 +175,11 @@
     },
     {
       "type": "setup",
-      "url": "systems/mothership-fr/images/icons/ui/system/mothership-repo.webp",
-      "thumbnail": "systems/mothership-fr/images/icons/ui/system/mothership-thumbnail.webp"
+      "url": "systems/mothership-fr/images/icons/ui/system/mosh-repo.webp",
+      "thumbnail": "systems/mothership-fr/images/icons/ui/system/mosh-thumbnail.webp"
     }
   ],
-  "background": "systems/mothership-fr/images/icons/ui/system/mothership-background.webp",
+  "background": "systems/mothership-fr/images/icons/ui/system/mosh-background.webp",
   "languages": [
     {
       "lang": "fr",
