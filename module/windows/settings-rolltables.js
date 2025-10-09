@@ -6,7 +6,7 @@ export class rolltableConfig extends FormApplication {
         //options.classes = ["mosh", "sheet", "actor", "ship"];
         options.id = 'rolltable-modifiers';
         options.classes = ["mosh"];
-        options.template = 'systems/mosh/templates/dialogs/settings-rolltableconfig-dialog.html';
+        options.template = 'systems/mothership-fr/templates/dialogs/settings-rolltableconfig-dialog.html';
         options.width = 800;
         options.height = 'auto';
         options.resizeable = false;

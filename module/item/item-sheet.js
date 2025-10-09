@@ -18,7 +18,7 @@ export class MothershipItemSheet extends foundry.appv1.sheets.ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/mosh/templates/item";
+    const path = "systems/mothership-fr/templates/item";
     // Return a single sheet for all item types.
     return `${path}/item-${this.item.type}-sheet.html`;
     // Alternatively, you could use the following return statement to do a

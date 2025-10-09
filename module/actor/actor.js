@@ -847,7 +847,7 @@ export class MothershipActor extends Actor {
         specialRoll: specialRoll
       };
       //prepare template
-      messageTemplate = 'systems/mosh/templates/chat/rollTable.html';
+      messageTemplate = 'systems/mothership-fr/templates/chat/rollTable.html';
       //render template
       messageContent = await renderTemplate(messageTemplate, messageData);
       //make message
@@ -890,7 +890,7 @@ export class MothershipActor extends Actor {
       let buttonDesc = ``;
       //create HTML for this window
         //header
-      let dialogDesc = await renderTemplate('systems/mosh/templates/dialogs/skill-check-stat-selection-dialog.html');
+      let dialogDesc = await renderTemplate('systems/mothership-fr/templates/dialogs/skill-check-stat-selection-dialog.html');
         //create button header if needed
         if (!rollString) {
         buttonDesc = `<h4>` + game.i18n.localize("Mosh.SelectYourRollType") + `:</h4>`;
@@ -977,7 +977,7 @@ export class MothershipActor extends Actor {
       let buttonDesc = ``;
       //create HTML for this window
         //header
-        let skillHeader = await renderTemplate('systems/mosh/templates/dialogs/choose-skill-dialog-header.html');
+        let skillHeader = await renderTemplate('systems/mothership-fr/templates/dialogs/choose-skill-dialog-header.html');
         //skill template
         let skillRow = `
         <label for="[RADIO_ID]">
@@ -1390,7 +1390,7 @@ export class MothershipActor extends Actor {
             alias: this.name
           }
         };
-        let template = 'systems/mosh/templates/chat/rollCheck.html';
+        let template = 'systems/mothership-fr/templates/chat/rollCheck.html';
         renderTemplate(template, messageData).then(content => {
           chatData.content = content;
           ChatMessage.create(chatData);
@@ -1560,7 +1560,7 @@ export class MothershipActor extends Actor {
           //override message header
           msgHeader = game.i18n.localize("Mosh.RestSave");
           //override  header image
-          msgImgPath = `systems/mosh/images/icons/ui/macros/rest_save.png`;
+          msgImgPath = `systems/mothership-fr/images/icons/ui/macros/rest_save.png`;
           //prepare attribute label
           attributeLabel = this.system.stats[attribute].label;
           //1e rest save
@@ -1652,7 +1652,7 @@ export class MothershipActor extends Actor {
           //message header
           msgHeader = game.i18n.localize("Mosh.BankrupcySave");
           //set header image
-          msgImgPath = 'systems/mosh/images/icons/ui/rolltables/bankruptcy_save.png';
+          msgImgPath = 'systems/mothership-fr/images/icons/ui/rolltables/bankruptcy_save.png';
           //prepare attribute label
           attributeLabel = game.i18n.localize("Mosh.Bankrupcy");
           //get the bankruptcy table
@@ -1682,7 +1682,7 @@ export class MothershipActor extends Actor {
           //message header
           msgHeader = game.i18n.localize("Mosh.MoraleCheck") 
           //set header image
-          msgImgPath = 'systems/mosh/images/icons/ui/macros/morale_check.png';
+          msgImgPath = 'systems/mothership-fr/images/icons/ui/macros/morale_check.png';
           //prepare attribute label
           attributeLabel = 'Megadamage';
           //prep text based on success or failure
@@ -1701,7 +1701,7 @@ export class MothershipActor extends Actor {
         //message header
         msgHeader = this.system.stats[attribute].rollLabel;
         //set header image
-        msgImgPath = 'systems/mosh/images/icons/ui/attributes/' + attribute + '.png';
+        msgImgPath = 'systems/mothership-fr/images/icons/ui/attributes/' + attribute + '.png';
         //prep text based on success or failure
         if (parsedRollResult.success === false && this.type === 'character') {
           //if first edition
@@ -1770,7 +1770,7 @@ export class MothershipActor extends Actor {
       androidPanic: game.settings.get('mosh', 'androidPanic')
       };
       //prepare template
-      messageTemplate = 'systems/mosh/templates/chat/rollCheck.html';
+      messageTemplate = 'systems/mothership-fr/templates/chat/rollCheck.html';
       //render template
       messageContent = await renderTemplate(messageTemplate, messageData);
       //make message
@@ -1970,7 +1970,7 @@ export class MothershipActor extends Actor {
               halfDamage: halfDamage
             };
             //prepare template
-            messageTemplate = 'systems/mosh/templates/chat/modifyActor.html';
+            messageTemplate = 'systems/mothership-fr/templates/chat/modifyActor.html';
             //render template
             messageContent = await renderTemplate(messageTemplate, messageData);
             //push message
@@ -2111,7 +2111,7 @@ export class MothershipActor extends Actor {
                   halfDamage: halfDamage
                 };
                 //prepare template
-                messageTemplate = 'systems/mosh/templates/chat/modifyActor.html';
+                messageTemplate = 'systems/mothership-fr/templates/chat/modifyActor.html';
                 //render template
                 messageContent = await renderTemplate(messageTemplate, messageData);
                 //make message
@@ -2235,7 +2235,7 @@ export class MothershipActor extends Actor {
         flavorText: flavorText
       };
       //prepare template
-      messageTemplate = 'systems/mosh/templates/chat/modifyItem.html';
+      messageTemplate = 'systems/mothership-fr/templates/chat/modifyItem.html';
       //render template
       messageContent = await renderTemplate(messageTemplate, messageData);
       //make message
@@ -2371,7 +2371,7 @@ export class MothershipActor extends Actor {
         msgBody: msgBody
       };
       //prepare template
-      messageTemplate = 'systems/mosh/templates/chat/reload.html';
+      messageTemplate = 'systems/mothership-fr/templates/chat/reload.html';
       //render template
       messageContent = await renderTemplate(messageTemplate, messageData);
       //push message
@@ -2521,7 +2521,7 @@ export class MothershipActor extends Actor {
       <div class="rollcontainer">
           <div class="flexrow" style="margin-bottom: 5px;">
           <div class="rollweaponh1">${cryoDamage}</div>
-          <div style="text-align: right"><img class="roll-image" src="systems/mosh/images/icons/ui/attributes/health.png" /></div>
+          <div style="text-align: right"><img class="roll-image" src="systems/mothership-fr/images/icons/ui/attributes/health.png" /></div>
           </div>
           <div class="description"" style="margin-bottom: 20px;">
           <div class="body">
@@ -2578,7 +2578,7 @@ export class MothershipActor extends Actor {
       }  
 
       //create pop-up HTML
-      let msgContent = await renderTemplate('systems/mosh/templates/dialogs/choose-cover-dialog.html', {
+      let msgContent = await renderTemplate('systems/mothership-fr/templates/dialogs/choose-cover-dialog.html', {
           curDR:curDR, 
           curAP:curAP, 
           none_checked: none_checked,
@@ -2619,7 +2619,7 @@ export class MothershipActor extends Actor {
     //wrap the whole thing in a promise, so that it waits for the form to be interacted with
     return new Promise(async (resolve) => {
       //create pop-up HTML
-      let msgContent = await renderTemplate('systems/mosh/templates/dialogs/distres-signal-dialog.html');
+      let msgContent = await renderTemplate('systems/mothership-fr/templates/dialogs/distres-signal-dialog.html');
       
       //create final dialog data
       const dialogData = {
@@ -2876,7 +2876,7 @@ export class MothershipActor extends Actor {
     let rollMode = game.settings.get("core", "rollMode");
     if (["gmroll", "blindroll"].includes(rollMode)) chatData["whisper"] = ChatMessage.getWhisperRecipients("GM");
 
-    let template = 'systems/mosh/templates/chat/itemRoll.html';
+    let template = 'systems/mothership-fr/templates/chat/itemRoll.html';
     renderTemplate(template, templateData).then(content => {
       chatData.content = content;
       ChatMessage.create(chatData);

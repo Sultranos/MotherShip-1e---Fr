@@ -1,4 +1,4 @@
-import { fromIdUuid } from "../mosh.js";
+import { fromIdUuid } from "../mothership-fr.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -16,7 +16,7 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
 
         var options = {
             classes: ["mosh", "sheet", "actor", "ship"],
-            template: "systems/mosh/templates/actor/ship-sheet-sbt.html",
+            template: "systems/mothership-fr/templates/actor/ship-sheet-sbt.html",
             width: 700,
             height: 840,
             tabs: [{ navSelector: "#sheet-tabs", contentSelector: "#sheet-body", initial: "character" },

@@ -10,7 +10,7 @@ export class MothershipCreatureSheet extends foundry.appv1.sheets.ActorSheet {
     static get defaultOptions() {
         var options = {
             classes: ["mosh", "sheet", "actor", "creature"],
-            template: "systems/mosh/templates/actor/creature-sheet.html",
+            template: "systems/mothership-fr/templates/actor/creature-sheet.html",
             width: 700,
             height: 650,
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "character" }]

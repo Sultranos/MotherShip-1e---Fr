@@ -8,7 +8,7 @@ export class MothershipShipSheet extends foundry.appv1.sheets.ActorSheet {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["mosh", "sheet", "actor", "ship"],
-            template: "systems/mosh/templates/actor/ship-sheet.html",
+            template: "systems/mothership-fr/templates/actor/ship-sheet.html",
             width: 700,
             height: 650,
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "character" }]
