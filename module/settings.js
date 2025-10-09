@@ -441,4 +441,14 @@ export const registerSettings = function () {
     default: "BsfdIl7CJNs1PViS"
   });
 
+  // QoL Theme Color Setting
+  game.settings.register('mothership-fr', 'themeColor', {
+    name: "Theme Color",
+    hint: "The color theme used for QoL interface elements.",
+    default: "#f50",
+    scope: 'world',
+    type: String,
+    config: true
+  });
+
 };

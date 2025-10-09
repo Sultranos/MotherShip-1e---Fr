@@ -1,13 +1,21 @@
 export function getThemeColor() {
-  // 1. GM-Setting
-  const global = String(game.settings.get("mosh-greybearded-qol", "themeColor") || "").trim();
-  if (isValidCssColor(global)) return ensureContrast(global, "#111");
+  // 1. Try mothership-fr theme color setting if it exists
+  try {
+    const global = String(game.settings.get("mothership-fr", "themeColor") || "").trim();
+    if (isValidCssColor(global)) return ensureContrast(global, "#111");
+  } catch (e) {
+    // Setting doesn't exist, continue to fallbacks
+  }
 
-  // 2. Spieler-Override
-  const override = String(game.settings.get("mosh-greybearded-qol", "themeColorOverride") || "").trim();
-  if (isValidCssColor(override)) return ensureContrast(override, "#111");
+  // 2. Try old mosh-greybearded-qol setting for compatibility
+  try {
+    const compat = String(game.settings.get("mosh-greybearded-qol", "themeColor") || "").trim();
+    if (isValidCssColor(compat)) return ensureContrast(compat, "#111");
+  } catch (e) {
+    // Setting doesn't exist, continue to fallbacks
+  }
   
-  // 3. Spielerfarbe (Pixi-Zahl) in HEX umwandeln
+  // 3. Player color (Pixi number to HEX)
   const userColor = game.user?.color;
   const colorNum = Number(userColor);
   if (!isNaN(colorNum)) {
@@ -15,7 +23,7 @@ export function getThemeColor() {
     if (isValidCssColor(hex)) return ensureContrast(hex, "#111");
   }
 
-  // 4. Fallback
+  // 4. Fallback to orange
   return "#f50";
 }
 
