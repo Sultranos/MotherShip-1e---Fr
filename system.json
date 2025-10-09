@@ -188,8 +188,6 @@
       "flags": {}
     }
   ],
-  "grid.distance": 1,
-  "grid.units": "mètre",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "other.stress",
   "url": "https://github.com/Sultranos/MotherShip-1e---Fr",
