@@ -1,6 +1,6 @@
 {
   "id": "mothership-fr",
-  "title": "Mothership - Système Unifié Français",
+  "title": "Mothership - Français",
   "description": "Le système Mothership complet en français avec tous les modules intégrés - un jeu de rôle de science-fiction d'horreur.",
   "version": "1.0.0",
   "esmodules": [
@@ -192,13 +192,13 @@
   "grid.units": "mètre",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "other.stress",
-  "url": "https://github.com/votre-repo/mothership-francais",
-  "manifest": "https://raw.githubusercontent.com/votre-repo/mothership-francais/main/system.json",
-  "download": "https://github.com/votre-repo/mothership-francais/releases/latest/download/mothership-francais.zip",
+  "url": "https://github.com/Sultranos/MotherShip-1e---Fr",
+  "manifest": "https://raw.githubusercontent.com/Sultranos/MotherShip-1e---Fr/main/system.json",
+  "download": "https://github.com/Sultranos/MotherShip-1e---Fr/archive/refs/heads/main.zip",
   "license": "LICENSE.txt",
   "authors": [
     {
-      "name": "Système Unifié par Assistant IA",
+      "name": "Système Unifié par Sultranos et Assistant IA",
       "flags": {}
     },
     {
