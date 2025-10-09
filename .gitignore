@@ -1,0 +1,48 @@
+# FoundryVTT System - MotherShip Français
+# Fichiers et dossiers à ignorer lors du versioning
+
+# Fichiers temporaires et logs
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Fichiers de développement
+node_modules/
+.npm
+.sass-cache/
+*.map
+
+# Fichiers de sauvegarde et corruption
+*.backup
+*.backup.*
+*.corrupted
+*.bak
+*~
+
+# Fichiers de cache et build
+.cache/
+dist/
+build/
+
+# Variables d'environnement et configuration locale
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Scripts de développement temporaires
+compare_compendiums.ps1
+translate_compendiums.py
+translate_compendiums.ps1
+simple_translate.ps1
+
+# Documentation de développement (garder seulement la doc utilisateur)
+NETTOYAGE_FINAL.md
+SYNTHESE_FINALE.md
+
+# Ignore les versions corrompues si elles existent
+packs/*.corrupted
+packs/*.backup.*

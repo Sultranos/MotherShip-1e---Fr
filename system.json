@@ -1,0 +1,214 @@
+{
+  "id": "mothership-fr",
+  "title": "Mothership - Système Unifié Français",
+  "description": "Le système Mothership complet en français avec tous les modules intégrés - un jeu de rôle de science-fiction d'horreur.",
+  "version": "1.0.0",
+  "esmodules": [
+    "module/mothership-fr.js"
+  ],
+  "styles": [
+    "css/mothership-fr.css"
+  ],
+  "packs": [
+    {
+      "name": "conditions_1e",
+      "label": "Conditions (1e)",
+      "system": "mothership-fr",
+      "path": "packs/conditions_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "classes_1e",
+      "label": "Classes (1e)",
+      "system": "mothership-fr",
+      "path": "packs/classes_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "competences_1e",
+      "label": "Compétences (1e)",
+      "system": "mothership-fr",
+      "path": "packs/competences_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "armures_1e",
+      "label": "Armures (1e)",
+      "system": "mothership-fr",
+      "path": "packs/armures_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "armes_1e",
+      "label": "Armes (1e)",
+      "system": "mothership-fr",
+      "path": "packs/armes_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "equipement_1e",
+      "label": "Équipement (1e)",
+      "system": "mothership-fr",
+      "path": "packs/equipement_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "soins_medicaux_1e",
+      "label": "Soins Médicaux (1e)",
+      "system": "mothership-fr",
+      "path": "packs/soins_medicaux_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "ecussons_1e",
+      "label": "Écussons (1e)",
+      "system": "mothership-fr",
+      "path": "packs/ecussons_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "bibelots_1e",
+      "label": "Bibelots (1e)",
+      "system": "mothership-fr",
+      "path": "packs/bibelots_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "maintenance_1e",
+      "label": "Problèmes de Maintenance (1e)",
+      "system": "mothership-fr",
+      "path": "packs/maintenance_1e.db",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "macros_hotbar_1e",
+      "label": "Macros Barre Rapide (1e)",
+      "system": "mothership-fr",
+      "path": "packs/macros_hotbar_1e.db",
+      "type": "Macro",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "macros_triggered_1e",
+      "label": "Macros Déclenchées (1e)",
+      "system": "mothership-fr",
+      "path": "packs/macros_triggered_1e.db",
+      "type": "Macro",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "tables_aleatoires_1e",
+      "label": "Tables Aléatoires (1e)",
+      "system": "mothership-fr",
+      "path": "packs/tables_aleatoires_1e.db",
+      "type": "RollTable",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "media": [
+    {
+      "type": "cover",
+      "loop": false,
+      "flags": {}
+    },
+    {
+      "type": "setup",
+      "url": "systems/mothership-fr/images/icons/ui/system/mothership-repo.webp",
+      "thumbnail": "systems/mothership-fr/images/icons/ui/system/mothership-thumbnail.webp"
+    }
+  ],
+  "background": "systems/mothership-fr/images/icons/ui/system/mothership-background.webp",
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json",
+      "flags": {}
+    }
+  ],
+  "grid.distance": 1,
+  "grid.units": "mètre",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "other.stress",
+  "url": "https://github.com/votre-repo/mothership-francais",
+  "manifest": "https://raw.githubusercontent.com/votre-repo/mothership-francais/main/system.json",
+  "download": "https://github.com/votre-repo/mothership-francais/releases/latest/download/mothership-francais.zip",
+  "license": "LICENSE.txt",
+  "authors": [
+    {
+      "name": "Système Unifié par Assistant IA",
+      "flags": {}
+    },
+    {
+      "name": "Basé sur les travaux de Futilrevenge, hollowphoton, GreybeardGM",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "12",
+    "maximum": "13",
+    "verified": "13"
+  }
+}
