@@ -14,6 +14,9 @@ import {
   registerSettings
 } from "./settings.js";
 
+// Import Update Manager
+import { UpdateManager } from "./update-manager.js";
+
 // Import Modules QoL - Fonctionnalités avancées
 import { QoLContractorSheet } from "./qol/contractor-sheet-class.js";
 import { defineStashSheet } from "./qol/stash-sheet-class.js";
@@ -32,6 +35,9 @@ import {
 
 Hooks.once('init', async function () {
 
+  // Enregistrer les paramètres de l'UpdateManager
+  UpdateManager.registerSettings();
+
   game.mosh = {
     MothershipActor,
     MothershipItem,
@@ -42,7 +48,9 @@ Hooks.once('init', async function () {
     initModifyActor,
     initModifyItem,
     noCharSelected,
-    startCharacterCreation
+    startCharacterCreation,
+    // Exposer l'UpdateManager pour un accès global
+    UpdateManager
   };
 
   registerSettings();
@@ -129,6 +137,9 @@ Hooks.once('init', async function () {
 
 
 Hooks.once("ready", async function () {
+  
+  // Initialiser l'UpdateManager
+  await UpdateManager.initialize();
   
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
