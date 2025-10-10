@@ -8,69 +8,54 @@ import { SKILL_TRANSLATION_MAP, SKILL_REVERSE_MAP } from "./skill-translation-ma
 /**
  * Définit les dépendances entre compétences avec support bilingue
  * Format: { compétence: [prérequis1, prérequis2, ...] }
+ * NOTE: Seules les versions FRANCAISES sont définies ici pour éviter les doublons
+ * Le système gère automatiquement la correspondance bilingue via skill-translation-map.js
  */
 export const SKILL_DEPENDENCIES = {
   // Expert level skills require trained prerequisites
-  "Engineering": ["Industrial Equipment"],
   "Ingénierie": ["Équipement Industriel"],
-  
-  "Surgery": ["Field Medicine"],
   "Chirurgie": ["Médecine de Terrain"],
-  
-  "Cybernetics": ["Engineering"],
   "Cybernétique": ["Ingénierie"],
-  
-  "Artificial Intelligence": ["Computers"],
   "Intelligence Artificielle": ["Informatique"],
-  
-  "Robotics": ["Engineering"],
   "Robotique": ["Ingénierie"],
-  
-  "Hacking": ["Computers"],
   "Piratage": ["Informatique"],
-  
-  "Xenoesotericism": ["Mysticism"],
   "Xénoésotérisme": ["Mysticisme"],
-  
-  "Command": ["Military Training"],
   "Commandement": ["Entraînement Militaire"],
-  
-  "Exobiology": ["Zoology"],
   "Exobiologie": ["Zoologie"],
-  
-  "Sophontology": ["Psychology"],
   "Sophontologie": ["Psychologie"],
-  
-  "Hyperspace": ["Physics"],
   "Hyperspace": ["Physique"],
-  
-  "Pharmacology": ["Chemistry"],
   "Pharmacologie": ["Chimie"],
-  
-  "Pathology": ["Field Medicine"],
   "Pathologie": ["Médecine de Terrain"],
-  
-  "Planetology": ["Geology"],
   "Planétologie": ["Géologie"]
 };
 
 /**
- * Obtient les prérequis d'une compétence avec support bilingue
+ * Obtient les prérequis d'une compétence avec support bilingue automatique
  * @param {string} skillName - Nom de la compétence (anglais ou français)
  * @returns {Array<string>} - Liste des prérequis
  */
 export function getSkillPrerequisites(skillName) {
   if (!skillName) return [];
   
-  // Recherche directe
+  // Recherche directe (nom français)
   let prereqs = SKILL_DEPENDENCIES[skillName];
   if (prereqs) return prereqs;
   
-  // Recherche via traduction
-  const translatedName = SKILL_TRANSLATION_MAP[skillName] || SKILL_REVERSE_MAP[skillName];
-  if (translatedName) {
-    prereqs = SKILL_DEPENDENCIES[translatedName];
+  // Si nom anglais, convertir vers français et chercher
+  const frenchName = SKILL_TRANSLATION_MAP[skillName];
+  if (frenchName) {
+    prereqs = SKILL_DEPENDENCIES[frenchName];
     if (prereqs) return prereqs;
+  }
+  
+  // Si nom français non trouvé, essayer la version anglaise
+  const englishName = SKILL_REVERSE_MAP[skillName];
+  if (englishName) {
+    const frenchEquivalent = SKILL_TRANSLATION_MAP[englishName];
+    if (frenchEquivalent) {
+      prereqs = SKILL_DEPENDENCIES[frenchEquivalent];
+      if (prereqs) return prereqs;
+    }
   }
   
   return [];
@@ -88,26 +73,30 @@ export function hasPrerequisites(skillName) {
 /**
  * Obtient toutes les compétences qui dépendent d'une compétence donnée
  * @param {string} skillName - Nom de la compétence prérequise
- * @returns {Array<string>} - Liste des compétences dépendantes
+ * @returns {Array<string>} - Liste des compétences dépendantes (dédoublonnées)
  */
 export function getSkillDependents(skillName) {
   if (!skillName) return [];
   
-  const dependents = [];
+  const dependents = new Set(); // Utiliser un Set pour éviter les doublons
+  
+  // Normaliser le nom de la compétence prérequise (version française)
+  const frenchSkillName = SKILL_TRANSLATION_MAP[skillName] || skillName;
+  const englishSkillName = SKILL_REVERSE_MAP[skillName] || skillName;
   
   for (const [skill, prereqs] of Object.entries(SKILL_DEPENDENCIES)) {
-    if (prereqs.includes(skillName)) {
-      dependents.push(skill);
-    }
-    
-    // Vérifier aussi avec la traduction
-    const translatedSkillName = SKILL_TRANSLATION_MAP[skillName] || SKILL_REVERSE_MAP[skillName];
-    if (translatedSkillName && prereqs.includes(translatedSkillName)) {
-      dependents.push(skill);
+    for (const prereq of prereqs) {
+      // Vérifier correspondance directe ou bilingue
+      if (prereq === frenchSkillName || 
+          prereq === englishSkillName ||
+          SKILL_TRANSLATION_MAP[prereq] === frenchSkillName ||
+          SKILL_REVERSE_MAP[prereq] === englishSkillName) {
+        dependents.add(skill);
+      }
     }
   }
   
-  return [...new Set(dependents)]; // Dédoublonnage
+  return [...dependents];
 }
 
 /**

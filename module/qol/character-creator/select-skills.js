@@ -207,32 +207,45 @@ export async function selectSkills(actor, selectedClass) {
           );
         
           const linesToDraw = [];
+          const processedConnections = new Set(); // Éviter les doublons
         
           for (const skill of sortedSkills) {
             // Utilisation des prérequis du système ET de notre configuration
             const systemPrereqIds = (skill.system.prerequisite_ids || []).map(p => p.split(".").pop());
             const configPrereqs = getSkillPrerequisites(skill.name);
             
-            // Combinaison des deux sources de prérequis
-            const allPrereqNames = [...systemPrereqIds, ...configPrereqs];
-        
-            for (const prereqIdentifier of allPrereqNames) {
-              let fromEl = null;
-              
-              // Recherche par ID d'abord
-              fromEl = html[0].querySelector(`.skill-card[data-skill-id="${prereqIdentifier}"]`);
-              
-              // Si pas trouvé, recherche par nom avec correspondance bilingue
-              if (!fromEl) {
-                for (const candidateSkill of sortedSkills) {
-                  if (skillNamesMatch(candidateSkill.name, prereqIdentifier)) {
-                    fromEl = html[0].querySelector(`.skill-card[data-skill-id="${candidateSkill.id}"]`);
-                    break;
-                  }
-                }
+            // Normalisation et déduplication des prérequis
+            const normalizedPrereqs = new Set();
+            
+            // Ajouter les prérequis système (par ID)
+            for (const prereqId of systemPrereqIds) {
+              const prereqSkill = sortedSkills.find(s => s.id === prereqId);
+              if (prereqSkill) {
+                normalizedPrereqs.add(prereqId);
               }
+            }
+            
+            // Ajouter les prérequis de configuration (par nom)
+            for (const prereqName of configPrereqs) {
+              const prereqSkill = findSkillByName(prereqName, sortedSkills);
+              if (prereqSkill) {
+                normalizedPrereqs.add(prereqSkill.id);
+              }
+            }
+        
+            for (const prereqId of normalizedPrereqs) {
+              // Créer une clé unique pour cette connexion
+              const connectionKey = `${prereqId}->${skill.id}`;
               
+              // Éviter les connexions dupliquées
+              if (processedConnections.has(connectionKey)) {
+                continue;
+              }
+              processedConnections.add(connectionKey);
+              
+              const fromEl = html[0].querySelector(`.skill-card[data-skill-id="${prereqId}"]`);
               const toEl = html[0].querySelector(`.skill-card[data-skill-id="${skill.id}"]`);
+              
               if (!fromEl || !toEl) continue;
         
               const rect1 = fromEl.getBoundingClientRect();
@@ -258,7 +271,7 @@ export async function selectSkills(actor, selectedClass) {
               const pathData = `M ${relX1},${relY1} C ${c1x},${c1y} ${c2x},${c2y} ${relX2},${relY2}`;
               
               // Vérification si le prérequis est sélectionné
-              const prereqSelected = selected.has(fromEl.dataset.skillId);
+              const prereqSelected = selected.has(prereqId);
               const skillSelected = selected.has(skill.id);
               
               const isHighlighted =
