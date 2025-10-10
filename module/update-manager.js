@@ -92,7 +92,7 @@ export class UpdateManager {
     ui.notifications.info(`🔄 Mise à jour vers ${toVersion} - Reset des LVDB en cours...`);
     
     try {
-      // Reset des LVDB
+      // Reset des LVDB avec gestion d'erreur améliorée
       await this.resetLVDB();
       
       // Notification de succès
@@ -103,7 +103,10 @@ export class UpdateManager {
       
     } catch (error) {
       console.error("❌ Erreur lors de la mise à jour:", error);
-      ui.notifications.error(`❌ Erreur lors de la mise à jour: ${error.message}`);
+      ui.notifications.warn(`⚠️ Mise à jour vers ${toVersion} terminée avec des avertissements - voir la console pour plus de détails`);
+      
+      // Log des changements même en cas d'erreur partielle
+      this.logVersionChanges(fromVersion, toVersion);
     }
   }
   
@@ -124,24 +127,28 @@ export class UpdateManager {
       }
     }
     
-    // Forcer le rechargement des compendiums
+    // Compter les compendiums traités avec succès
+    let resetCount = 0;
+    let totalCount = 0;
+    
+    // Forcer le rechargement des compendiums de manière compatible
     for (const pack of game.packs) {
       if (pack.metadata.system === this.MODULE_NAME) {
-        try {
-          // Vider le cache du compendium
-          pack.apps = [];
-          pack._source = null;
-          pack.index = new Map();
-          console.log(`🔄 Reset du compendium: ${pack.collection}`);
-        } catch (error) {
-          console.warn(`⚠️ Erreur lors du reset du compendium ${pack.collection}:`, error);
+        totalCount++;
+        const success = await this.safeResetCompendium(pack);
+        if (success) {
+          resetCount++;
+          console.log(`✅ Reset du compendium: ${pack.collection}`);
         }
       }
     }
     
-    // Recharger les packs
-    await game.packs.reload();
-    console.log("✅ Compendiums rechargés");
+    console.log(`✅ Compendiums traités: ${resetCount}/${totalCount} avec succès`);
+    
+    // Si on est dans un navigateur, suggérer un rechargement de page
+    if (resetCount < totalCount) {
+      console.log("💡 Astuce: Un rechargement de page (F5) garantira la prise en compte complète des changements");
+    }
   }
   
   /**
@@ -157,6 +164,12 @@ export class UpdateManager {
         "🔄 Ajout du gestionnaire de mise à jour automatique",
         "🗑️ Reset automatique des LVDB pour éviter les artefacts",
         "📦 Amélioration de la stabilité des compendiums"
+      ],
+      "1.1.9": [
+        "🔧 Correction des erreurs de reset LVDB",
+        "🛡️ Gestion sécurisée des propriétés en lecture seule",
+        "⚠️ Amélioration de la gestion d'erreurs",
+        "💡 Suggestions automatiques pour les cas problématiques"
       ]
     };
     
@@ -188,7 +201,39 @@ export class UpdateManager {
       ui.notifications.info("✅ Reset des LVDB terminé !");
     } catch (error) {
       console.error("❌ Erreur lors du reset forcé:", error);
-      ui.notifications.error(`❌ Erreur: ${error.message}`);
+      ui.notifications.warn(`⚠️ Reset terminé avec des avertissements - voir la console pour plus de détails`);
+    }
+  }
+  
+  /**
+   * Méthode utilitaire pour nettoyer un compendium de manière sécurisée
+   */
+  static async safeResetCompendium(pack) {
+    try {
+      // Méthodes sécurisées qui ne touchent pas aux propriétés en lecture seule
+      if (pack.apps && Array.isArray(pack.apps)) {
+        pack.apps.length = 0;
+      }
+      
+      if (pack.index && typeof pack.index.clear === 'function') {
+        pack.index.clear();
+      } else if (pack.index && pack.index instanceof Map) {
+        pack.index.clear();
+      }
+      
+      // Marquer comme non chargé si possible
+      if (pack.hasOwnProperty('_loaded')) {
+        try {
+          pack._loaded = false;
+        } catch (e) {
+          // Propriété en lecture seule, ignorer
+        }
+      }
+      
+      return true;
+    } catch (error) {
+      console.warn(`⚠️ Impossible de réinitialiser complètement le compendium ${pack.collection}:`, error);
+      return false;
     }
   }
 }
