@@ -170,14 +170,14 @@ Hooks.once('init', async function () {
 
   // Register sheet application classes
   foundry.documents.collections.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
-  foundry.documents.collections.Actors.registerSheet("mosh", MothershipActorSheet, {types: ['character'], makeDefault: true});
-  foundry.documents.collections.Actors.registerSheet("mosh", MothershipCreatureSheet, {types: ['creature'], makeDefault: false});
-  foundry.documents.collections.Actors.registerSheet("mosh", MothershipShipSheetSBT, {types: ['ship'], makeDefault: true});
-  foundry.documents.collections.Actors.registerSheet("mosh", MothershipShipSheet, {types: ['ship'], makeDefault: false});
+  foundry.documents.collections.Actors.registerSheet("mothership-fr", MothershipActorSheet, {types: ['character'], makeDefault: true});
+  foundry.documents.collections.Actors.registerSheet("mothership-fr", MothershipCreatureSheet, {types: ['creature'], makeDefault: false});
+  foundry.documents.collections.Actors.registerSheet("mothership-fr", MothershipShipSheetSBT, {types: ['ship'], makeDefault: true});
+  foundry.documents.collections.Actors.registerSheet("mothership-fr", MothershipShipSheet, {types: ['ship'], makeDefault: false});
   foundry.documents.collections.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
-  foundry.documents.collections.Items.registerSheet("mosh", MothershipClassSheet, {types: ['class'], makeDefault: true});
-  foundry.documents.collections.Items.registerSheet("mosh", MothershipSkillSheet, {types: ['skill'], makeDefault: true});
-  foundry.documents.collections.Items.registerSheet("mosh", MothershipItemSheet, {
+  foundry.documents.collections.Items.registerSheet("mothership-fr", MothershipClassSheet, {types: ['class'], makeDefault: true});
+  foundry.documents.collections.Items.registerSheet("mothership-fr", MothershipSkillSheet, {types: ['skill'], makeDefault: true});
+  foundry.documents.collections.Items.registerSheet("mothership-fr", MothershipItemSheet, {
     types: [
       "item",
       "weapon",
@@ -380,7 +380,7 @@ Hooks.once("ready", async function () {
 
   // Enregistrer les feuilles QoL
   try {
-    const BaseSheet = CONFIG.Actor.sheetClasses.character["mosh.MothershipActorSheet"].cls;
+    const BaseSheet = CONFIG.Actor.sheetClasses.character["mothership-fr.MothershipActorSheet"].cls;
     const StashSheet = defineStashSheet(BaseSheet);
 
     foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
