@@ -1,4 +1,4 @@
-﻿import { fromIdUuid } from "../mothership-fr.js";
+import { fromIdUuid } from "../mothership-fr.js";
 
 /**
  * Extend the base Actor entity by defining a custom roll data structure which is ideal for the Simple system.
@@ -909,7 +909,7 @@ export class MothershipActor extends Actor {
         //we need to generate a roll string
         dialogData.buttons = [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
             action: `action_advantage`,
             callback: (event, button, dialog) => {
               rollString = `1d100 [+]`;
@@ -921,7 +921,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: (event, button, dialog) => {
               rollString = `1d100`;
@@ -933,7 +933,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: (event, button, dialog) => {
               rollString = `1d100 [-]`;
@@ -1056,7 +1056,7 @@ export class MothershipActor extends Actor {
         //we need to generate a roll string
         dialogData.buttons = [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
             action: `action_advantage`,
             callback: (event, button, dialog) => {
               rollString = `1d100 [+]`;
@@ -1068,7 +1068,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
             action: `action_normal`,
             callback: (event, button, dialog) => {
               rollString = `1d100`;
@@ -1080,7 +1080,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
             action: `action_disadvantage`,
             callback: (event, button, dialog) => {
               rollString = `1d100 [-]`;
@@ -1126,10 +1126,10 @@ export class MothershipActor extends Actor {
       const dialogData = {
         window: {title: dlgTitle},
         position: {width: 600,height: 105},
-        content: `<h4>` + game.i18n.localize("Mosh.SelectYourRollType") + `:</h4>`,
+        content: `<h4>` + game.i18n.localize("SelectYourRollType") + `:</h4>`,
         buttons: [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
 			      action: `action_advantage`,
             callback: (event, button, dialog) => {
               rollString = dieAdv;
@@ -1139,7 +1139,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: (event, button, dialog) => {
               rollString = die;
@@ -1149,7 +1149,7 @@ export class MothershipActor extends Actor {
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: (event, button, dialog) => { 
               rollString = dieDis;
@@ -2628,19 +2628,19 @@ export class MothershipActor extends Actor {
         content: msgContent,
         buttons: [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
 			      action: `action_advantage`,
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [+]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10`, `low`, true, false, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [-]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
@@ -2669,19 +2669,19 @@ export class MothershipActor extends Actor {
         content: msgContent,
         buttons: [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
 			      action: `action_advantage`,
             callback: () => this.rollTable(`maintenanceCheck`, `1d100 [+]`, `low`, null, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: () => this.rollTable(`maintenanceCheck`, `1d100`, `low`, null, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: () => this.rollTable(`maintenanceCheck`, `1d100 [-]`, `low`, null, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
@@ -2710,19 +2710,19 @@ export class MothershipActor extends Actor {
         content: msgContent,
         buttons: [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
 			      action: `action_advantage`,
             callback: () => this.rollCheck(`1d100 [+]`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: () => this.rollCheck(`1d100`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: () => this.rollCheck(`1d100 [-]`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
@@ -2786,19 +2786,19 @@ export class MothershipActor extends Actor {
         content: msgContent,
         buttons: [
           {
-            label: game.i18n.localize("Mosh.Advantage"),
+            label: game.i18n.localize("Advantage"),
 			      action: `action_advantage`,
             callback: () => this.rollCheck(`1d10 [+]`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Normal"),
+            label: game.i18n.localize("Normal"),
 			      action: `action_normal`,
             callback: () => this.rollCheck(`1d10`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
-            label: game.i18n.localize("Mosh.Disadvantage"),
+            label: game.i18n.localize("Disadvantage"),
 			      action: `action_disadvantage`,
             callback: () => this.rollCheck(`1d10 [-]`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
