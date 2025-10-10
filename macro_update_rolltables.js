@@ -100,6 +100,20 @@ async function updateRollTablesCompendium() {
                 console.log(`📝 Table: "${table.name}" -> "${newName}"`);
             }
             
+            // Corriger l'image de la table (systems/mosh -> systems/mothership-fr)
+            if (table.data.img && table.data.img.startsWith("systems/mosh/")) {
+                let newImg = table.data.img.replace("systems/mosh/", "systems/mothership-fr/");
+                
+                // Corriger les noms de fichiers spécifiques
+                if (newImg.includes("panic_check_normal.png")) {
+                    newImg = newImg.replace("panic_check_normal.png", "panic_check.png");
+                }
+                
+                updateData.img = newImg;
+                hasChanges = true;
+                console.log(`🖼️ Image de table corrigée: "${table.data.img}" -> "${newImg}"`);
+            }
+            
             // Traduire la description si elle existe
             if (table.data.description && table.data.description.trim()) {
                 let newDescription = table.data.description;
@@ -150,6 +164,20 @@ async function updateRollTablesCompendium() {
                             newResult.text = newText;
                             resultsChanged = true;
                         }
+                    }
+                    
+                    // Corriger le chemin d'image (systems/mosh -> systems/mothership-fr)
+                    if (result.img && result.img.startsWith("systems/mosh/")) {
+                        let newImg = result.img.replace("systems/mosh/", "systems/mothership-fr/");
+                        
+                        // Corriger les noms de fichiers spécifiques
+                        if (newImg.includes("panic_check_normal.png")) {
+                            newImg = newImg.replace("panic_check_normal.png", "panic_check.png");
+                        }
+                        
+                        newResult.img = newImg;
+                        resultsChanged = true;
+                        console.log(`🖼️ Image corrigée: "${result.img}" -> "${newImg}"`);
                     }
                     
                     newResults.push(newResult);
