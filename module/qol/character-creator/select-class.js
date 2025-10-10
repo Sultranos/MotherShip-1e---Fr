@@ -19,16 +19,20 @@ export async function selectClass(actor, applyStats = true) {
 
   // Load all the classes
   const compendiumPacks = [
-    "mothership-fr.items_classes_1e",
+    "mothership-fr.classes_1e",
     ...game.packs.filter(p => p.metadata.type === "Item" && p.metadata.label.toLowerCase().includes("class")).map(p => p.metadata.id)
   ];
   const worldClasses = game.items.filter(cls => cls.type === "class");
   const classMap = new Map();
 
+  console.log("🔍 DEBUG: Compendium packs recherchés:", compendiumPacks);
+
   for (const packId of compendiumPacks) {
     const pack = game.packs.get(packId);
+    console.log(`🔍 DEBUG: Pack ${packId}:`, pack ? "TROUVÉ" : "INTROUVABLE");
     if (!pack) continue;
     const classes = await pack.getDocuments();
+    console.log(`🔍 DEBUG: ${packId} contient ${classes.length} classes:`, classes.map(c => c.name));
     for (const cls of classes) {
       if (!classMap.has(cls.name)) {
         classMap.set(cls.name, foundry.utils.deepClone(cls));
@@ -37,6 +41,8 @@ export async function selectClass(actor, applyStats = true) {
   }
   for (const cls of worldClasses) classMap.set(cls.name, foundry.utils.deepClone(cls));
   const sortedClasses = Array.from(classMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+
+  console.log(`🔍 DEBUG: ${sortedClasses.length} classes trouvées au total:`, sortedClasses.map(c => c.name));
 
   // Compile processed class data
   const processedClasses = sortedClasses.map(cls => {
