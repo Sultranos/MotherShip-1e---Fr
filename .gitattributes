@@ -1,0 +1,14 @@
+# Fichiers binaires - ne pas modifier les fins de ligne
+*.db binary
+*.ldb binary
+*.log binary
+*.json -text
+packs/*.db binary
+packs/*.ldb binary
+
+# Fichiers texte avec fins de ligne LF
+*.js text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
