@@ -126,7 +126,7 @@ export class MothershipActor extends Actor {
     let enrichedRollResult = rollResult;
     let rollFormula = enrichedRollResult.formula;
     let rollAim = rollFormula.substr(rollFormula.indexOf("}") + 1, 2);
-    let useCalm = game.settings.get('mosh', 'useCalm');
+    let useCalm = game.settings.get('mothership-fr', 'useCalm');
     let die0value = 999;
     let die1value = 999;
     let die0success = false;
@@ -548,9 +548,9 @@ export class MothershipActor extends Actor {
     let rollTarget = null;
     let valueAddress = [];
     let specialRoll = null;
-    let firstEdition = game.settings.get('mosh', 'firstEdition');
-    let useCalm = game.settings.get('mosh', 'useCalm');
-    let androidPanic = game.settings.get('mosh', 'androidPanic');
+    let firstEdition = game.settings.get('mothership-fr', 'firstEdition');
+    let useCalm = game.settings.get('mothership-fr', 'useCalm');
+    let androidPanic = game.settings.get('mothership-fr', 'androidPanic');
     let tableResultNumber = null;
     let secondRoll = false;
     let rollResult2 = null;
@@ -564,14 +564,14 @@ export class MothershipActor extends Actor {
         if (firstEdition) { 
           if (androidPanic && this.system.class.value.toLowerCase() === 'android') { 
             if (useCalm) {
-            tableId = game.settings.get('mosh', 'table1ePanicCalmAndroid');
+            tableId = game.settings.get('mothership-fr', 'table1ePanicCalmAndroid');
               aimFor = 'low';
               zeroBased = true;
               checkCrit = true;
               rollAgainst = 'system.other.stress.value';
               comparison = '<';
             } else {
-            tableId = game.settings.get('mosh', 'table1ePanicStressAndroid');
+            tableId = game.settings.get('mothership-fr', 'table1ePanicStressAndroid');
               aimFor = 'high';
               zeroBased = false;
               checkCrit = false;
@@ -580,14 +580,14 @@ export class MothershipActor extends Actor {
             }
           } else {
             if (useCalm) { 
-            tableId = game.settings.get('mosh', 'table1ePanicCalmNormal');
+            tableId = game.settings.get('mothership-fr', 'table1ePanicCalmNormal');
               aimFor = 'low';
               zeroBased = true;
               checkCrit = true;
               rollAgainst = 'system.other.stress.value';
               comparison = '<';
             } else {
-            tableId = game.settings.get('mosh', 'table1ePanicStressNormal');
+            tableId = game.settings.get('mothership-fr', 'table1ePanicStressNormal');
               aimFor = 'high';
               zeroBased = false;
               checkCrit = false;
@@ -598,14 +598,14 @@ export class MothershipActor extends Actor {
         } else {
           if (androidPanic && this.system.class.value.toLowerCase() === 'android') { 
             if (useCalm) { 
-            tableId = game.settings.get('mosh', 'table0ePanicCalmAndroid');
+            tableId = game.settings.get('mothership-fr', 'table0ePanicCalmAndroid');
               aimFor = 'low';
               zeroBased = true;
               checkCrit = true;
               rollAgainst = 'system.other.stress.value';
               comparison = '<';
             } else {
-            tableId = game.settings.get('mosh', 'table0ePanicStressAndroid');
+            tableId = game.settings.get('mothership-fr', 'table0ePanicStressAndroid');
               aimFor = 'high';
               zeroBased = false;
               checkCrit = false;
@@ -614,14 +614,14 @@ export class MothershipActor extends Actor {
             }
           } else {
             if (useCalm) { 
-            tableId = game.settings.get('mosh', 'table0ePanicCalmNormal');
+            tableId = game.settings.get('mothership-fr', 'table0ePanicCalmNormal');
               aimFor = 'low';
               zeroBased = true;
               checkCrit = true;
               rollAgainst = 'system.other.stress.value';
               comparison = '<';
             } else {
-            tableId = game.settings.get('mosh', 'table0ePanicStressNormal');
+            tableId = game.settings.get('mothership-fr', 'table0ePanicStressNormal');
               aimFor = 'high';
               zeroBased = false;
               checkCrit = false;
@@ -651,7 +651,7 @@ export class MothershipActor extends Actor {
         //set special roll value for use later
         specialRoll = tableId;
         //assign variables
-      tableId = game.settings.get('mosh', 'table1eMaintenance');
+      tableId = game.settings.get('mothership-fr', 'table1eMaintenance');
         zeroBased = true;
         checkCrit = true;
         rollAgainst = 'system.stats.systems.value';
@@ -717,9 +717,9 @@ export class MothershipActor extends Actor {
     //roll the dice
       //parse the roll string
     let parsedRollString = this.parseRollString(rollString, aimFor);
-    if (game.settings.get('mosh', 'panicDieTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
+    if (game.settings.get('mothership-fr', 'panicDieTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
         //set panic die color
-      let dsnTheme = game.settings.get('mosh', 'panicDieTheme');
+      let dsnTheme = game.settings.get('mothership-fr', 'panicDieTheme');
         //apply theme if this is a panic check
         if (tableName === 'Panic Check') {
           parsedRollString = parsedRollString + '[' + dsnTheme + ']';
@@ -1190,8 +1190,8 @@ export class MothershipActor extends Actor {
     let msgHeader = ``;
     let msgImgPath = ``;
     let chatId = (game.release.generation >= 12 ? foundry.utils.randomID() : randomID());
-    let firstEdition = game.settings.get('mosh', 'firstEdition');
-    let useCalm = game.settings.get('mosh', 'useCalm');
+    let firstEdition = game.settings.get('mothership-fr', 'firstEdition');
+    let useCalm = game.settings.get('mothership-fr', 'useCalm');
     //customize this roll if its a unique use-case
       //damage roll
       if (attribute === 'damage') {  
@@ -1333,9 +1333,9 @@ export class MothershipActor extends Actor {
       //override  header image
       msgImgPath = weapon.img;
       let dsnTheme = 0;
-      if (game.settings.get('mosh', 'damageDiceTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
+      if (game.settings.get('mothership-fr', 'damageDiceTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
         //set damage dice color
-        dsnTheme = game.settings.get('mosh', 'damageDiceTheme');
+        dsnTheme = game.settings.get('mothership-fr', 'damageDiceTheme');
       }
       //prepare flavortext
       if (weapon.system.damage === "Str/10" && this.type === 'character') {
@@ -1455,25 +1455,25 @@ export class MothershipActor extends Actor {
         //override  header image
         msgImgPath = weapon.img;
         let dsnTheme = 0;
-      if (game.settings.get('mosh', 'damageDiceTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
+      if (game.settings.get('mothership-fr', 'damageDiceTheme') != "") { //We're going to check if the theme field is blank. Otherwise, don't use this.
           //set damage dice color
-        dsnTheme = game.settings.get('mosh', 'damageDiceTheme');
+        dsnTheme = game.settings.get('mothership-fr', 'damageDiceTheme');
         }
         //prepare attribute label
         attributeLabel = this.system.stats[attribute].label;
         //set crit damage effect
         if (parsedRollResult.success === true && parsedRollResult.critical === true) {
-        if (game.settings.get('mosh', 'critDamage') === 'advantage') {
+        if (game.settings.get('mothership-fr', 'critDamage') === 'advantage') {
             parsedDamageString = '{' + parsedDamageString + ',' + parsedDamageString + '}kh';
-        } else if (game.settings.get('mosh', 'critDamage') === 'doubleDamage') {
+        } else if (game.settings.get('mothership-fr', 'critDamage') === 'doubleDamage') {
             critMod = ' * 2';
-        } else if (game.settings.get('mosh', 'critDamage') === 'doubleDice') {
+        } else if (game.settings.get('mothership-fr', 'critDamage') === 'doubleDice') {
             critMod = ' + ' + parsedDamageString + '[' + dsnTheme + ']';
-        } else if (game.settings.get('mosh', 'critDamage') === 'maxDamage') {
+        } else if (game.settings.get('mothership-fr', 'critDamage') === 'maxDamage') {
           parsedDamageString = parsedDamageString.replaceAll('d', ' * ');
-        } else if (game.settings.get('mosh', 'critDamage') === 'weaponValue') {
+        } else if (game.settings.get('mothership-fr', 'critDamage') === 'weaponValue') {
             critMod = ' + ' + weapon.system.critDmg + '[' + dsnTheme + ']';
-        } else if (game.settings.get('mosh', 'critDamage') === 'none') {
+        } else if (game.settings.get('mothership-fr', 'critDamage') === 'none') {
             //do nothing
           }
         }
@@ -1491,7 +1491,7 @@ export class MothershipActor extends Actor {
           if (firstEdition) {
             //if calm not enabled
             if (!useCalm) {
-            if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+            if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                 //increase stress by 1 and retrieve the flavor text from the result
               let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                 flavorText = addStress[1];
@@ -1510,7 +1510,7 @@ export class MothershipActor extends Actor {
             if (!useCalm) {
               //on Save failure
               if (attribute === 'sanity' || attribute === 'fear' || attribute === 'body' || attribute === 'armor') {
-              if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+              if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                   //gain 1 stress
                 let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                   flavorText = addStress[1];
@@ -1582,7 +1582,7 @@ export class MothershipActor extends Actor {
             } else {
               //prep text based on success or failure
               if (parsedRollResult.success === false && this.type === 'character') {
-              if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+              if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                   //increase stress by 1 and retrieve the flavor text from the result
                 let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                   flavorText = addStress[1];
@@ -1623,7 +1623,7 @@ export class MothershipActor extends Actor {
             } else {
               //prep text based on success or failure
               if (parsedRollResult.success === false && this.type === 'character') {
-              if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+              if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                   //increase stress by 1 and retrieve the flavor text from the result
                 let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                   flavorText = addStress[1];
@@ -1656,7 +1656,7 @@ export class MothershipActor extends Actor {
           //prepare attribute label
           attributeLabel = game.i18n.localize("Mosh.Bankrupcy");
           //get the bankruptcy table
-          let tableId = game.settings.get('mosh','table1eBankruptcy');
+          let tableId = game.settings.get('mothership-fr','table1eBankruptcy');
           //get Table Data
           let tableData = await fromIdUuid(tableId,{type:"RollTable"});
           //prep text for success
@@ -1708,7 +1708,7 @@ export class MothershipActor extends Actor {
           if (firstEdition) {
             //if calm not enabled
             if (!useCalm) {
-            if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+            if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                 //increase stress by 1 and retrieve the flavor text from the result
               let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                 flavorText = addStress[1];
@@ -1727,7 +1727,7 @@ export class MothershipActor extends Actor {
             if (!useCalm) {
               //on Save failure
               if (attribute === 'sanity' || attribute === 'fear' || attribute === 'body' || attribute === 'armor') {
-              if (game.settings.get('mosh', 'autoStress')) { //If the automatic stress option is enabled
+              if (game.settings.get('mothership-fr', 'autoStress')) { //If the automatic stress option is enabled
                   //gain 1 stress
                 let addStress = await this.modifyActor('system.other.stress.value', 1, null, false);
                   flavorText = addStress[1];
@@ -1765,9 +1765,9 @@ export class MothershipActor extends Actor {
         needsDesc: needsDesc,
         woundEffect: woundEffect,
         critFail: critFail,
-      firstEdition: game.settings.get('mosh', 'firstEdition'),
-      useCalm: game.settings.get('mosh', 'useCalm'),
-      androidPanic: game.settings.get('mosh', 'androidPanic')
+      firstEdition: game.settings.get('mothership-fr', 'firstEdition'),
+      useCalm: game.settings.get('mothership-fr', 'useCalm'),
+      androidPanic: game.settings.get('mothership-fr', 'androidPanic')
       };
       //prepare template
       messageTemplate = 'systems/mothership-fr/templates/chat/rollCheck.html';
@@ -1824,9 +1824,9 @@ export class MothershipActor extends Actor {
     let msgChange = ``;
     let chatId = (game.release.generation >= 12 ? foundry.utils.randomID() : randomID())
     let halfDamage = false;
-    let firstEdition = game.settings.get('mosh', 'firstEdition');
-    let useCalm = game.settings.get('mosh', 'useCalm');
-    let androidPanic = game.settings.get('mosh', 'androidPanic');
+    let firstEdition = game.settings.get('mothership-fr', 'firstEdition');
+    let useCalm = game.settings.get('mothership-fr', 'useCalm');
+    let androidPanic = game.settings.get('mothership-fr', 'androidPanic');
     //get information about this field from the actor
       //set path for important fields
         //field value
@@ -2630,19 +2630,19 @@ export class MothershipActor extends Actor {
           {
             label: game.i18n.localize("Mosh.Advantage"),
 			      action: `action_advantage`,
-            callback: () => this.rollTable(game.settings.get('mosh', 'table1eDistressSignal'), `1d10 [+]`, `low`, true, false, null, null),
+            callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [+]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
             label: game.i18n.localize("Mosh.Normal"),
 			      action: `action_normal`,
-            callback: () => this.rollTable(game.settings.get('mosh', 'table1eDistressSignal'), `1d10`, `low`, true, false, null, null),
+            callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10`, `low`, true, false, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
             label: game.i18n.localize("Mosh.Disadvantage"),
 			      action: `action_disadvantage`,
-            callback: () => this.rollTable(game.settings.get('mosh', 'table1eDistressSignal'), `1d10 [-]`, `low`, true, false, null, null),
+            callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [-]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
           }
         ]

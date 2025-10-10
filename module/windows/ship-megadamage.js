@@ -1,4 +1,4 @@
-import { fromIdUuid } from "../mothership-fr.js";
+﻿import { fromIdUuid } from "../mothership-fr.js";
 export class DLShipMegaDamage extends FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
@@ -41,7 +41,7 @@ export class DLShipMegaDamage extends FormApplication {
         const actorData = sheetData.object;
 
         //A script to return the data from a table.
-        let tableId = game.settings.get('mosh','table1eMegadamageEffects');
+        let tableId = game.settings.get('mothership-fr','table1eMegadamageEffects');
         //get table data
         let tableData = await fromIdUuid(tableId,{type:"RollTable"});
 

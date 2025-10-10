@@ -1,4 +1,4 @@
-import { fromIdUuid } from "../mothership-fr.js";
+﻿import { fromIdUuid } from "../mothership-fr.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -177,7 +177,7 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
     async _prepareMegadamage(sheetData) {
         const actorData = sheetData;
         //A script to return the data from a table.
-        let tableId = game.settings.get('mosh', 'table1eMegadamageEffects');
+        let tableId = game.settings.get('mothership-fr', 'table1eMegadamageEffects');
         //get table data
         let tableData = await fromIdUuid(tableId,{type:"RollTable"});
 
