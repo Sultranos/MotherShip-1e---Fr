@@ -16,11 +16,7 @@
       "system": "mothership-fr",
       "path": "packs/conditions_1e.db",
       "type": "Item",
-      "flags": {},
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
+      "flags": {}
     },
     {
       "name": "classes_1e",

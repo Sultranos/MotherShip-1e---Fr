@@ -1,4 +1,4 @@
-﻿// Import Modules - SystÃ¨me de base Mothership
+// Import Modules
 import { MothershipActor } from "./actor/actor.js";
 import { MothershipActorSheet } from "./actor/actor-sheet.js";
 import { MothershipCreatureSheet } from "./actor/creature-sheet.js";
@@ -14,121 +14,7 @@ import {
   registerSettings
 } from "./settings.js";
 
-// Import Update Manager
-import { UpdateManager } from "./update-manager.js";
-
-// Import Modules QoL - FonctionnalitÃ©s avancÃ©es
-import { QoLContractorSheet } from "./qol/contractor-sheet-class.js";
-import { defineStashSheet } from "./qol/stash-sheet-class.js";
-import { convertStress } from "./qol/convert-stress.js";
-import { ShoreLeaveTierEditor } from "./qol/ui/edit-shore-leave-tiers.js";
-import { simpleShoreLeave } from "./qol/simple-shore-leave.js";
-import { SHORE_LEAVE_TIERS } from "./qol/config/default-shore-leave-tiers.js";
-import { startCharacterCreation } from "./qol/character-creator/character-creator.js";
-import {
-  checkReady,
-  checkCompleted,
-  setReady,
-  setCompleted,
-  reset
-} from "./qol/character-creator/progress.js";
-
 Hooks.once('init', async function () {
-
-  // Enregistrer les paramÃ¨tres de l'UpdateManager
-  UpdateManager.registerSettings();
-
-  // Enregistrer les paramÃ¨tres QoL
-  game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
-    name: "Activer le crÃ©ateur de personnage",
-    hint: "Active le systÃ¨me de crÃ©ation de personnage QoL",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: true
-  });
-
-  game.settings.register("mosh-greybearded-qol", "themeColor", {
-    name: "Couleur du thÃ¨me global",
-    hint: "Si dÃ©finie, cette couleur remplacera les couleurs des joueurs",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "#f50"
-  });
-
-  game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
-    name: "Couleur du thÃ¨me joueur",
-    hint: "Si dÃ©finie, cette couleur remplacera la couleur par dÃ©faut pour cet utilisateur",
-    scope: "client",
-    config: true,
-    type: String,
-    default: ""
-  });
-
-  // ParamÃ¨tres de conversion du stress
-  game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
-    name: "Pas de jet de sanitÃ© mentale",
-    hint: "Si activÃ©, le stress sera converti sans jet de sanitÃ© mentale",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-
-  game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
-    name: "Pas de rÃ©duction de stress",
-    hint: "Si activÃ©, le stress ne sera pas remis au minimum aprÃ¨s conversion",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-
-  game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
-    name: "Convertir le stress minimum",
-    hint: "Si activÃ©, la conversion du stress est plafonnÃ©e Ã  0 au lieu du stress minimum",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-
-  game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
-    name: "Formule de conversion du stress",
-    hint: "Formule de dÃ©s de secours utilisÃ©e pour convertir le stress",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "1d10"
-  });
-
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
-    name: "Texte d'ambiance alÃ©atoire pour les permissions",
-    hint: "Si activÃ©, ajoute du texte d'ambiance alÃ©atoire aux activitÃ©s de permission",
-    scope: "world",
-    config: true,
-    default: true,
-    type: Boolean
-  });
-
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
-    name: "DÃ©sactiver complÃ¨tement le texte d'ambiance",
-    hint: "Si activÃ©, dÃ©sactive tout texte d'ambiance pour les permissions",
-    scope: "world", 
-    config: true,
-    default: false,
-    type: Boolean
-  });
-
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.shoreLeaveTiers", {
-    name: "Niveaux des permissions",
-    hint: "Configuration des diffÃ©rents niveaux de permissions disponibles",
-    scope: "world",
-    config: false,
-    type: Object,
-    default: SHORE_LEAVE_TIERS
-  });
 
   game.mothershipFr = {
     MothershipActor,
@@ -139,16 +25,7 @@ Hooks.once('init', async function () {
     initRollCheck,
     initModifyActor,
     initModifyItem,
-    noCharSelected,
-    startCharacterCreation,
-    // Exposer l'UpdateManager pour un accÃ¨s global
-    UpdateManager,
-    // Fonctions QoL
-    convertStress,
-    simpleShoreLeave,
-    QoLContractorSheet,
-    defineStashSheet,
-    ShoreLeaveTierEditor
+    noCharSelected
   };
 
   registerSettings();
@@ -236,172 +113,6 @@ Hooks.once('init', async function () {
 
 Hooks.once("ready", async function () {
   
-  // Initialiser l'UpdateManager
-  await UpdateManager.initialize();
-  
-  // Initialisation des modules QoL
-  console.log("ðŸ”§ Initialisation des modules QoL...");
-  
-  // Helpers Handlebars pour QoL
-  Handlebars.registerHelper("eq", (a, b) => a === b);  
-  Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
-  Handlebars.registerHelper("capitalize", str => str.charAt(0).toUpperCase() + str.slice(1));
-  Handlebars.registerHelper("includes", function (collection, value) {
-    if (Array.isArray(collection)) return collection.includes(value);
-    if (collection instanceof Set) return collection.has(value);
-    return false;
-  });
-  Handlebars.registerHelper("stripHtml", (text) => {
-    return typeof text === "string" ? text.replace(/<[^>]*>/g, "").trim() : "";
-  });
-  
-  // Registre global pour utilisation dans les macros
-  game.moshGreybeardQol = game.moshGreybeardQol || {};
-  game.moshGreybeardQol.convertStress = convertStress;
-  game.moshGreybeardQol.simpleShoreLeave = simpleShoreLeave;
-  game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
-  
-  // Fonction de diagnostic systÃ¨me complet
-  game.moshGreybeardQol.diagnosticSysteme = function() {
-    console.log("=== DIAGNOSTIC SYSTÃˆME COMPLET ===");
-    
-    console.log("1. Informations systÃ¨me:");
-    console.log(`   - ID systÃ¨me: ${game.system.id}`);
-    console.log(`   - Version systÃ¨me: ${game.system.version}`);
-    console.log(`   - Version FoundryVTT: ${game.version}`);
-    
-    console.log("\n2. Configuration documents:");
-    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor?.documentClass?.name || 'NON DÃ‰FINI'}`);
-    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item?.documentClass?.name || 'NON DÃ‰FINI'}`);
-    
-    console.log("\n3. Feuilles d'acteur enregistrÃ©es:");
-    Object.entries(CONFIG.Actor.sheetClasses).forEach(([type, sheets]) => {
-      console.log(`   Type "${type}":`);
-      Object.entries(sheets).forEach(([key, sheet]) => {
-        console.log(`     - ${key}: ${sheet.cls.name} (dÃ©faut: ${sheet.default})`);
-      });
-    });
-    
-    console.log("\n4. Feuilles d'objet enregistrÃ©es:");
-    Object.entries(CONFIG.Item.sheetClasses).forEach(([type, sheets]) => {
-      console.log(`   Type "${type}":`);
-      Object.entries(sheets).forEach(([key, sheet]) => {
-        console.log(`     - ${key}: ${sheet.cls.name} (dÃ©faut: ${sheet.default})`);
-      });
-    });
-    
-    console.log("\n5. Test compendiums:");
-    const totalPacks = game.packs.size;
-    const systemPacks = Array.from(game.packs.values()).filter(p => p.metadata.packageName === game.system.id);
-    console.log(`   - Total compendiums: ${totalPacks}`);
-    console.log(`   - Compendiums du systÃ¨me: ${systemPacks.length}`);
-    
-    console.log("\n6. Test ouverture compendium:");
-    const testPack = game.packs.get("mothership-fr.classes_1e");
-    if (testPack) {
-      try {
-        console.log("   - Tentative d'ouverture du pack classes...");
-        testPack.render(true);
-        console.log("   âœ… Ouverture rÃ©ussie");
-      } catch (err) {
-        console.log("   âŒ Erreur ouverture:", err.message);
-        console.log("   Stack:", err.stack);
-      }
-    } else {
-      console.log("   âŒ Pack classes non trouvÃ©");
-    }
-    
-    console.log("=== FIN DIAGNOSTIC ===");
-  };
-  
-  // Fonction de debug pour diagnostiquer les problÃ¨mes de compendium
-  game.moshGreybeardQol.debugCompendiums = async function() {
-    console.log("=== DEBUG COMPENDIUM CLASSES ===");
-    
-    // 1. Lister tous les packs disponibles
-    console.log("1. Tous les packs disponibles:");
-    Array.from(game.packs.keys()).forEach(key => {
-      const pack = game.packs.get(key);
-      console.log(`   - ${key} (${pack.metadata.label}) - Type: ${pack.metadata.type}`);
-    });
-    
-    // 2. Rechercher spÃ©cifiquement le pack des classes
-    console.log("\n2. Recherche du pack classes_1e:");
-    const classPack = game.packs.get("mothership-fr.classes_1e");
-    if (classPack) {
-      console.log("   âœ… Pack trouvÃ©:", classPack.metadata);
-      
-      // 3. Lister le contenu du pack
-      try {
-        const docs = await classPack.getDocuments();
-        console.log("\n3. Contenu du pack classes_1e:");
-        console.log(`   Nombre de documents: ${docs.length}`);
-        docs.forEach(doc => {
-          console.log(`   - ${doc.name} (type: ${doc.type}, id: ${doc.id})`);
-          if (doc.type === "class") {
-            console.log(`     UUID: ${doc.uuid}`);
-            console.log(`     Pack: ${doc.pack}`);
-          }
-        });
-      } catch (err) {
-        console.error("   âŒ Erreur lors de la lecture du pack:", err);
-      }
-    } else {
-      console.log("   âŒ Pack non trouvÃ© !");
-      
-      // Chercher des alternatives
-      console.log("\n   Recherche d'alternatives:");
-      game.packs.forEach(pack => {
-        if (pack.metadata.label.toLowerCase().includes("class")) {
-          console.log(`   TrouvÃ©: ${pack.metadata.id} (${pack.metadata.label})`);
-        }
-      });
-    }
-    
-    // 4. Test d'ouverture de compendium
-    console.log("\n4. Test d'ouverture de compendiums:");
-    try {
-      console.log("   - Test ouverture pack classes...");
-      classPack.render(true);
-      console.log("   âœ… Pack classes ouvert avec succÃ¨s");
-    } catch (err) {
-      console.error("   âŒ Erreur ouverture pack classes:", err);
-    }
-    
-    // 5. VÃ©rification de la configuration systÃ¨me
-    console.log("\n5. Configuration systÃ¨me:");
-    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor.documentClass?.name || 'NON DÃ‰FINI'}`);
-    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item.documentClass?.name || 'NON DÃ‰FINI'}`);
-    console.log(`   - game.system.id: ${game.system.id}`);
-    console.log(`   - game.system.version: ${game.system.version}`);
-    
-    console.log("=== FIN DEBUG ===");
-  };
-
-  // Enregistrer les feuilles QoL
-  try {
-    const BaseSheet = CONFIG.Actor.sheetClasses.character["mothership-fr.MothershipActorSheet"].cls;
-    const StashSheet = defineStashSheet(BaseSheet);
-
-    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
-      types: ["character"],
-      label: "Stash Sheet",
-      makeDefault: false
-    });
-
-    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", QoLContractorSheet, {
-      types: ["creature"],
-      label: "Contractor Sheet",
-      makeDefault: false
-    });
-    
-    console.log("âœ… Feuilles QoL enregistrÃ©es avec succÃ¨s");
-  } catch (error) {
-    console.warn("âš ï¸ Erreur lors de l'enregistrement des feuilles QoL:", error);
-  }
-  
-  console.log("âœ… MoSh Greybearded QoL intÃ©grÃ©");
-  
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     if (data.type === "Item") {
@@ -410,89 +121,7 @@ Hooks.once("ready", async function () {
     }
   });
   
-    //Calm & 1e/0e character updates
-    // if the user has calm enabled at the start, 
-    if (game.settings.get('mothership-fr','useCalm')) {
-      //get list of actors
-      let actorList = game.actors;
-      let actorName = '';
-      let minStart = null;
-      let valueStart = null;
-      let maxStart = null;
-      let labelStart = '';
-      let minEnd = null;
-      let valueEnd = null;
-      let maxEnd = null;
-      let labelEnd = '';
-      //loop through all actors and update their stress values
-      actorList.forEach(function(actor){ 
-        //loop through each result
-        if (actor.type === 'character') {
-          //set character name
-          actorName = actor.name;
-          //set current values
-          minStart = actor.system.other.stress.min;
-          valueStart = actor.system.other.stress.value;
-          maxStart = actor.system.other.stress.max;
-          labelStart = actor.system.other.stress.label;
-          //if the label does not say Calm
-          if (actor.system.other.stress.label != 'Calm') {
-            //change it to calm
-            actor.update({'system.other.stress.label': 'Calm'});
-            //log
-            labelEnd = 'Calm';
-          }
-          //if the MIN value is not 0, this is an old character
-          if (actor.system.other.stress.min != 0) {
-            //put this value as the maximum
-              //change it to calm
-              actor.update({'system.other.stress.max': actor.system.other.stress.min});
-              //log
-              maxEnd = actor.system.other.stress.min;
-            //set the minimum to zero
-              //change it to calm
-              actor.update({'system.other.stress.min': 0});
-              //log
-              minEnd = 0;
-          }
-          //log change
-          console.log(actorName + " stress.min changed from " + minStart + " to " + minEnd);
-          console.log(actorName + " stress.max changed from " + maxStart + " to " + maxEnd);
-          console.log(actorName + " stress.label changed from " + labelStart + " to " + labelEnd);
-          //rerender this sheet
-          actor.render();
-        }
-      });
-    //user does not have calm enabled
-    } else {
-      //if the user has Zero edition enabled
-      if (!game.settings.get('mothership-fr','firstEdition')) {
-        //loop through all actors and update their stress values
-        actorList.forEach(function(actor){ 
-          //loop through each result
-          if (actor.type === 'character') {
-            //set character name
-            actorName = actor.name;
-            //set current values
-            maxStart = actor.system.other.stress.max;
-            //if the max value, this is an old character
-            if (actor.system.other.stress.max != 999) {
-              //put this value as the maximum
-                //change it to calm
-                actor.update({'system.other.stress.max': 999});
-                //log
-                maxEnd = 999;
-            }
-            //log change
-            console.log(actorName + " stress.max changed from " + maxStart + " to " + maxEnd);
-            //rerender this sheet
-            actor.render();
-          }
-        });
-      }
-    }
 });
-  
 
 //add custom damage dice for MOSH
 Hooks.once('diceSoNiceReady', (dice3d) => {
@@ -545,52 +174,42 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
   )
 })
 
-//Hooks.on("preCreateActor", (createData) => {
-/**
- * Set default values for new actors' tokens
- */
+//set initial things when creating an actor
 Hooks.on("preCreateActor", (document, createData, options, userId) => {
-  let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+  console.log("preCreateActor fired for:", createData?.name, createData?.type);
 
-  if (createData.type == "creature") {
-    disposition = CONST.TOKEN_DISPOSITIONS.HOSTILE
-  }
+  const disposition =
+    createData.type === "creature"
+      ? CONST.TOKEN_DISPOSITIONS.HOSTILE
+      : CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
-  // Set wounds, advantage, and display name visibility
-  foundry.utils.mergeObject(createData,
-    {
-      "token.bar1": { "attribute": "health" },        // Default Bar 1 to Health 
-      "token.bar2": { "attribute": "hits" },      // Default Bar 2 to Insanity
-      "token.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,     // Default display name to be on owner hover
-      "token.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,     // Default display bars to be on owner hover
-      "token.disposition": disposition,                               // Default disposition to neutral
-      "token.name": createData.name                                   // Set token name to actor name
-    })
+  // Apply prototype token defaults (v12+)
+  document.updateSource({
+    "prototypeToken.bar1.attribute": "system.health", // <-- use full system path
+    "prototypeToken.bar2.attribute": "system.hits",   // adjust to your schema
+    "prototypeToken.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+    "prototypeToken.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+    "prototypeToken.disposition": disposition,
+    "prototypeToken.name": createData.name
+  });
 
-    console.log(createData);
-    console.log("Created!");
-
-  if (createData.type == "character") {
-    console.log("Got here");
-    const prototypeToken = { disposition: 1, actorLink: true, vision: true}; // Set disposition to "Friendly"
-    document.updateSource({ prototypeToken });
-    
-  }
-})
-
-Hooks.on('renderSidebarTab', async (app, html) => {
-  console.log(app);
-  console.log(app.options.id);
-  if (app.options.id == "actors" || app.title == "Actors Directory") {
-    console.log("testing~");
-    let button = $(`<button class="import-json"><i class="fas fa-file-import"></i> Import JSON</button>`);
-    button.click(function () {
-      d.render({force: true});
+  if (createData.type === "character") {
+    document.updateSource({
+      "prototypeToken.disposition": CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+      "prototypeToken.actorLink": true,
+      "prototypeToken.vision": true
     });
-    html.find(".directory-footer").append(button);
+
+    if (game.settings.get("mothership-fr", "useCalm")) {
+      document.updateSource({
+        "system.other.stress.min": 0,
+        "system.other.stress.value": 85,
+        "system.other.stress.max": 85,
+        "system.other.stress.label": "Calm"
+      });
+    }
   }
 });
-
 
 
 /* -------------------------------------------- */
@@ -614,11 +233,8 @@ async function createMothershipMacro(data, slot) {
   var actor = game.actors.get(itemUUID[1]);
   var item;
 
-  if (game.release.generation >= 12) {
     item = foundry.utils.duplicate(actor.getEmbeddedDocument('Item',itemUUID[3]));
-  } else {
-    item = duplicate(actor.getEmbeddedDocument('Item',itemUUID[3]));
-  }
+
   console.log(item);
 
   if (!item) return ui.notifications.warn("You can only create macro buttons for owned Items");
@@ -634,7 +250,7 @@ console.log(command);
       img: item.img,
       command: command,
       flags: {
-        "mosh.itemMacro": true
+        "mothership-fr.itemMacro": true
       }
     });
   }
@@ -662,11 +278,7 @@ function rollItemMacro(itemName) {
         //get item id
         itemId = game.user.character.items.getName(itemName)._id;
         //get item
-        if (game.release.generation >= 12) {
-          item = foundry.utils.duplicate(game.user.character.getEmbeddedDocument("Item", itemId));
-        } else {
-          item = duplicate(game.user.character.getEmbeddedDocument("Item", itemId));
-        }
+        item = foundry.utils.duplicate(game.user.character.getEmbeddedDocument("Item", itemId));
         //warn if no item
         if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
         //roll action
@@ -689,11 +301,7 @@ function rollItemMacro(itemName) {
         //get item id
         itemId = token.actor.items.getName(itemName)._id;
         //get item
-        if (game.release.generation >= 12) {
-          item = foundry.utils.duplicate(token.actor.getEmbeddedDocument("Item", itemId));
-        } else {
-          item = duplicate(token.actor.getEmbeddedDocument("Item", itemId));
-        }
+        item = foundry.utils.duplicate(token.actor.getEmbeddedDocument("Item", itemId));
         //warn if no item
         if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
         //roll action
@@ -866,18 +474,19 @@ async function noCharSelected() {
     //create final dialog data
     const dialogData = {
       window: {title: `Macro Issue`},
+      classes: ["macro-popup-dialog"],
       content: errorMessage,
       buttons: [
         {
           label: `Ok`,
           action: 'action_ok',
           callback: () => { },
-          icon: '<i class="fas fa-check"></i>'
+          icon: 'fas fa-check'
         }
       ]
     };
     //render dialog
-    const dialog = foundry.applications.api.DialogV2(dialogData).render({force: true});
+    const dialog = new foundry.applications.api.DialogV2(dialogData).render({force: true});
     //log what was done
     console.log(`Told the user that no character was selected.`);
   });
@@ -898,13 +507,14 @@ async function noShipSelected() {
     //create final dialog data
     const dialogData = {
       window: {title: `Macro Issue`},
+      classes: ["macro-popup-dialog"],
       content: errorMessage,
       buttons: [
         {
           label: `Ok`,
           action: 'action_ok',
           callback: () => { },
-          icon: '<i class="fas fa-check"></i>'
+          icon: 'fas fa-check'
         }
       ]
     };
@@ -1046,54 +656,28 @@ export async function fromIdUuid(id_uuid, options={}){
 
 }
 
-// Hooks QoL pour les menus contextuels  
-Hooks.on("getActorDirectoryEntryContext", (html, options) => {
-  const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
-  if (!enabled) return;
+/**
+ * This function will format a number into a more readable string with appropriate suffixes.
+ * For example, 1500 becomes "1.5K", 2000000 becomes "2M", etc.
+ * It handles numbers in the trillions (t), billions (b), millions (m), and thousands (k).
+ * It also handles negative numbers and zero.
+ * At the end it appends 'cr' to denote credits.
+ * @namespace formatCreditsNumber
+ * @param {int} num Credits number to format.
+ * @returns {string}  Credits , formatted string with appropriate suffix.
+ */
+export function formatCreditsNumber(num) {
+  const absNum = Math.abs(num);
 
-  options.push(
-    {
-      name: "RÃ©initialiser le crÃ©ateur de personnage",
-      icon: '<i class="fas fa-undo"></i>',
-      condition: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        return game.user.isGM && actor?.type === "character";
-      },
-      callback: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        if (!actor) return;
-        reset(actor);
-        ui.notifications.info(`Progression du crÃ©ateur de personnage rÃ©initialisÃ©e pour : ${actor.name}`);
-      }
-    },
-    {
-      name: "Marquer comme prÃªt",
-      icon: '<i class="fas fa-check-circle"></i>',
-      condition: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor) && !checkReady(actor);
-      },
-      callback: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        if (!actor) return;
-        setReady(actor);
-        ui.notifications.info(`Personnage marquÃ© comme prÃªt : ${actor.name}`);
-      }
-    },
-    {
-      name: "Marquer comme terminÃ©",
-      icon: '<i class="fas fa-flag-checkered"></i>',
-      condition: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor);
-      },
-      callback: li => {
-        const actor = game.actors.get(li.data("documentId"));
-        if (!actor) return;
-        setCompleted(actor);
-        ui.notifications.info(`Personnage marquÃ© comme terminÃ© : ${actor.name}`);
-      }
-    }
-  );
-});
-
+  if (absNum >= 1_000_000_000_000) {
+    return (num / 1_000_000_000_000).toFixed(1).replace(/\.0$/, '') + 'tcr';
+  } else if (absNum >= 1_000_000_000) {
+    return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'bcr';
+  } else if (absNum >= 1_000_000) {
+    return (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'mcr';
+  } else if (absNum >= 1_000) {
+    return (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'kcr';
+  } else {
+    return num.toString() + 'cr';
+  }
+}
