@@ -1,8 +1,8 @@
 import { getThemeColor } from "./get-theme-color.js";
 
 export async function chatOutput({
-  actor = null,
-  title = game.i18n.localize("MoshQoL.UI.Untitled"),
+  actor,
+  title = "Untitled",
   subtitle = "",
   content = "",
   icon = null,
@@ -12,7 +12,7 @@ export async function chatOutput({
 } = {}) {
   // Fallback actor
   actor = actor || game.user.character;
-  if (!actor) return ui.notifications.warn(game.i18n.localize("MoshQoL.UI.NoActorAvailable"));
+  if (!actor) return ui.notifications.warn("No actor available for chat output.");
 
   // Normalize icon: if image is given, drop icon completely
   if (image) {
@@ -42,7 +42,7 @@ export async function chatOutput({
 
   // Prepare HTML via template
   const themeColor = getThemeColor();
-  const html = await foundry.applications.handlebars.renderTemplate("modules/mosh-greybearded-qol/templates/chat-output.html", {
+  const html = await renderTemplate("modules/mosh-greybearded-qol/templates/chat-output.html", {
     actor,
     title,
     subtitle,

@@ -9,12 +9,12 @@ export async function showStressConversionDialog(actor, points) {
     };
     const values = structuredClone(base);
 
-    const html = await foundry.applications.handlebars.renderTemplate("modules/mosh-greybearded-qol/templates/stress-conversion.html", { 
+    const html = await renderTemplate("modules/mosh-greybearded-qol/templates/stress-conversion.html", { 
       themeColor :getThemeColor()
     });
 
     const dlg = new Dialog({
-      title: game.i18n.localize("MoshQoL.ConvertStress.DistributionTitle"),
+      title: "Distribute Stress Conversion",
       content: html,
       buttons: {}, // No standard buttons
       close: () => resolve(null),

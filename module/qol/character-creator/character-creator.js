@@ -7,49 +7,53 @@ import { rollLoadout } from "./roll-loadout.js";
 
 export async function startCharacterCreation(actor) {
   if (!actor) {
-    ui.notifications.error(game.i18n.localize("MoshQoL.CharacterCreation.NoActorProvided"));
+    ui.notifications.error("No actor provided.");
     return;
   }
   // ✅ Check if character is already completed
   if (checkCompleted(actor)) {
     if (game.user.isGM) {
       const resetConfirm = await Dialog.confirm({
-        title: game.i18n.localize("MoshQoL.CharacterCreation.AlreadyCompleted"),
-        content: game.i18n.format("MoshQoL.CharacterCreation.AlreadyCompletedContent", {name: actor.name})
+        title: "Character Already Completed",
+        content: `<p><strong>${actor.name}</strong> has already completed character creation.<br>Do you want to reset and start over?</p>`
       });
       if (resetConfirm) {
         await reset(actor);
-        ui.notifications.info(game.i18n.format("MoshQoL.CharacterCreation.ResetComplete", {name: actor.name}));
+        ui.notifications.info(`Character creation for ${actor.name} has been reset.`);
       } else {
-        ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.Cancelled"));
+        ui.notifications.warn("Character creation cancelled.");
         return;
       }
     } else {
-      ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.AlreadyCompletedWarning"));
+      ui.notifications.warn("Character creation already completed.");
       return;
     }
   }
 
   // ✅ Step 1: Check if actor is marked "ready"
   if (!checkReady(actor)) {
-    const content = game.i18n.format("MoshQoL.CharacterCreation.WarningContent", {name: actor.name});
+    const content = `
+      <p>No valid character creator data found for <strong>${actor.name}</strong>!</p>
+      <p>Proceeding might <strong><span style="color: #f55;">overwrite</span></strong> an existing character.</p>
+      <p>Please choose an action:</p>
+    `;
   
     const choice = await Dialog.wait({
-      title: game.i18n.localize("MoshQoL.CharacterCreation.Warning"),
+      title: "Character Creator: Warning",
       content,
       buttons: {
         overwrite: {
-          label: game.i18n.localize("MoshQoL.CharacterCreation.Overwrite"),
+          label: "Overwrite",
           icon: `<i class="fa fa-exclamation-triangle" style="color: #f50;"></i>`,
           callback: () => "overwrite"
         },
         markComplete: {
-          label: game.i18n.localize("MoshQoL.CharacterCreation.MarkCompleted"),
+          label: "Mark Completed",
           icon: `<i class="fa fa-check-circle" style="color: green;"></i>`,
           callback: () => "complete"
         },
         cancel: {
-          label: game.i18n.localize("MoshQoL.CharacterCreation.Cancel"),
+          label: "Cancel",
           icon: `<i class="fa fa-times" style="color: red;"></i>`,
           callback: () => null
         }
@@ -58,11 +62,11 @@ export async function startCharacterCreation(actor) {
     });
   
     if (choice === "cancel") {
-      ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.Cancelled"));
+      ui.notifications.warn("Character creation cancelled.");
       return;
     } else if (choice === "complete") {
       await setCompleted(actor, true);
-      ui.notifications.info(game.i18n.format("MoshQoL.CharacterCreation.MarkedCompleted", {name: actor.name}));
+      ui.notifications.info(`${actor.name} has been marked as completed manually.`);
       return;
     } else if (choice === "overwrite") {
       await setReady(actor, true); // mark as ready and proceed
@@ -133,14 +137,14 @@ export async function startCharacterCreation(actor) {
 
     const content = `
       <div style="display: flex; gap: 32px; line-height: 1.5;">
-        ${formatBlock(game.i18n.localize("MoshQoL.CharacterCreation.Stats"), rolledAttributes)}
-        ${formatBlock(game.i18n.localize("MoshQoL.CharacterCreation.Saves"), rolledSaves)}
+        ${formatBlock("Stats", rolledAttributes)}
+        ${formatBlock("Saves", rolledSaves)}
       </div>
     `;
 
     await chatOutput({
       actor,
-      title: game.i18n.localize("MoshQoL.CharacterCreation.StatsRolled"),
+      title: "Stats Rolled",
       subtitle: actor.name,
       content,
       icon: "fa-chart-line",
@@ -158,10 +162,10 @@ export async function startCharacterCreation(actor) {
     if (classUUID) {
       selectedClass = await fromUuid(classUUID);
       if (!selectedClass) {
-        ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.ClassInvalid"));
+        ui.notifications.warn("Class UUID invalid. Please reselect.");
       }
     } else {
-      ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.NoClassUUID"));
+      ui.notifications.warn("No class UUID found. Please select a class.");
     }
   }
   // If nothing was loaded -> selection dialog
@@ -169,13 +173,13 @@ export async function startCharacterCreation(actor) {
     console.log("📚 Selecting class...");
     selectedClass = await selectClass(actor);
     if (!selectedClass) {
-      ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.ClassSelectionCancelled"));
+      ui.notifications.warn("Class selection cancelled.");
       return;
     }
     await chatOutput({
-      title: game.i18n.localize("MoshQoL.CharacterCreation.ClassSelected"),
+      title: "Class Selected",
       subtitle: actor.name,
-      content: game.i18n.format("MoshQoL.CharacterCreation.ClassSelectedContent", {name: actor.name, className: selectedClass.name}),
+      content: `${actor.name} chose a class: <label class="counter">${selectedClass.name}</label>`,
       image: selectedClass?.img || "",
       icon: "fa-user"
     });
@@ -188,10 +192,10 @@ export async function startCharacterCreation(actor) {
     if (choices.length > 0) {
       try {
         const adjustments = await selectAttributes(actor, choices);
-        if (!adjustments) return ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.AttributeSelectionCancelled"));
+        if (!adjustments) return ui.notifications.warn("Attribute selection cancelled.");
       } catch (err) {
         console.warn("Attribute selection aborted:", err);
-        return ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.AttributeSelectionCancelled"));
+        return ui.notifications.warn("Attribute selection cancelled.");
       }
     }
     await completeStep(actor, "selectedAttributes");
@@ -213,7 +217,7 @@ export async function startCharacterCreation(actor) {
   
     await chatOutput({
       actor,
-      title: game.i18n.localize("MoshQoL.CharacterCreation.HealthRolled"),
+      title: "Health Rolled",
       subtitle: actor.name,
       icon: "fa-heart-pulse",
       content: `<span class="counter">${total}</span> HP`
@@ -226,12 +230,12 @@ export async function startCharacterCreation(actor) {
   if (!checkStep(actor, "selectedSkills")) {
     const adjustments = await selectSkills(actor, selectedClass);
     if (!adjustments || adjustments.length === 0) {
-      return ui.notifications.warn(game.i18n.localize("MoshQoL.CharacterCreation.SkillSelectionCancelled"));
+      return ui.notifications.warn("Skill selection cancelled.");
     }
 
     await chatOutput({
       actor,
-      title: game.i18n.localize("MoshQoL.CharacterCreation.SkillsSelected"),
+      title: "Skills Selected",
       subtitle: actor.name,
       icon: "fa-sitemap",
       content: `
@@ -257,6 +261,6 @@ export async function startCharacterCreation(actor) {
      
   // ✅ Final Step: Mark character creation as completed
   await setCompleted(actor, true);
-  ui.notifications.info(game.i18n.format("MoshQoL.CharacterCreation.Complete", {name: actor.name}));
+  ui.notifications.info(`${actor.name} has completed character creation.`);
 
 }

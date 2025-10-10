@@ -17,7 +17,7 @@ export function defineStashSheet(BaseSheet) {
     }
 
     get title() {
-      return this.actor.name || game.i18n.localize("MoshQoL.StashSheet.Title");
+      return this.actor.name || "Stash";
     }
 
     getData(options = {}) {

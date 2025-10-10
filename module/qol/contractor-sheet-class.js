@@ -6,9 +6,9 @@ import { MOTIVATION_TABLE } from "./config/default-contractor-motivation.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
- * @extends {foundry.appv1.sheets.ActorSheet}
+ * @extends {ActorSheet}
  */
-export class QoLContractorSheet extends foundry.appv1.sheets.ActorSheet {
+export class QoLContractorSheet extends ActorSheet {
 
     /** @override */
     static get defaultOptions() {

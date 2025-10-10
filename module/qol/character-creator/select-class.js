@@ -18,64 +18,25 @@ export async function selectClass(actor, applyStats = true) {
   const saves = ['sanity', 'fear', 'body'];
 
   // Load all the classes
-  console.log("🔍 DEBUG: Tous les packs disponibles:", Array.from(game.packs.keys()));
-  
   const compendiumPacks = [
-    "mothership-fr.classes_1e",
+    "fvtt_mosh_1e_psg.items_classes_1e",
     ...game.packs.filter(p => p.metadata.type === "Item" && p.metadata.label.toLowerCase().includes("class")).map(p => p.metadata.id)
   ];
   const worldClasses = game.items.filter(cls => cls.type === "class");
   const classMap = new Map();
 
-  console.log("🔍 DEBUG: Compendium packs recherchés:", compendiumPacks);
-
   for (const packId of compendiumPacks) {
     const pack = game.packs.get(packId);
-    console.log(`🔍 DEBUG: Pack ${packId}:`, pack ? "TROUVÉ" : "INTROUVABLE");
     if (!pack) continue;
     const classes = await pack.getDocuments();
-    console.log(`🔍 DEBUG: ${packId} contient ${classes.length} classes:`, classes.map(c => c.name));
     for (const cls of classes) {
       if (!classMap.has(cls.name)) {
         classMap.set(cls.name, foundry.utils.deepClone(cls));
       }
     }
   }
-
-  // Si aucune classe n'a été trouvée, essayer une recherche plus large
-  if (classMap.size === 0) {
-    console.log("🔍 DEBUG: Aucune classe trouvée, recherche dans tous les packs...");
-    for (const pack of game.packs.values()) {
-      if (pack.metadata.type === "Item") {
-        console.log(`🔍 DEBUG: Vérification du pack: ${pack.metadata.id} (${pack.metadata.label})`);
-        try {
-          const documents = await pack.getDocuments();
-          const classes = documents.filter(doc => doc.type === "class");
-          if (classes.length > 0) {
-            console.log(`🔍 DEBUG: Trouvé ${classes.length} classes dans ${pack.metadata.id}:`, classes.map(c => c.name));
-            for (const cls of classes) {
-              if (!classMap.has(cls.name)) {
-                classMap.set(cls.name, foundry.utils.deepClone(cls));
-              }
-            }
-          }
-        } catch (error) {
-          console.warn(`🔍 DEBUG: Erreur lors de la lecture de ${pack.metadata.id}:`, error);
-        }
-      }
-    }
-  }
   for (const cls of worldClasses) classMap.set(cls.name, foundry.utils.deepClone(cls));
   const sortedClasses = Array.from(classMap.values()).sort((a, b) => a.name.localeCompare(b.name));
-
-  console.log(`🔍 DEBUG: ${sortedClasses.length} classes trouvées au total:`, sortedClasses.map(c => c.name));
-
-  // Si aucune classe trouvée, afficher un message d'erreur explicite
-  if (sortedClasses.length === 0) {
-    ui.notifications.error("Aucune classe trouvée ! Vérifiez que le compendium 'Classes (1e)' est bien présent et contient des données.");
-    console.error("🔍 DEBUG: ERREUR - Aucune classe trouvée dans aucun compendium !");
-    return null;
-  }
 
   // Compile processed class data
   const processedClasses = sortedClasses.map(cls => {
@@ -141,11 +102,11 @@ export async function selectClass(actor, applyStats = true) {
     gridColumns,
     classes: processedClasses
   };
-  const content = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
+  const content = await renderTemplate("modules/mosh-greybearded-qol/templates/character-creator/select-class.html", templateData);
 
   return new Promise(resolve => {
     const dlg = new Dialog({
-      title: game.i18n.localize("MoshQoL.UI.SelectClass"),
+      title: "Select Your Class",
       content,
       buttons: {},
       close: () => resolve(null),

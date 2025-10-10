@@ -13,14 +13,14 @@ export async function selectAttributes(actor, attributeChoices) {
   const maxCols = Math.max(...attributeChoices.map(choice => choice.stats.length));
   const dialogWidth = calculateDialogWidth(maxCols, cardWidth, true);
 
-  const htmlContent = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-attributes.html", {
+  const htmlContent = await renderTemplate("modules/mosh-greybearded-qol/templates/character-creator/select-attributes.html", {
     attributeSets,
     themeColor: getThemeColor()
   });
 
   return new Promise((resolve, reject) => {
     const dlg = new Dialog({
-      title: game.i18n.localize("MoshQoL.UI.SelectAttributes"),
+      title: "Select Attributes",
       content: htmlContent,
       buttons: {}, // Keine Foundry-Buttons
       close: () => reject("Cancelled"),

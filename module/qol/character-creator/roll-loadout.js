@@ -4,9 +4,9 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   if (!actor || !selectedClass) return false;
 
   const DEFAULT_IMAGES = {
-    Loadout: "systems/mothership-fr/icons/rolltables/loadouts.png",
-    Patches: "systems/mothership-fr/icons/rolltables/patch.png",
-    Trinkets: "systems/mothership-fr/icons/rolltables/trinket.png"
+    Loadout: "modules/fvtt_mosh_1e_psg/icons/rolltables/loadouts.png",
+    Patches: "modules/fvtt_mosh_1e_psg/icons/rolltables/patch.png",
+    Trinkets: "modules/fvtt_mosh_1e_psg/icons/rolltables/trinket.png"
   };
 
   const classData = selectedClass.system ?? selectedClass; // Support for Item or raw data
@@ -16,8 +16,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     classData.roll_tables?.trinket
   ].filter(Boolean);
 
-  // Utilisation des noms français pour les catégories d'items
-  const allItems = { Armes: [], Armures: [], Équipements: [] };
+  const allItems = { Weapons: [], Armor: [], Items: [] };
   const itemsToCreate = [];
 
   if (clearItems) {
@@ -39,9 +38,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
       let fullItem = null;
       let uuid = result.documentUuid;
       
-      // Fix for FoundryVTT v13: Handle both old and new formats
       if (!uuid && result.documentCollection && result.documentId) {
-        // Convert old format to proper UUID
         uuid = `Compendium.${result.documentCollection}.${result.documentId}`;
       }
       
@@ -56,18 +53,17 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
       if (fullItem) {
         const itemData = fullItem.toObject(false);
         itemsToCreate.push(itemData);
-        // Classification française des items
-        if (itemData.type === "weapon") allItems.Armes.push({ name: itemData.name, img: itemData.img });
-        else if (itemData.type === "armor") allItems.Armures.push({ name: itemData.name, img: itemData.img });
-        else allItems.Équipements.push({ name: itemData.name, img: itemData.img });
+        if (itemData.type === "weapon") allItems.Weapons.push({ name: itemData.name, img: itemData.img });
+        else if (itemData.type === "armor") allItems.Armor.push({ name: itemData.name, img: itemData.img });
+        else allItems.Items.push({ name: itemData.name, img: itemData.img });
         continue;
       }
 
       // fallback for text-only results
-      const cleanText = (result.text || result.name || result.description)?.replace(/<br\s*\/?>/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
+      const cleanText = result.text?.replace(/<br\s*\/?>/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
       if (cleanText) {
         itemsToCreate.push({ name: cleanText, type: "item", img: DEFAULT_IMAGES.Loadout, system: {}, effects: [], flags: {} });
-        allItems.Équipements.push({ name: cleanText, img: DEFAULT_IMAGES.Loadout });
+        allItems.Items.push({ name: cleanText, img: DEFAULT_IMAGES.Loadout });
       }
     }
   }
@@ -76,7 +72,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     await actor.createEmbeddedDocuments("Item", itemsToCreate);
   }
 
-  // 💬 Chat output avec noms français
+  // 💬 Chat output
   let itemSummary = "";
   for (const [category, items] of Object.entries(allItems)) {
     if (items.length > 0) {
@@ -87,18 +83,18 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
   }
 
-  // Jet pour les Crédits de Départ
+  // Roill for Staring Credits
   if (rollCredits) {
     const creditRoll = new Roll("2d10 * 10");
     await creditRoll.evaluate();
     const startingCredits = creditRoll.total;
     await actor.update({ system: { credits: { value: startingCredits } } });
-    itemSummary += `<br><strong>Crédits de Départ:</strong> <label class="counter">${startingCredits}</label> cr`;
+    itemSummary += `<br><strong>Starting Credits:</strong> <label class="counter">${startingCredits}</label> cr`;
   }
   
   await chatOutput({
     actor,
-    title: "Équipement Généré",
+    title: "Loadout Rolled",
     subtitle: actor.name,
     icon: "fa-dice",
     image: DEFAULT_IMAGES.Loadout,

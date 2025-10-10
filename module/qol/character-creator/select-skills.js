@@ -1,54 +1,8 @@
 import { getThemeColor } from "../utils/get-theme-color.js";
-import { findSkillByName, normalizeSkillName, getSkillNameVariants, skillNamesMatch } from "../../utils/skill-translation-map.js";
-import { getSkillPrerequisites, getSkillDependents, validateSkillSelection } from "../../utils/skill-dependencies.js";
 
 export async function selectSkills(actor, selectedClass) {
   function getSkillSortOrder() {
-    // Ordre de tri avec support bilingue
-    return [
-      "Linguistique", "Linguistics",
-      "Zoologie", "Zoology",
-      "Botanique", "Botany",
-      "Géologie", "Geology",
-      "Équipement Industriel", "Industrial Equipment",
-      "Bricolage", "Jury-Rigging",
-      "Chimie", "Chemistry",
-      "Informatique", "Computers",
-      "Gravité Zéro", "Zero-G",
-      "Mathématiques", "Mathematics",
-      "Art", "Art",
-      "Archéologie", "Archaeology",
-      "Théologie", "Theology",
-      "Entraînement Militaire", "Military Training",
-      "Connaissances de la Bordure", "Rimwise",
-      "Athlétisme", "Athletics",
-      "Psychologie", "Psychology",
-      "Pathologie", "Pathology",
-      "Médecine de Terrain", "Field Medicine",
-      "Écologie", "Ecology",
-      "Extraction d'Astéroïdes", "Asteroid Mining",
-      "Réparation Mécanique", "Mechanical Repair",
-      "Explosifs", "Explosives",
-      "Pharmacologie", "Pharmacology",
-      "Piratage", "Hacking",
-      "Pilotage", "Piloting",
-      "Physique", "Physics",
-      "Mysticisme", "Mysticism",
-      "Survie en Milieu Hostile", "Survival",
-      "Armes à Feu", "Firearms",
-      "Combat Rapproché", "Close Quarters Battle",
-      "Sophontologie", "Sophontology",
-      "Exobiologie", "Exobiology",
-      "Chirurgie", "Surgery",
-      "Planétologie", "Planetology",
-      "Robotique", "Robotics",
-      "Ingénierie", "Engineering",
-      "Cybernétique", "Cybernetics",
-      "Intelligence Artificielle", "Artificial Intelligence",
-      "Hyperspace", "Hyperspace",
-      "Xénoésotérisme", "Xenoesotericism",
-      "Commandement", "Command"
-    ];
+    return ["Linguistics", "Zoology", "Botany", "Geology", "Industrial Equipment", "Jury-Rigging", "Chemistry", "Computers", "Zero-G", "Mathematics", "Art", "Archaeology", "Theology", "Military Training", "Rimwise", "Athletics", "Psychology", "Pathology", "Field Medicine", "Ecology", "Asteroid Mining", "Mechanical Repair", "Explosives", "Pharmacology", "Hacking", "Piloting", "Physics", "Mysticism", "Wilderness Survival", "Firearms", "Hand-to-Hand Combat", "Sophontology", "Exobiology", "Surgery", "Planetology", "Robotics", "Engineering", "Cybernetics", "Artificial Intelligence", "Hyperspace", "Xenoesotericism", "Command"];
   }
 
   function stripHtml(html) {
@@ -57,8 +11,6 @@ export async function selectSkills(actor, selectedClass) {
 
   function getSkillDependencies(skills) {
     const map = new Map(); // prereqId → Set of dependentIds
-    
-    // D'abord, traiter les dépendances du système
     for (const skill of skills) {
       for (const prereq of skill.system.prerequisite_ids || []) {
         const prereqId = prereq.split(".").pop();
@@ -66,76 +18,25 @@ export async function selectSkills(actor, selectedClass) {
         map.get(prereqId).add(skill.id);
       }
     }
-    
-    // Ensuite, ajouter les dépendances de notre configuration
-    for (const skill of skills) {
-      const configPrereqs = getSkillPrerequisites(skill.name);
-      for (const prereqName of configPrereqs) {
-        // Trouver la compétence prérequise par nom (avec support bilingue)
-        const prereqSkill = findSkillByName(prereqName, skills);
-        if (prereqSkill) {
-          if (!map.has(prereqSkill.id)) map.set(prereqSkill.id, new Set());
-          map.get(prereqSkill.id).add(skill.id);
-        }
-      }
-    }
-    
     return map;
   }
   
-  const compendiumSkills = await game.packs.get('mothership-fr.competences_1e')?.getDocuments() ?? [];
+  const compendiumSkills = await game.packs.get('fvtt_mosh_1e_psg.items_skills_1e')?.getDocuments() ?? [];
   const worldSkills = game.items.filter(item => item.type === 'skill');
   const allSkills = [...worldSkills, ...compendiumSkills].map(skill => {
-    // Normalisation des rangs français vers anglais pour compatibilité
-    const rank = skill.system.rank;
-    if (rank === "Formé" || rank === "Entraîné") skill.system.rank = "trained";
-    else if (rank === "Expert") skill.system.rank = "expert";
-    else if (rank === "Maître") skill.system.rank = "master";
-    else skill.system.rank = skill.system.rank?.toLowerCase();
-    
-    // Normalisation du nom pour compatibilité bilingue
-    skill.normalizedName = normalizeSkillName(skill.name);
-    skill.nameVariants = getSkillNameVariants(skill.name);
-    
+    skill.system.rank = skill.system.rank?.toLowerCase();
     return skill;
   });
 
-  // Création d'un map avec support bilingue
   const skillMap = new Map();
   for (const skill of allSkills) {
     skillMap.set(skill.id, skill);
-    // Ajout des variantes de nom pour faciliter la recherche
-    skillMap.set(skill.name, skill);
-    if (skill.nameVariants.english !== skill.name) {
-      skillMap.set(skill.nameVariants.english, skill);
-    }
-    if (skill.nameVariants.french !== skill.name) {
-      skillMap.set(skill.nameVariants.french, skill);
-    }
   }
   
   const dependencies = getSkillDependencies(allSkills);
 
   const sortOrder = getSkillSortOrder();
-  const sortedSkills = allSkills.sort((a, b) => {
-    // Support bilingue pour le tri
-    const indexA = Math.min(
-      sortOrder.indexOf(a.name),
-      sortOrder.indexOf(a.nameVariants?.english || ""),
-      sortOrder.indexOf(a.nameVariants?.french || "")
-    );
-    const indexB = Math.min(
-      sortOrder.indexOf(b.name),
-      sortOrder.indexOf(b.nameVariants?.english || ""),
-      sortOrder.indexOf(b.nameVariants?.french || "")
-    );
-    
-    // Si non trouvé dans l'ordre de tri, placer à la fin
-    const realIndexA = indexA === -1 ? 9999 : indexA;
-    const realIndexB = indexB === -1 ? 9999 : indexB;
-    
-    return realIndexA - realIndexB;
-  });
+  const sortedSkills = allSkills.sort((a, b) => sortOrder.indexOf(a.name) - sortOrder.indexOf(b.name));
 
 
   const baseAnd = selectedClass.system.selected_adjustment?.choose_skill_and ?? {};
@@ -151,14 +52,14 @@ export async function selectSkills(actor, selectedClass) {
     master: (baseAnd.master || 0) + fullSetMaster
   };
 
-  // Convertit tout ce qui ressemble à un nombre en Number, sinon 0
+  // Wandelt alles "zahlähnliche" sicher in Number um, sonst 0
   const toNum = (v) => {
     if (v === "" || v === null || v === undefined) return 0;
     const n = Number(v);
     return Number.isFinite(n) ? n : 0;
   };
 
-  // Somme pratique
+  // Bequemer Summer
   const add = (...vals) => vals.map(toNum).reduce((a, b) => a + b, 0);
 
   const orOptions = baseOr.flat().map((opt, i) => {
@@ -171,7 +72,7 @@ export async function selectSkills(actor, selectedClass) {
     };
   });
 
-  const html = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-skills.html", {
+  const html = await renderTemplate("modules/mosh-greybearded-qol/templates/character-creator/select-skills.html", {
     themeColor: getThemeColor(),
     actor,
     selectedClass,
@@ -183,7 +84,7 @@ export async function selectSkills(actor, selectedClass) {
 
   return new Promise((resolve) => {
     const dlg = new Dialog({
-      title: game.i18n.format("MoshQoL.UI.SelectSkills"),
+      title: `Select Skills for ${actor.name}`,
       content: html,
       buttons: {},
       close: () => {
@@ -207,45 +108,13 @@ export async function selectSkills(actor, selectedClass) {
           );
         
           const linesToDraw = [];
-          const processedConnections = new Set(); // Éviter les doublons
         
           for (const skill of sortedSkills) {
-            // Utilisation des prérequis du système ET de notre configuration
-            const systemPrereqIds = (skill.system.prerequisite_ids || []).map(p => p.split(".").pop());
-            const configPrereqs = getSkillPrerequisites(skill.name);
-            
-            // Normalisation et déduplication des prérequis
-            const normalizedPrereqs = new Set();
-            
-            // Ajouter les prérequis système (par ID)
-            for (const prereqId of systemPrereqIds) {
-              const prereqSkill = sortedSkills.find(s => s.id === prereqId);
-              if (prereqSkill) {
-                normalizedPrereqs.add(prereqId);
-              }
-            }
-            
-            // Ajouter les prérequis de configuration (par nom)
-            for (const prereqName of configPrereqs) {
-              const prereqSkill = findSkillByName(prereqName, sortedSkills);
-              if (prereqSkill) {
-                normalizedPrereqs.add(prereqSkill.id);
-              }
-            }
+            const prereqIds = (skill.system.prerequisite_ids || []).map(p => p.split(".").pop());
         
-            for (const prereqId of normalizedPrereqs) {
-              // Créer une clé unique pour cette connexion
-              const connectionKey = `${prereqId}->${skill.id}`;
-              
-              // Éviter les connexions dupliquées
-              if (processedConnections.has(connectionKey)) {
-                continue;
-              }
-              processedConnections.add(connectionKey);
-              
+            for (const prereqId of prereqIds) {
               const fromEl = html[0].querySelector(`.skill-card[data-skill-id="${prereqId}"]`);
               const toEl = html[0].querySelector(`.skill-card[data-skill-id="${skill.id}"]`);
-              
               if (!fromEl || !toEl) continue;
         
               const rect1 = fromEl.getBoundingClientRect();
@@ -269,21 +138,16 @@ export async function selectSkills(actor, selectedClass) {
               const c2y = relY2;
         
               const pathData = `M ${relX1},${relY1} C ${c1x},${c1y} ${c2x},${c2y} ${relX2},${relY2}`;
-              
-              // Vérification si le prérequis est sélectionné
-              const prereqSelected = selected.has(prereqId);
-              const skillSelected = selected.has(skill.id);
-              
               const isHighlighted =
-                skillSelected &&
-                prereqSelected &&
+                selected.has(skill.id) &&
+                selected.has(prereqId) &&
                 (skill.system.rank === "expert" || skill.system.rank === "master");
         
               linesToDraw.push({ d: pathData, highlight: isHighlighted });
             }
           }
         
-          // ⬇️ D'abord: lignes grises
+          // ⬇️ Zuerst: graue Linien
           for (const line of linesToDraw.filter(l => !l.highlight)) {
             const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
             path.setAttribute("d", line.d);
@@ -293,7 +157,7 @@ export async function selectSkills(actor, selectedClass) {
             svg.appendChild(path);
           }
         
-          // ⬆️ Ensuite: lignes colorées par-dessus
+          // ⬆️ Dann: farbige oben drauf
           for (const line of linesToDraw.filter(l => l.highlight)) {
             const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
             path.setAttribute("d", line.d);
@@ -321,43 +185,8 @@ export async function selectSkills(actor, selectedClass) {
                 this.classList.remove("locked");
               } else {
                 const skill = skillMap.get(skillId);
-                
-                // Combiner les prérequis du système et de la configuration
-                const systemPrereqs = (skill?.system?.prerequisite_ids || []).map(p => p.split(".").pop());
-                const configPrereqs = getSkillPrerequisites(skill?.name || "");
-                
-                // Vérification des prérequis avec support bilingue
-                const hasSystemPrereqs = systemPrereqs.length === 0 || systemPrereqs.some(prereqId => {
-                  // Recherche directe par ID
-                  if (selectedSkills.has(prereqId)) return true;
-                  
-                  // Recherche par nom avec correspondance bilingue
-                  const prereqSkill = skillMap.get(prereqId);
-                  if (!prereqSkill) return false;
-                  
-                  // Vérifie si une compétence sélectionnée correspond au prérequis
-                  for (const selectedId of selectedSkills) {
-                    const selectedSkill = skillMap.get(selectedId);
-                    if (selectedSkill && skillNamesMatch(selectedSkill.name, prereqSkill.name)) {
-                      return true;
-                    }
-                  }
-                  return false;
-                });
-                
-                const hasConfigPrereqs = configPrereqs.length === 0 || configPrereqs.some(prereqName => {
-                  // Recherche par nom avec correspondance bilingue
-                  for (const selectedId of selectedSkills) {
-                    const selectedSkill = skillMap.get(selectedId);
-                    if (selectedSkill && skillNamesMatch(selectedSkill.name, prereqName)) {
-                      return true;
-                    }
-                  }
-                  return false;
-                });
-                
-                const unlocked = hasSystemPrereqs && hasConfigPrereqs;
-                
+                const prereqs = (skill?.system?.prerequisite_ids || []).map(p => p.split(".").pop());
+                const unlocked = prereqs.length === 0 || prereqs.some(id => selectedSkills.has(id));
                 if (unlocked) {
                   this.classList.remove("locked");
                 } else {
@@ -401,26 +230,10 @@ export async function selectSkills(actor, selectedClass) {
               const depSkill = skillMap.get(depId);
               const depPrereqs = (depSkill.system.prerequisite_ids || []).map(p => p.split(".").pop());
           
-              // Vérification avec support bilingue
               const fulfilled = depPrereqs.filter(pid => {
-                if (pid === skillId) return false; // compétence actuellement désélectionnée
-                
-                // Recherche directe par ID
+                if (pid === skillId) return false; // gerade ausgewählter Skill fällt weg
                 const el = html[0].querySelector(`[data-skill-id="${pid}"]`);
-                if (el?.classList.contains("selected")) return true;
-                
-                // Recherche par correspondance bilingue
-                const prereqSkill = skillMap.get(pid);
-                if (!prereqSkill) return false;
-                
-                const selectedElements = html[0].querySelectorAll('.skill-card.selected');
-                for (const selectedEl of selectedElements) {
-                  const selectedSkill = skillMap.get(selectedEl.dataset.skillId);
-                  if (selectedSkill && skillNamesMatch(selectedSkill.name, prereqSkill.name)) {
-                    return true;
-                  }
-                }
-                return false;
+                return el?.classList.contains("selected");
               });
           
               if (fulfilled.length === 0) {

@@ -2,7 +2,7 @@ export class ShoreLeaveTierEditor extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "shore-leave-tier-editor",
-      title: game.i18n.localize("MoshQoL.EditShoreLeaveTiers.Title"),
+      title: "Edit Shore Leave Tiers",
       template: "modules/mosh-greybearded-qol/templates/edit-shore-leave-tiers.html",
       width: 600,
       height: "auto",
@@ -22,13 +22,13 @@ export class ShoreLeaveTierEditor extends FormApplication {
       const module = await import("../config/default-shore-leave-tiers.js");
       await game.settings.set("mosh-greybearded-qol", "shoreLeaveTiers", module.SHORE_LEAVE_TIERS);
       this.render();
-      ui.notifications.info(game.i18n.localize("MoshQoL.EditShoreLeaveTiers.Reset"));
+      ui.notifications.info("Shore Leave tiers reset to defaults.");
     });
   }
 
   async _updateObject(event, formData) {
     const data = foundry.utils.expandObject(formData);
     await game.settings.set("mosh-greybearded-qol", "shoreLeaveTiers", data.tiers);
-    ui.notifications.info(game.i18n.localize("MoshQoL.EditShoreLeaveTiers.Updated"));
+    ui.notifications.info("Shore Leave Tiers updated.");
   }
 }

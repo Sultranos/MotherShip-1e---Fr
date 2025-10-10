@@ -14,6 +14,22 @@ import {
   registerSettings
 } from "./settings.js";
 
+// Import Modules QoL - Fonctionnalités avancées
+import { QoLContractorSheet } from "./qol/contractor-sheet-class.js";
+import { defineStashSheet } from "./qol/stash-sheet-class.js";
+import { convertStress } from "./qol/convert-stress.js";
+import { ShoreLeaveTierEditor } from "./qol/ui/edit-shore-leave-tiers.js";
+import { simpleShoreLeave } from "./qol/simple-shore-leave.js";
+import { SHORE_LEAVE_TIERS } from "./qol/config/default-shore-leave-tiers.js";
+import { startCharacterCreation } from "./qol/character-creator/character-creator.js";
+import {
+  checkReady,
+  checkCompleted,
+  setReady,
+  setCompleted,
+  reset
+} from "./qol/character-creator/progress.js";
+
 Hooks.once('init', async function () {
 
   game.mothershipFr = {
@@ -25,10 +41,109 @@ Hooks.once('init', async function () {
     initRollCheck,
     initModifyActor,
     initModifyItem,
-    noCharSelected
+    noCharSelected,
+    startCharacterCreation,
+    // Fonctions QoL
+    convertStress,
+    simpleShoreLeave,
+    QoLContractorSheet,
+    defineStashSheet,
+    ShoreLeaveTierEditor
   };
 
   registerSettings();
+
+  // Enregistrer les paramètres QoL
+  game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
+    name: "Activer le créateur de personnage",
+    hint: "Active le système de création de personnage QoL",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true
+  });
+
+  game.settings.register("mosh-greybearded-qol", "themeColor", {
+    name: "Couleur du thème global",
+    hint: "Si définie, cette couleur remplacera les couleurs des joueurs",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "#f50"
+  });
+
+  game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
+    name: "Couleur du thème joueur",
+    hint: "Si définie, cette couleur remplacera la couleur par défaut pour cet utilisateur",
+    scope: "client",
+    config: true,
+    type: String,
+    default: ""
+  });
+
+  // Paramètres de conversion du stress
+  game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
+    name: "Pas de jet de sanité mentale",
+    hint: "Si activé, le stress sera converti sans jet de sanité mentale",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
+    name: "Pas de réduction de stress",
+    hint: "Si activé, le stress ne sera pas remis au minimum après conversion",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
+    name: "Convertir le stress minimum",
+    hint: "Si activé, la conversion du stress est plafonnée à 0 au lieu du stress minimum",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
+    name: "Formule de conversion du stress",
+    hint: "Formule de dés de secours utilisée pour convertir le stress",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "1d10"
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
+    name: "Texte d'ambiance aléatoire pour les permissions",
+    hint: "Si activé, ajoute du texte d'ambiance aléatoire aux activités de permission",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
+    name: "Désactiver complètement le texte d'ambiance",
+    hint: "Si activé, désactive tout texte d'ambiance pour les permissions",
+    scope: "world", 
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.shoreLeaveTiers", {
+    name: "Niveaux des permissions",
+    hint: "Configuration des différents niveaux de permissions disponibles",
+    scope: "world",
+    config: false,
+    type: Object,
+    default: SHORE_LEAVE_TIERS
+  });
 
 
   /**
@@ -112,6 +227,52 @@ Hooks.once('init', async function () {
 
 
 Hooks.once("ready", async function () {
+  
+  // Initialisation des modules QoL
+  console.log("🔧 Initialisation des modules QoL...");
+  
+  // Helpers Handlebars pour QoL
+  Handlebars.registerHelper("eq", (a, b) => a === b);  
+  Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
+  Handlebars.registerHelper("capitalize", str => str.charAt(0).toUpperCase() + str.slice(1));
+  Handlebars.registerHelper("includes", function (collection, value) {
+    if (Array.isArray(collection)) return collection.includes(value);
+    if (collection instanceof Set) return collection.has(value);
+    return false;
+  });
+  Handlebars.registerHelper("stripHtml", (text) => {
+    return typeof text === "string" ? text.replace(/<[^>]*>/g, "").trim() : "";
+  });
+  
+  // Registre global pour utilisation dans les macros
+  game.moshGreybeardQol = game.moshGreybeardQol || {};
+  game.moshGreybeardQol.convertStress = convertStress;
+  game.moshGreybeardQol.simpleShoreLeave = simpleShoreLeave;
+  game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
+
+  // Enregistrer les feuilles QoL
+  try {
+    const BaseSheet = CONFIG.Actor.sheetClasses.character["mothership-fr.MothershipActorSheet"].cls;
+    const StashSheet = defineStashSheet(BaseSheet);
+
+    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
+      types: ["character"],
+      label: "Stash Sheet",
+      makeDefault: false
+    });
+
+    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", QoLContractorSheet, {
+      types: ["creature"],
+      label: "Contractor Sheet",
+      makeDefault: false
+    });
+    
+    console.log("✅ Feuilles QoL enregistrées avec succès");
+  } catch (error) {
+    console.warn("⚠️ Erreur lors de l'enregistrement des feuilles QoL:", error);
+  }
+  
+  console.log("✅ MoSh Greybearded QoL intégré");
   
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
@@ -681,3 +842,54 @@ export function formatCreditsNumber(num) {
     return num.toString() + 'cr';
   }
 }
+
+// Hooks QoL pour les menus contextuels  
+Hooks.on("getActorDirectoryEntryContext", (html, options) => {
+  const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+  if (!enabled) return;
+
+  options.push(
+    {
+      name: "Réinitialiser le créateur de personnage",
+      icon: '<i class="fas fa-undo"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character";
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        reset(actor);
+        ui.notifications.info(`Progression du créateur de personnage réinitialisée pour : ${actor.name}`);
+      }
+    },
+    {
+      name: "Marquer comme prêt",
+      icon: '<i class="fas fa-check-circle"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor) && !checkReady(actor);
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        setReady(actor);
+        ui.notifications.info(`Personnage marqué comme prêt : ${actor.name}`);
+      }
+    },
+    {
+      name: "Marquer comme terminé",
+      icon: '<i class="fas fa-flag-checkered"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor);
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        setCompleted(actor);
+        ui.notifications.info(`Personnage marqué comme terminé : ${actor.name}`);
+      }
+    }
+  );
+});

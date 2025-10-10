@@ -6,7 +6,7 @@ import { flavorizeShoreLeave } from "./utils/flavorize-shore-leave.js";
 import { chatOutput } from "./utils/chat-output.js";
 
 export async function simpleShoreLeave(actor, randomFlavor) {
-  if (!actor) return ui.notifications.warn(game.i18n.localize("MoshQoL.ShoreLeave.NoActorProvided"));
+  if (!actor) return ui.notifications.warn("No actor provided.");
   const flavorDisabled = game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor");
   randomFlavor = flavorDisabled ? false : (randomFlavor ?? game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor"));
 
@@ -30,14 +30,14 @@ export async function simpleShoreLeave(actor, randomFlavor) {
   });
 
   const themeColor = getThemeColor();
-  const content = await foundry.applications.handlebars.renderTemplate("modules/mosh-greybearded-qol/templates/simple-shore-leave.html", {
+  const content = await renderTemplate("modules/mosh-greybearded-qol/templates/simple-shore-leave.html", {
     tiers,
     themeColor
   });
 
   return new Promise(resolve => {
     const dlg = new Dialog({
-      title: game.i18n.localize("MoshQoL.ShoreLeave.Title"),
+      title: "Select Shore Leave Tier",
       content,
       buttons: {}, // Keine Foundry-Buttons
       close: () => resolve(null),
@@ -71,13 +71,13 @@ export async function simpleShoreLeave(actor, randomFlavor) {
           await chatOutput({
             actor,
             title: entry.label,
-            subtitle: entry.flavor?.label || game.i18n.localize("MoshQoL.ShoreLeave.Default"),
+            subtitle: entry.flavor?.label || "Shore Leave",
             content: entry.flavor?.description || "",
             icon: entry.flavor?.icon || entry.icon,
             roll,
             buttons: [
               {
-                label: game.i18n.localize("MoshQoL.ShoreLeave.ParticipateNow"),
+                label: "Participate Now",
                 icon: "fa-dice",
                 action: "convertStress",
                 args: [entry.stressFormula]
@@ -106,7 +106,7 @@ export async function simpleShoreLeave(actor, randomFlavor) {
     
           const selected = html.find("input[name='shore-tier']:checked").val();
           const entry = tiers.find(t => t.tier === selected);
-          if (!entry) return ui.notifications.error(game.i18n.localize("MoshQoL.ShoreLeave.InvalidTier"));
+          if (!entry) return ui.notifications.error("Invalid tier selected.");
     
           const result = await convertStress(actor, entry.stressFormula);
           dlg.close();
