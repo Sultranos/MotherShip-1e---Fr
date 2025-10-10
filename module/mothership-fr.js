@@ -38,6 +38,98 @@ Hooks.once('init', async function () {
   // Enregistrer les paramètres de l'UpdateManager
   UpdateManager.registerSettings();
 
+  // Enregistrer les paramètres QoL
+  game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
+    name: "Activer le créateur de personnage",
+    hint: "Active le système de création de personnage QoL",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true
+  });
+
+  game.settings.register("mosh-greybearded-qol", "themeColor", {
+    name: "Couleur du thème global",
+    hint: "Si définie, cette couleur remplacera les couleurs des joueurs",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "#f50"
+  });
+
+  game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
+    name: "Couleur du thème joueur",
+    hint: "Si définie, cette couleur remplacera la couleur par défaut pour cet utilisateur",
+    scope: "client",
+    config: true,
+    type: String,
+    default: ""
+  });
+
+  // Paramètres de conversion du stress
+  game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
+    name: "Pas de jet de sanité mentale",
+    hint: "Si activé, le stress sera converti sans jet de sanité mentale",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
+    name: "Pas de réduction de stress",
+    hint: "Si activé, le stress ne sera pas remis au minimum après conversion",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
+    name: "Convertir le stress minimum",
+    hint: "Si activé, la conversion du stress est plafonnée à 0 au lieu du stress minimum",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
+    name: "Formule de conversion du stress",
+    hint: "Formule de dés de secours utilisée pour convertir le stress",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "1d10"
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
+    name: "Texte d'ambiance aléatoire pour les permissions",
+    hint: "Si activé, ajoute du texte d'ambiance aléatoire aux activités de permission",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
+    name: "Désactiver complètement le texte d'ambiance",
+    hint: "Si activé, désactive tout texte d'ambiance pour les permissions",
+    scope: "world", 
+    config: true,
+    default: false,
+    type: Boolean
+  });
+
+  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.shoreLeaveTiers", {
+    name: "Niveaux des permissions",
+    hint: "Configuration des différents niveaux de permissions disponibles",
+    scope: "world",
+    config: false,
+    type: Object,
+    default: SHORE_LEAVE_TIERS
+  });
+
   game.mosh = {
     MothershipActor,
     MothershipItem,
@@ -50,7 +142,13 @@ Hooks.once('init', async function () {
     noCharSelected,
     startCharacterCreation,
     // Exposer l'UpdateManager pour un accès global
-    UpdateManager
+    UpdateManager,
+    // Fonctions QoL
+    convertStress,
+    simpleShoreLeave,
+    QoLContractorSheet,
+    defineStashSheet,
+    ShoreLeaveTierEditor
   };
 
   registerSettings();
@@ -141,6 +239,99 @@ Hooks.once("ready", async function () {
   // Initialiser l'UpdateManager
   await UpdateManager.initialize();
   
+  // Initialisation des modules QoL
+  console.log("🔧 Initialisation des modules QoL...");
+  
+  // Helpers Handlebars pour QoL
+  Handlebars.registerHelper("eq", (a, b) => a === b);  
+  Handlebars.registerHelper("array", (...args) => args.slice(0, -1));
+  Handlebars.registerHelper("capitalize", str => str.charAt(0).toUpperCase() + str.slice(1));
+  Handlebars.registerHelper("includes", function (collection, value) {
+    if (Array.isArray(collection)) return collection.includes(value);
+    if (collection instanceof Set) return collection.has(value);
+    return false;
+  });
+  Handlebars.registerHelper("stripHtml", (text) => {
+    return typeof text === "string" ? text.replace(/<[^>]*>/g, "").trim() : "";
+  });
+  
+  // Registre global pour utilisation dans les macros
+  game.moshGreybeardQol = game.moshGreybeardQol || {};
+  game.moshGreybeardQol.convertStress = convertStress;
+  game.moshGreybeardQol.simpleShoreLeave = simpleShoreLeave;
+  game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
+  
+  // Fonction de debug pour diagnostiquer les problèmes de compendium
+  game.moshGreybeardQol.debugCompendiums = async function() {
+    console.log("=== DEBUG COMPENDIUM CLASSES ===");
+    
+    // 1. Lister tous les packs disponibles
+    console.log("1. Tous les packs disponibles:");
+    Array.from(game.packs.keys()).forEach(key => {
+      const pack = game.packs.get(key);
+      console.log(`   - ${key} (${pack.metadata.label}) - Type: ${pack.metadata.type}`);
+    });
+    
+    // 2. Rechercher spécifiquement le pack des classes
+    console.log("\n2. Recherche du pack classes_1e:");
+    const classPack = game.packs.get("mothership-fr.classes_1e");
+    if (classPack) {
+      console.log("   ✅ Pack trouvé:", classPack.metadata);
+      
+      // 3. Lister le contenu du pack
+      try {
+        const docs = await classPack.getDocuments();
+        console.log("\n3. Contenu du pack classes_1e:");
+        console.log(`   Nombre de documents: ${docs.length}`);
+        docs.forEach(doc => {
+          console.log(`   - ${doc.name} (type: ${doc.type}, id: ${doc.id})`);
+          if (doc.type === "class") {
+            console.log(`     UUID: ${doc.uuid}`);
+            console.log(`     Pack: ${doc.pack}`);
+          }
+        });
+      } catch (err) {
+        console.error("   ❌ Erreur lors de la lecture du pack:", err);
+      }
+    } else {
+      console.log("   ❌ Pack non trouvé !");
+      
+      // Chercher des alternatives
+      console.log("\n   Recherche d'alternatives:");
+      game.packs.forEach(pack => {
+        if (pack.metadata.label.toLowerCase().includes("class")) {
+          console.log(`   Trouvé: ${pack.metadata.id} (${pack.metadata.label})`);
+        }
+      });
+    }
+    
+    console.log("=== FIN DEBUG ===");
+  };
+
+  // Enregistrer les feuilles QoL
+  try {
+    const BaseSheet = CONFIG.Actor.sheetClasses.character["mosh.MothershipActorSheet"].cls;
+    const StashSheet = defineStashSheet(BaseSheet);
+
+    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
+      types: ["character"],
+      label: "Stash Sheet",
+      makeDefault: false
+    });
+
+    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", QoLContractorSheet, {
+      types: ["creature"],
+      label: "Contractor Sheet",
+      makeDefault: false
+    });
+    
+    console.log("✅ Feuilles QoL enregistrées avec succès");
+  } catch (error) {
+    console.warn("⚠️ Erreur lors de l'enregistrement des feuilles QoL:", error);
+  }
+  
+  console.log("✅ MoSh Greybearded QoL intégré");
+  
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     if (data.type === "Item") {
@@ -148,6 +339,89 @@ Hooks.once("ready", async function () {
       return false;
     }
   });
+  
+    //Calm & 1e/0e character updates
+    // if the user has calm enabled at the start, 
+    if (game.settings.get('mosh','useCalm')) {
+      //get list of actors
+      let actorList = game.actors;
+      let actorName = '';
+      let minStart = null;
+      let valueStart = null;
+      let maxStart = null;
+      let labelStart = '';
+      let minEnd = null;
+      let valueEnd = null;
+      let maxEnd = null;
+      let labelEnd = '';
+      //loop through all actors and update their stress values
+      actorList.forEach(function(actor){ 
+        //loop through each result
+        if (actor.type === 'character') {
+          //set character name
+          actorName = actor.name;
+          //set current values
+          minStart = actor.system.other.stress.min;
+          valueStart = actor.system.other.stress.value;
+          maxStart = actor.system.other.stress.max;
+          labelStart = actor.system.other.stress.label;
+          //if the label does not say Calm
+          if (actor.system.other.stress.label != 'Calm') {
+            //change it to calm
+            actor.update({'system.other.stress.label': 'Calm'});
+            //log
+            labelEnd = 'Calm';
+          }
+          //if the MIN value is not 0, this is an old character
+          if (actor.system.other.stress.min != 0) {
+            //put this value as the maximum
+              //change it to calm
+              actor.update({'system.other.stress.max': actor.system.other.stress.min});
+              //log
+              maxEnd = actor.system.other.stress.min;
+            //set the minimum to zero
+              //change it to calm
+              actor.update({'system.other.stress.min': 0});
+              //log
+              minEnd = 0;
+          }
+          //log change
+          console.log(actorName + " stress.min changed from " + minStart + " to " + minEnd);
+          console.log(actorName + " stress.max changed from " + maxStart + " to " + maxEnd);
+          console.log(actorName + " stress.label changed from " + labelStart + " to " + labelEnd);
+          //rerender this sheet
+          actor.render();
+        }
+      });
+    //user does not have calm enabled
+    } else {
+      //if the user has Zero edition enabled
+      if (!game.settings.get('mosh','firstEdition')) {
+        //loop through all actors and update their stress values
+        actorList.forEach(function(actor){ 
+          //loop through each result
+          if (actor.type === 'character') {
+            //set character name
+            actorName = actor.name;
+            //set current values
+            maxStart = actor.system.other.stress.max;
+            //if the max value, this is an old character
+            if (actor.system.other.stress.max != 999) {
+              //put this value as the maximum
+                //change it to calm
+                actor.update({'system.other.stress.max': 999});
+                //log
+                maxEnd = 999;
+            }
+            //log change
+            console.log(actorName + " stress.max changed from " + maxStart + " to " + maxEnd);
+            //rerender this sheet
+            actor.render();
+          }
+        });
+      }
+    }
+});
   
     //Calm & 1e/0e character updates
     // if the user has calm enabled at the start, 
@@ -783,3 +1057,54 @@ export async function fromIdUuid(id_uuid, options={}){
   }
 
 }
+
+// Hooks QoL pour les menus contextuels  
+Hooks.on("getActorDirectoryEntryContext", (html, options) => {
+  const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+  if (!enabled) return;
+
+  options.push(
+    {
+      name: "Réinitialiser le créateur de personnage",
+      icon: '<i class="fas fa-undo"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character";
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        reset(actor);
+        ui.notifications.info(`Progression du créateur de personnage réinitialisée pour : ${actor.name}`);
+      }
+    },
+    {
+      name: "Marquer comme prêt",
+      icon: '<i class="fas fa-check-circle"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor) && !checkReady(actor);
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        setReady(actor);
+        ui.notifications.info(`Personnage marqué comme prêt : ${actor.name}`);
+      }
+    },
+    {
+      name: "Marquer comme terminé",
+      icon: '<i class="fas fa-flag-checkered"></i>',
+      condition: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        return game.user.isGM && actor?.type === "character" && !checkCompleted(actor);
+      },
+      callback: li => {
+        const actor = game.actors.get(li.data("documentId"));
+        if (!actor) return;
+        setCompleted(actor);
+        ui.notifications.info(`Personnage marqué comme terminé : ${actor.name}`);
+      }
+    }
+  );
+});

@@ -70,6 +70,13 @@ export async function selectClass(actor, applyStats = true) {
 
   console.log(`🔍 DEBUG: ${sortedClasses.length} classes trouvées au total:`, sortedClasses.map(c => c.name));
 
+  // Si aucune classe trouvée, afficher un message d'erreur explicite
+  if (sortedClasses.length === 0) {
+    ui.notifications.error("Aucune classe trouvée ! Vérifiez que le compendium 'Classes (1e)' est bien présent et contient des données.");
+    console.error("🔍 DEBUG: ERREUR - Aucune classe trouvée dans aucun compendium !");
+    return null;
+  }
+
   // Compile processed class data
   const processedClasses = sortedClasses.map(cls => {
     const description = stripHtml(cls.system.description || "No description available.");
@@ -134,7 +141,7 @@ export async function selectClass(actor, applyStats = true) {
     gridColumns,
     classes: processedClasses
   };
-  const content = await foundry.applications.handlebars.renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
+  const content = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
 
   return new Promise(resolve => {
     const dlg = new Dialog({
