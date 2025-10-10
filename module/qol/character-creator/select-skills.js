@@ -21,7 +21,7 @@ export async function selectSkills(actor, selectedClass) {
     return map;
   }
   
-  const compendiumSkills = await game.packs.get('fvtt_mosh_1e_psg.items_skills_1e')?.getDocuments() ?? [];
+  const compendiumSkills = await game.packs.get('mothership-fr.competences_1e')?.getDocuments() ?? [];
   const worldSkills = game.items.filter(item => item.type === 'skill');
   const allSkills = [...worldSkills, ...compendiumSkills].map(skill => {
     skill.system.rank = skill.system.rank?.toLowerCase();
