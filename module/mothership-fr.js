@@ -261,6 +261,59 @@ Hooks.once("ready", async function () {
   game.moshGreybeardQol.simpleShoreLeave = simpleShoreLeave;
   game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
   
+  // Fonction de diagnostic système complet
+  game.moshGreybeardQol.diagnosticSysteme = function() {
+    console.log("=== DIAGNOSTIC SYSTÈME COMPLET ===");
+    
+    console.log("1. Informations système:");
+    console.log(`   - ID système: ${game.system.id}`);
+    console.log(`   - Version système: ${game.system.version}`);
+    console.log(`   - Version FoundryVTT: ${game.version}`);
+    
+    console.log("\n2. Configuration documents:");
+    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor?.documentClass?.name || 'NON DÉFINI'}`);
+    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item?.documentClass?.name || 'NON DÉFINI'}`);
+    
+    console.log("\n3. Feuilles d'acteur enregistrées:");
+    Object.entries(CONFIG.Actor.sheetClasses).forEach(([type, sheets]) => {
+      console.log(`   Type "${type}":`);
+      Object.entries(sheets).forEach(([key, sheet]) => {
+        console.log(`     - ${key}: ${sheet.cls.name} (défaut: ${sheet.default})`);
+      });
+    });
+    
+    console.log("\n4. Feuilles d'objet enregistrées:");
+    Object.entries(CONFIG.Item.sheetClasses).forEach(([type, sheets]) => {
+      console.log(`   Type "${type}":`);
+      Object.entries(sheets).forEach(([key, sheet]) => {
+        console.log(`     - ${key}: ${sheet.cls.name} (défaut: ${sheet.default})`);
+      });
+    });
+    
+    console.log("\n5. Test compendiums:");
+    const totalPacks = game.packs.size;
+    const systemPacks = Array.from(game.packs.values()).filter(p => p.metadata.packageName === game.system.id);
+    console.log(`   - Total compendiums: ${totalPacks}`);
+    console.log(`   - Compendiums du système: ${systemPacks.length}`);
+    
+    console.log("\n6. Test ouverture compendium:");
+    const testPack = game.packs.get("mothership-fr.classes_1e");
+    if (testPack) {
+      try {
+        console.log("   - Tentative d'ouverture du pack classes...");
+        testPack.render(true);
+        console.log("   ✅ Ouverture réussie");
+      } catch (err) {
+        console.log("   ❌ Erreur ouverture:", err.message);
+        console.log("   Stack:", err.stack);
+      }
+    } else {
+      console.log("   ❌ Pack classes non trouvé");
+    }
+    
+    console.log("=== FIN DIAGNOSTIC ===");
+  };
+  
   // Fonction de debug pour diagnostiquer les problèmes de compendium
   game.moshGreybeardQol.debugCompendiums = async function() {
     console.log("=== DEBUG COMPENDIUM CLASSES ===");
@@ -304,6 +357,23 @@ Hooks.once("ready", async function () {
         }
       });
     }
+    
+    // 4. Test d'ouverture de compendium
+    console.log("\n4. Test d'ouverture de compendiums:");
+    try {
+      console.log("   - Test ouverture pack classes...");
+      classPack.render(true);
+      console.log("   ✅ Pack classes ouvert avec succès");
+    } catch (err) {
+      console.error("   ❌ Erreur ouverture pack classes:", err);
+    }
+    
+    // 5. Vérification de la configuration système
+    console.log("\n5. Configuration système:");
+    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor.documentClass?.name || 'NON DÉFINI'}`);
+    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item.documentClass?.name || 'NON DÉFINI'}`);
+    console.log(`   - game.system.id: ${game.system.id}`);
+    console.log(`   - game.system.version: ${game.system.version}`);
     
     console.log("=== FIN DEBUG ===");
   };
@@ -423,7 +493,6 @@ Hooks.once("ready", async function () {
     }
 });
   
-
 
 //add custom damage dice for MOSH
 Hooks.once('diceSoNiceReady', (dice3d) => {
