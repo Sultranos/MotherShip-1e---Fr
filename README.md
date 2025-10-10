@@ -43,7 +43,7 @@
 ### Installation automatique
 1. Dans FoundryVTT, allez dans l'onglet "Game Systems"
 2. Cliquez sur "Install System"
-3. Collez l'URL du manifest : `[URL du manifest]`
+3. Collez l'URL du manifest : `https://raw.githubusercontent.com/Sultranos/MotherShip-1e---Fr/main/system.json`
 4. Cliquez sur "Install"
 
 ### Installation manuelle

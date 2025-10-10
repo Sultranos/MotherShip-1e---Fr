@@ -18,6 +18,8 @@ export async function selectClass(actor, applyStats = true) {
   const saves = ['sanity', 'fear', 'body'];
 
   // Load all the classes
+  console.log("🔍 DEBUG: Tous les packs disponibles:", Array.from(game.packs.keys()));
+  
   const compendiumPacks = [
     "mothership-fr.classes_1e",
     ...game.packs.filter(p => p.metadata.type === "Item" && p.metadata.label.toLowerCase().includes("class")).map(p => p.metadata.id)
@@ -36,6 +38,30 @@ export async function selectClass(actor, applyStats = true) {
     for (const cls of classes) {
       if (!classMap.has(cls.name)) {
         classMap.set(cls.name, foundry.utils.deepClone(cls));
+      }
+    }
+  }
+
+  // Si aucune classe n'a été trouvée, essayer une recherche plus large
+  if (classMap.size === 0) {
+    console.log("🔍 DEBUG: Aucune classe trouvée, recherche dans tous les packs...");
+    for (const pack of game.packs.values()) {
+      if (pack.metadata.type === "Item") {
+        console.log(`🔍 DEBUG: Vérification du pack: ${pack.metadata.id} (${pack.metadata.label})`);
+        try {
+          const documents = await pack.getDocuments();
+          const classes = documents.filter(doc => doc.type === "class");
+          if (classes.length > 0) {
+            console.log(`🔍 DEBUG: Trouvé ${classes.length} classes dans ${pack.metadata.id}:`, classes.map(c => c.name));
+            for (const cls of classes) {
+              if (!classMap.has(cls.name)) {
+                classMap.set(cls.name, foundry.utils.deepClone(cls));
+              }
+            }
+          }
+        } catch (error) {
+          console.warn(`🔍 DEBUG: Erreur lors de la lecture de ${pack.metadata.id}:`, error);
+        }
       }
     }
   }
@@ -108,7 +134,7 @@ export async function selectClass(actor, applyStats = true) {
     gridColumns,
     classes: processedClasses
   };
-  const content = await renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
+  const content = await foundry.applications.handlebars.renderTemplate("systems/mothership-fr/templates/qol/character-creator/select-class.html", templateData);
 
   return new Promise(resolve => {
     const dlg = new Dialog({
