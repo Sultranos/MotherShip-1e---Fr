@@ -1,4 +1,4 @@
-// Import Modules - Système de base Mothership
+﻿// Import Modules - SystÃ¨me de base Mothership
 import { MothershipActor } from "./actor/actor.js";
 import { MothershipActorSheet } from "./actor/actor-sheet.js";
 import { MothershipCreatureSheet } from "./actor/creature-sheet.js";
@@ -17,7 +17,7 @@ import {
 // Import Update Manager
 import { UpdateManager } from "./update-manager.js";
 
-// Import Modules QoL - Fonctionnalités avancées
+// Import Modules QoL - FonctionnalitÃ©s avancÃ©es
 import { QoLContractorSheet } from "./qol/contractor-sheet-class.js";
 import { defineStashSheet } from "./qol/stash-sheet-class.js";
 import { convertStress } from "./qol/convert-stress.js";
@@ -35,13 +35,13 @@ import {
 
 Hooks.once('init', async function () {
 
-  // Enregistrer les paramètres de l'UpdateManager
+  // Enregistrer les paramÃ¨tres de l'UpdateManager
   UpdateManager.registerSettings();
 
-  // Enregistrer les paramètres QoL
+  // Enregistrer les paramÃ¨tres QoL
   game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
-    name: "Activer le créateur de personnage",
-    hint: "Active le système de création de personnage QoL",
+    name: "Activer le crÃ©ateur de personnage",
+    hint: "Active le systÃ¨me de crÃ©ation de personnage QoL",
     scope: "world",
     config: true,
     type: Boolean,
@@ -49,8 +49,8 @@ Hooks.once('init', async function () {
   });
 
   game.settings.register("mosh-greybearded-qol", "themeColor", {
-    name: "Couleur du thème global",
-    hint: "Si définie, cette couleur remplacera les couleurs des joueurs",
+    name: "Couleur du thÃ¨me global",
+    hint: "Si dÃ©finie, cette couleur remplacera les couleurs des joueurs",
     scope: "world",
     config: true,
     type: String,
@@ -58,18 +58,18 @@ Hooks.once('init', async function () {
   });
 
   game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
-    name: "Couleur du thème joueur",
-    hint: "Si définie, cette couleur remplacera la couleur par défaut pour cet utilisateur",
+    name: "Couleur du thÃ¨me joueur",
+    hint: "Si dÃ©finie, cette couleur remplacera la couleur par dÃ©faut pour cet utilisateur",
     scope: "client",
     config: true,
     type: String,
     default: ""
   });
 
-  // Paramètres de conversion du stress
+  // ParamÃ¨tres de conversion du stress
   game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
-    name: "Pas de jet de sanité mentale",
-    hint: "Si activé, le stress sera converti sans jet de sanité mentale",
+    name: "Pas de jet de sanitÃ© mentale",
+    hint: "Si activÃ©, le stress sera converti sans jet de sanitÃ© mentale",
     scope: "world",
     config: true,
     default: false,
@@ -77,8 +77,8 @@ Hooks.once('init', async function () {
   });
 
   game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
-    name: "Pas de réduction de stress",
-    hint: "Si activé, le stress ne sera pas remis au minimum après conversion",
+    name: "Pas de rÃ©duction de stress",
+    hint: "Si activÃ©, le stress ne sera pas remis au minimum aprÃ¨s conversion",
     scope: "world",
     config: true,
     default: false,
@@ -87,7 +87,7 @@ Hooks.once('init', async function () {
 
   game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
     name: "Convertir le stress minimum",
-    hint: "Si activé, la conversion du stress est plafonnée à 0 au lieu du stress minimum",
+    hint: "Si activÃ©, la conversion du stress est plafonnÃ©e Ã  0 au lieu du stress minimum",
     scope: "world",
     config: true,
     default: false,
@@ -96,7 +96,7 @@ Hooks.once('init', async function () {
 
   game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
     name: "Formule de conversion du stress",
-    hint: "Formule de dés de secours utilisée pour convertir le stress",
+    hint: "Formule de dÃ©s de secours utilisÃ©e pour convertir le stress",
     scope: "world",
     config: true,
     type: String,
@@ -104,8 +104,8 @@ Hooks.once('init', async function () {
   });
 
   game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
-    name: "Texte d'ambiance aléatoire pour les permissions",
-    hint: "Si activé, ajoute du texte d'ambiance aléatoire aux activités de permission",
+    name: "Texte d'ambiance alÃ©atoire pour les permissions",
+    hint: "Si activÃ©, ajoute du texte d'ambiance alÃ©atoire aux activitÃ©s de permission",
     scope: "world",
     config: true,
     default: true,
@@ -113,8 +113,8 @@ Hooks.once('init', async function () {
   });
 
   game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
-    name: "Désactiver complètement le texte d'ambiance",
-    hint: "Si activé, désactive tout texte d'ambiance pour les permissions",
+    name: "DÃ©sactiver complÃ¨tement le texte d'ambiance",
+    hint: "Si activÃ©, dÃ©sactive tout texte d'ambiance pour les permissions",
     scope: "world", 
     config: true,
     default: false,
@@ -123,14 +123,14 @@ Hooks.once('init', async function () {
 
   game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.shoreLeaveTiers", {
     name: "Niveaux des permissions",
-    hint: "Configuration des différents niveaux de permissions disponibles",
+    hint: "Configuration des diffÃ©rents niveaux de permissions disponibles",
     scope: "world",
     config: false,
     type: Object,
     default: SHORE_LEAVE_TIERS
   });
 
-  game.mosh = {
+  game.mothershipFr = {
     MothershipActor,
     MothershipItem,
     rollItemMacro,
@@ -141,7 +141,7 @@ Hooks.once('init', async function () {
     initModifyItem,
     noCharSelected,
     startCharacterCreation,
-    // Exposer l'UpdateManager pour un accès global
+    // Exposer l'UpdateManager pour un accÃ¨s global
     UpdateManager,
     // Fonctions QoL
     convertStress,
@@ -240,7 +240,7 @@ Hooks.once("ready", async function () {
   await UpdateManager.initialize();
   
   // Initialisation des modules QoL
-  console.log("🔧 Initialisation des modules QoL...");
+  console.log("ðŸ”§ Initialisation des modules QoL...");
   
   // Helpers Handlebars pour QoL
   Handlebars.registerHelper("eq", (a, b) => a === b);  
@@ -261,32 +261,32 @@ Hooks.once("ready", async function () {
   game.moshGreybeardQol.simpleShoreLeave = simpleShoreLeave;
   game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
   
-  // Fonction de diagnostic système complet
+  // Fonction de diagnostic systÃ¨me complet
   game.moshGreybeardQol.diagnosticSysteme = function() {
-    console.log("=== DIAGNOSTIC SYSTÈME COMPLET ===");
+    console.log("=== DIAGNOSTIC SYSTÃˆME COMPLET ===");
     
-    console.log("1. Informations système:");
-    console.log(`   - ID système: ${game.system.id}`);
-    console.log(`   - Version système: ${game.system.version}`);
+    console.log("1. Informations systÃ¨me:");
+    console.log(`   - ID systÃ¨me: ${game.system.id}`);
+    console.log(`   - Version systÃ¨me: ${game.system.version}`);
     console.log(`   - Version FoundryVTT: ${game.version}`);
     
     console.log("\n2. Configuration documents:");
-    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor?.documentClass?.name || 'NON DÉFINI'}`);
-    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item?.documentClass?.name || 'NON DÉFINI'}`);
+    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor?.documentClass?.name || 'NON DÃ‰FINI'}`);
+    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item?.documentClass?.name || 'NON DÃ‰FINI'}`);
     
-    console.log("\n3. Feuilles d'acteur enregistrées:");
+    console.log("\n3. Feuilles d'acteur enregistrÃ©es:");
     Object.entries(CONFIG.Actor.sheetClasses).forEach(([type, sheets]) => {
       console.log(`   Type "${type}":`);
       Object.entries(sheets).forEach(([key, sheet]) => {
-        console.log(`     - ${key}: ${sheet.cls.name} (défaut: ${sheet.default})`);
+        console.log(`     - ${key}: ${sheet.cls.name} (dÃ©faut: ${sheet.default})`);
       });
     });
     
-    console.log("\n4. Feuilles d'objet enregistrées:");
+    console.log("\n4. Feuilles d'objet enregistrÃ©es:");
     Object.entries(CONFIG.Item.sheetClasses).forEach(([type, sheets]) => {
       console.log(`   Type "${type}":`);
       Object.entries(sheets).forEach(([key, sheet]) => {
-        console.log(`     - ${key}: ${sheet.cls.name} (défaut: ${sheet.default})`);
+        console.log(`     - ${key}: ${sheet.cls.name} (dÃ©faut: ${sheet.default})`);
       });
     });
     
@@ -294,7 +294,7 @@ Hooks.once("ready", async function () {
     const totalPacks = game.packs.size;
     const systemPacks = Array.from(game.packs.values()).filter(p => p.metadata.packageName === game.system.id);
     console.log(`   - Total compendiums: ${totalPacks}`);
-    console.log(`   - Compendiums du système: ${systemPacks.length}`);
+    console.log(`   - Compendiums du systÃ¨me: ${systemPacks.length}`);
     
     console.log("\n6. Test ouverture compendium:");
     const testPack = game.packs.get("mothership-fr.classes_1e");
@@ -302,19 +302,19 @@ Hooks.once("ready", async function () {
       try {
         console.log("   - Tentative d'ouverture du pack classes...");
         testPack.render(true);
-        console.log("   ✅ Ouverture réussie");
+        console.log("   âœ… Ouverture rÃ©ussie");
       } catch (err) {
-        console.log("   ❌ Erreur ouverture:", err.message);
+        console.log("   âŒ Erreur ouverture:", err.message);
         console.log("   Stack:", err.stack);
       }
     } else {
-      console.log("   ❌ Pack classes non trouvé");
+      console.log("   âŒ Pack classes non trouvÃ©");
     }
     
     console.log("=== FIN DIAGNOSTIC ===");
   };
   
-  // Fonction de debug pour diagnostiquer les problèmes de compendium
+  // Fonction de debug pour diagnostiquer les problÃ¨mes de compendium
   game.moshGreybeardQol.debugCompendiums = async function() {
     console.log("=== DEBUG COMPENDIUM CLASSES ===");
     
@@ -325,11 +325,11 @@ Hooks.once("ready", async function () {
       console.log(`   - ${key} (${pack.metadata.label}) - Type: ${pack.metadata.type}`);
     });
     
-    // 2. Rechercher spécifiquement le pack des classes
+    // 2. Rechercher spÃ©cifiquement le pack des classes
     console.log("\n2. Recherche du pack classes_1e:");
     const classPack = game.packs.get("mothership-fr.classes_1e");
     if (classPack) {
-      console.log("   ✅ Pack trouvé:", classPack.metadata);
+      console.log("   âœ… Pack trouvÃ©:", classPack.metadata);
       
       // 3. Lister le contenu du pack
       try {
@@ -344,16 +344,16 @@ Hooks.once("ready", async function () {
           }
         });
       } catch (err) {
-        console.error("   ❌ Erreur lors de la lecture du pack:", err);
+        console.error("   âŒ Erreur lors de la lecture du pack:", err);
       }
     } else {
-      console.log("   ❌ Pack non trouvé !");
+      console.log("   âŒ Pack non trouvÃ© !");
       
       // Chercher des alternatives
       console.log("\n   Recherche d'alternatives:");
       game.packs.forEach(pack => {
         if (pack.metadata.label.toLowerCase().includes("class")) {
-          console.log(`   Trouvé: ${pack.metadata.id} (${pack.metadata.label})`);
+          console.log(`   TrouvÃ©: ${pack.metadata.id} (${pack.metadata.label})`);
         }
       });
     }
@@ -363,15 +363,15 @@ Hooks.once("ready", async function () {
     try {
       console.log("   - Test ouverture pack classes...");
       classPack.render(true);
-      console.log("   ✅ Pack classes ouvert avec succès");
+      console.log("   âœ… Pack classes ouvert avec succÃ¨s");
     } catch (err) {
-      console.error("   ❌ Erreur ouverture pack classes:", err);
+      console.error("   âŒ Erreur ouverture pack classes:", err);
     }
     
-    // 5. Vérification de la configuration système
-    console.log("\n5. Configuration système:");
-    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor.documentClass?.name || 'NON DÉFINI'}`);
-    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item.documentClass?.name || 'NON DÉFINI'}`);
+    // 5. VÃ©rification de la configuration systÃ¨me
+    console.log("\n5. Configuration systÃ¨me:");
+    console.log(`   - CONFIG.Actor.documentClass: ${CONFIG.Actor.documentClass?.name || 'NON DÃ‰FINI'}`);
+    console.log(`   - CONFIG.Item.documentClass: ${CONFIG.Item.documentClass?.name || 'NON DÃ‰FINI'}`);
     console.log(`   - game.system.id: ${game.system.id}`);
     console.log(`   - game.system.version: ${game.system.version}`);
     
@@ -395,12 +395,12 @@ Hooks.once("ready", async function () {
       makeDefault: false
     });
     
-    console.log("✅ Feuilles QoL enregistrées avec succès");
+    console.log("âœ… Feuilles QoL enregistrÃ©es avec succÃ¨s");
   } catch (error) {
-    console.warn("⚠️ Erreur lors de l'enregistrement des feuilles QoL:", error);
+    console.warn("âš ï¸ Erreur lors de l'enregistrement des feuilles QoL:", error);
   }
   
-  console.log("✅ MoSh Greybearded QoL intégré");
+  console.log("âœ… MoSh Greybearded QoL intÃ©grÃ©");
   
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
@@ -412,7 +412,7 @@ Hooks.once("ready", async function () {
   
     //Calm & 1e/0e character updates
     // if the user has calm enabled at the start, 
-    if (game.settings.get('mosh','useCalm')) {
+    if (game.settings.get('mothership-fr','useCalm')) {
       //get list of actors
       let actorList = game.actors;
       let actorName = '';
@@ -466,7 +466,7 @@ Hooks.once("ready", async function () {
     //user does not have calm enabled
     } else {
       //if the user has Zero edition enabled
-      if (!game.settings.get('mosh','firstEdition')) {
+      if (!game.settings.get('mothership-fr','firstEdition')) {
         //loop through all actors and update their stress values
         actorList.forEach(function(actor){ 
           //loop through each result
@@ -624,7 +624,7 @@ async function createMothershipMacro(data, slot) {
   if (!item) return ui.notifications.warn("You can only create macro buttons for owned Items");
 
   // Create the macro command
-  let command = `game.mosh.rollItemMacro("${item.name}");`;
+  let command = `game.mothershipFr.rollItemMacro("${item.name}");`;
 console.log(command);
   let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
@@ -652,11 +652,11 @@ function rollItemMacro(itemName) {
   let item;
   let itemId;
   //determine who to run the macro for
-  if (game.settings.get('mosh','macroTarget') === 'character') {
+  if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for the player's 'Selected Character'
         //get item id
@@ -678,11 +678,11 @@ function rollItemMacro(itemName) {
           return game.user.character.rollCheck(null, null, null, item.name, item.system.bonus, null);
         }
     }
-  } else if (game.settings.get('mosh','macroTarget') === 'token') {
+  } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
     if (!canvas.tokens.controlled.length) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
@@ -742,20 +742,20 @@ function rollStatMacro() {
 //find and tell the actor to run the tableRoll function
 async function initRollTable(tableId,rollString,aimFor,zeroBased,checkCrit,rollAgainst,comparison) {
   //determine who to run the macro for
-  if (game.settings.get('mosh','macroTarget') === 'character') {
+  if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for the player's 'Selected Character'
       game.user.character.rollTable(tableId,rollString,aimFor,zeroBased,checkCrit,rollAgainst,comparison);
     }
-  } else if (game.settings.get('mosh','macroTarget') === 'token') {
+  } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
     if (!canvas.tokens.controlled.length) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
@@ -770,20 +770,20 @@ async function initRollTable(tableId,rollString,aimFor,zeroBased,checkCrit,rollA
 //find and tell the actor to run the rollCheck function
 async function initRollCheck(rollString,aimFor,attribute,skill,skillValue,weapon) {
   //determine who to run the macro for
-  if (game.settings.get('mosh','macroTarget') === 'character') {
+  if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for the player's 'Selected Character'
       game.user.character.rollCheck(rollString,aimFor,attribute,skill,skillValue,weapon);
     }
-  } else if (game.settings.get('mosh','macroTarget') === 'token') {
+  } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
     if (!canvas.tokens.controlled.length) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
@@ -798,20 +798,20 @@ async function initRollCheck(rollString,aimFor,attribute,skill,skillValue,weapon
 //find and tell the actor to run the modifyActor function
 async function initModifyActor(fieldAddress,modValue,modRollString,outputChatMsg) {
   //determine who to run the macro for
-  if (game.settings.get('mosh','macroTarget') === 'character') {
+  if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for the player's 'Selected Character'
       game.user.character.modifyActor(fieldAddress,modValue,modRollString,outputChatMsg);
     }
-  } else if (game.settings.get('mosh','macroTarget') === 'token') {
+  } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
     if (!canvas.tokens.controlled.length) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
@@ -826,20 +826,20 @@ async function initModifyActor(fieldAddress,modValue,modRollString,outputChatMsg
 //tell the actor to run the function
 async function initModifyItem(itemId,addAmount) {
   //determine who to run the macro for
-  if (game.settings.get('mosh','macroTarget') === 'character') {
+  if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for the player's 'Selected Character'
       game.user.character.modifyItem(itemId,addAmount);
     }
-  } else if (game.settings.get('mosh','macroTarget') === 'token') {
+  } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
     if (!canvas.tokens.controlled.length) {
       //warn player
-      game.mosh.noCharSelected();
+      game.mothershipFr.noCharSelected();
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
@@ -858,9 +858,9 @@ async function noCharSelected() {
     //init vars
     let errorMessage = ``;
     //create error text based on current settings
-    if (game.settings.get('mosh','macroTarget') === 'character') {
+    if (game.settings.get('mothership-fr','macroTarget') === 'character') {
       errorMessage = `<h3>No Character Selected</h3>Macro Target is set to the currently selected character. To select a character, modify your User Configuration in the Players menu located in the lower-left of the interface.<br><br>If you prefer Macros to be run on the currently selected token(s) in the scene, you should change your settings accordingly.<br><br>`;
-    } else if (game.settings.get('mosh','macroTarget') === 'token') {
+    } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
       errorMessage = `<h3>No Character Selected</h3>Macro Target is set to the currently selected token(s) in the scene. To select token(s), click or draw a box around token(s) in the current scene.<br><br>If you prefer Macros to be run on the currently selected character for your user, you should change your settings accordingly.<br><br>`;
     }
     //create final dialog data
@@ -890,9 +890,9 @@ async function noShipSelected() {
     //init vars
     let errorMessage = ``;
     //create error text based on current settings
-    if (game.settings.get('mosh','macroTarget') === 'character') {
+    if (game.settings.get('mothership-fr','macroTarget') === 'character') {
       errorMessage = `<h3>No Ship Selected</h3>Macro Target is set to the currently selected character. To select a ship, modify your User Configuration in the Players menu located in the lower-left of the interface.<br><br>If you prefer Macros to be run on the currently selected token(s) in the scene, you should change your settings accordingly.<br><br>`;
-    } else if (game.settings.get('mosh','macroTarget') === 'token') {
+    } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
       errorMessage = `<h3>No Ship Selected</h3>Macro Target is set to the currently selected token(s) in the scene. To select token(s), click or draw a box around token(s) in the current scene.<br><br>If you prefer Macros to be run on the currently selected character for your user, you should change your settings accordingly.<br><br>`;
     }
     //create final dialog data
@@ -1053,7 +1053,7 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
 
   options.push(
     {
-      name: "Réinitialiser le créateur de personnage",
+      name: "RÃ©initialiser le crÃ©ateur de personnage",
       icon: '<i class="fas fa-undo"></i>',
       condition: li => {
         const actor = game.actors.get(li.data("documentId"));
@@ -1063,11 +1063,11 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         reset(actor);
-        ui.notifications.info(`Progression du créateur de personnage réinitialisée pour : ${actor.name}`);
+        ui.notifications.info(`Progression du crÃ©ateur de personnage rÃ©initialisÃ©e pour : ${actor.name}`);
       }
     },
     {
-      name: "Marquer comme prêt",
+      name: "Marquer comme prÃªt",
       icon: '<i class="fas fa-check-circle"></i>',
       condition: li => {
         const actor = game.actors.get(li.data("documentId"));
@@ -1077,11 +1077,11 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         setReady(actor);
-        ui.notifications.info(`Personnage marqué comme prêt : ${actor.name}`);
+        ui.notifications.info(`Personnage marquÃ© comme prÃªt : ${actor.name}`);
       }
     },
     {
-      name: "Marquer comme terminé",
+      name: "Marquer comme terminÃ©",
       icon: '<i class="fas fa-flag-checkered"></i>',
       condition: li => {
         const actor = game.actors.get(li.data("documentId"));
@@ -1091,8 +1091,9 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         setCompleted(actor);
-        ui.notifications.info(`Personnage marqué comme terminé : ${actor.name}`);
+        ui.notifications.info(`Personnage marquÃ© comme terminÃ© : ${actor.name}`);
       }
     }
   );
 });
+

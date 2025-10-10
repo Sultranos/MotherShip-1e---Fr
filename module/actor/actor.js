@@ -1,4 +1,4 @@
-import { fromIdUuid } from "../mothership-fr.js";
+﻿import { fromIdUuid } from "../mothership-fr.js";
 
 /**
  * Extend the base Actor entity by defining a custom roll data structure which is ideal for the Simple system.
@@ -57,7 +57,7 @@ export class MothershipActor extends Actor {
   getFlavorText(type, context, action) {
     
     //replace 'stress' with calm if the setting is active
-    if (game.settings.get("mosh", "useCalm") && context === 'stress') {
+    if (game.settings.get("mothership-fr", "useCalm") && context === 'stress') {
       context = 'calm';
     }
     let systemclass = "human";
