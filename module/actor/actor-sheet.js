@@ -40,10 +40,9 @@ export class MothershipActorSheet extends foundry.appv1.sheets.ActorSheet {
     if (data.data.system.settings == null) {
       data.data.system.settings = {};
     }
-    data.data.system.settings.useCalm = game.settings.get("mosh", "useCalm");
-    data.data.system.settings.hideWeight = game.settings.get("mosh", "hideWeight");
-    data.data.system.settings.firstEdition = game.settings.get("mosh", "firstEdition");
-    data.data.system.settings.androidPanic = game.settings.get("mosh", "androidPanic");
+    data.data.system.settings.hideWeight = game.settings.get("mothership-fr", "hideWeight");
+    data.data.system.settings.firstEdition = game.settings.get("mothership-fr", "firstEdition");
+    data.data.system.settings.androidPanic = game.settings.get("mothership-fr", "androidPanic");
 
     data.data.enriched = [];
     data.data.enriched.notes = await foundry.applications.ux.TextEditor.implementation.enrichHTML(superData.notes, {async: true});

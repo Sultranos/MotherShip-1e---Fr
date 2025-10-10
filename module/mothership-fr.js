@@ -361,14 +361,7 @@ Hooks.on("preCreateActor", (document, createData, options, userId) => {
       "prototypeToken.vision": true
     });
 
-    if (game.settings.get("mothership-fr", "useCalm")) {
-      document.updateSource({
-        "system.other.stress.min": 0,
-        "system.other.stress.value": 85,
-        "system.other.stress.max": 85,
-        "system.other.stress.label": "Calm"
-      });
-    }
+    // useCalm functionality removed
   }
 });
 
