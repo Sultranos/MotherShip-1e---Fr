@@ -836,6 +836,86 @@ export function formatCreditsNumber(num) {
   }
 }
 
+/**
+ * Ajoute un bouton dans la barre d'en-tête de la feuille d'acteur.
+ * @param {HTMLElement} titleElem - Le nœud DOM avec le titre de la fenêtre
+ * @param {string} className - Classe supplémentaire pour le bouton
+ * @param {string} iconClass - Classe d'icône FontAwesome (sans "fas")
+ * @param {string} label - Le texte du bouton
+ * @param {string} color - La couleur principale pour le texte et l'ombre
+ * @param {Function} callback - Gestionnaire d'événement au clic
+ */
+function insertHeaderButton(titleElem, className, iconClass, label, color, callback) {
+  const button = document.createElement("a");
+  button.classList.add("header-button", className);
+  button.innerHTML = `<i class="fas ${iconClass}"></i> ${label}`;
+
+  Object.assign(button.style, {
+    cursor: "pointer",
+    padding: "0 6px",
+    color,
+    fontWeight: "bold",
+    textShadow: `0 0 2px ${color}88`
+  });
+
+  button.addEventListener("click", callback);
+  titleElem.insertAdjacentElement("afterend", button);
+}
+
+// Hook pour les boutons d'en-tête des feuilles d'acteur
+Hooks.on("renderActorSheet", (sheet, html) => {
+  const actor = sheet.actor;
+  
+  // Annuler si pas propriétaire
+  const isGM = game.user.isGM;
+  const isOwner = actor.testUserPermission(game.user, "OWNER");
+  if (!(isGM || isOwner)) return;
+
+  if (actor?.type === "character") {
+    // Masquer le bouton de création par défaut
+    const isCreatorEnabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+    
+    if (isCreatorEnabled) {  
+      const oldCreatorButton = html[0].querySelector(".configure-actor");
+      if (oldCreatorButton) {
+        oldCreatorButton.style.display = "none";
+        console.log("[MoSh QoL] Bouton configure masqué");
+      }
+    }
+    
+    const titleElem = html[0]?.querySelector(".window-header .window-title");
+    if (!titleElem) return;
+  
+    // Supprimer le bouton Shore Leave s'il existe
+    const existingShoreLeave = titleElem.parentElement.querySelector(".simple-shoreleave");
+    if (existingShoreLeave) existingShoreLeave.remove();
+    
+    // Supprimer le bouton Roll Character s'il existe
+    const existingCreateCharacter = titleElem.parentElement.querySelector(".create-character");
+    if (existingCreateCharacter) existingCreateCharacter.remove();
+  
+    const isReady = checkReady(actor) && !checkCompleted(actor);
+  
+    if (isCreatorEnabled && isReady) {
+      // Bouton "Roll Character" en vert
+      insertHeaderButton(titleElem, "create-character", "fa-dice-d20", "Roll Character", "#5f0", () => game.mothershipFr.startCharacterCreation(actor));
+    } else {
+      // Bouton "Shore Leave" standard  
+      insertHeaderButton(titleElem, "simple-shoreleave", "fa-umbrella-beach", "Shore Leave", "#3cf", () => game.mothershipFr.simpleShoreLeave(actor));
+    }
+  }
+});
+
+// Hook pour préparer les nouveaux personnages
+Hooks.on("createActor", async (actor, options, userId) => {
+  // Seulement pour les personnages
+  if (actor.type !== "character") return;
+
+  // Définir le flag
+  await setReady(actor);
+  console.log(`[MoSh QoL] setReady() défini pour le nouveau personnage : ${actor.name}`);
+});
+
 // Hooks QoL pour les menus contextuels  
 Hooks.on("getActorDirectoryEntryContext", (html, options) => {
   const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
