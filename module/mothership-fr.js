@@ -136,15 +136,6 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.shoreLeaveTiers", {
-    name: "Niveaux des permissions",
-    hint: "Configuration des différents niveaux de permissions disponibles",
-    scope: "world",
-    config: false,
-    type: Object,
-    default: SHORE_LEAVE_TIERS
-  });
-
 
   /**
    * Set an initiative formula for the system
@@ -901,7 +892,7 @@ Hooks.on("renderActorSheet", (sheet, html) => {
       insertHeaderButton(titleElem, "create-character", "fa-dice-d20", "Roll Character", "#5f0", () => game.mothershipFr.startCharacterCreation(actor));
     } else {
       // Bouton "Shore Leave" standard  
-      insertHeaderButton(titleElem, "simple-shoreleave", "fa-umbrella-beach", "Shore Leave", "#3cf", () => game.mothershipFr.simpleShoreLeave(actor));
+      insertHeaderButton(titleElem, "simple-shoreleave", "fa-umbrella-beach", "Shore Leave", "#3cf", () => game.moshGreybeardQol.simpleShoreLeave(actor));
     }
   }
 });
