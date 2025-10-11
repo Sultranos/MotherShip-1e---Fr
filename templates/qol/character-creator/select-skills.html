@@ -6,9 +6,9 @@
       <div class="card dialog-card interactive or-option" data-option="{{this.id}}">
         <h3>{{this.name}}</h3>
         <p class="counter">
-          {{#if this.trained}}{{this.trained}} <span class="bonus">Entraîné</span>{{/if}}
-          {{#if this.expert}}{{this.expert}} <span class="bonus">Expert</span>{{/if}}
-          {{#if this.master}}{{this.master}} <span class="bonus">Maître</span>{{/if}}
+          {{#if this.trained}}{{this.trained}} <span class="bonus">{{ localize 'MoshQoL.Skills.Trained' }}</span>{{/if}}
+          {{#if this.expert}}{{this.expert}} <span class="bonus">{{ localize 'MoshQoL.Skills.Expert' }}</span>{{/if}}
+          {{#if this.master}}{{this.master}} <span class="bonus">{{ localize 'MoshQoL.Skills.Master' }}</span>{{/if}}
         </p>
       </div>
     {{/each}}
@@ -23,7 +23,7 @@
     <div class="skill-columns">
       <!-- Trained Skills Column -->
       <div class="skill-column">
-        <div class="remaining-points">Entraîné [ <span class="point-count" data-rank="trained">{{basePoints.trained}}</span> ]</div>
+        <div class="remaining-points">{{ localize 'MoshQoL.Skills.Trained' }} [ <span class="point-count" data-rank="trained">{{basePoints.trained}}</span> ]</div>
         <div class="pill-list">
           {{#each sortedSkills}}
             {{#if (or (eq this.system.rank 'trained') (eq this.system.rank 'Trained') (eq this.system.rank 'Formé'))}}
@@ -42,7 +42,7 @@
       
       <!-- Expert Skills Column -->
       <div class="skill-column">
-        <div class="remaining-points">Expert [ <span class="point-count" data-rank="expert">{{basePoints.expert}}</span> ]</div>
+        <div class="remaining-points">{{ localize 'MoshQoL.Skills.Expert' }} [ <span class="point-count" data-rank="expert">{{basePoints.expert}}</span> ]</div>
         <div class="pill-list">
           {{#each sortedSkills}}
             {{#if (or (eq this.system.rank 'expert') (eq this.system.rank 'Expert'))}}
@@ -61,7 +61,7 @@
       
       <!-- Master Skills Column -->
       <div class="skill-column">
-        <div class="remaining-points">Maître [ <span class="point-count" data-rank="master">{{basePoints.master}}</span> ]</div>
+        <div class="remaining-points">{{ localize 'MoshQoL.Skills.Master' }} [ <span class="point-count" data-rank="master">{{basePoints.master}}</span> ]</div>
         <div class="pill-list">
           {{#each sortedSkills}}
             {{#if (or (eq this.system.rank 'master') (eq this.system.rank 'Master') (eq this.system.rank 'Maître'))}}
@@ -82,7 +82,7 @@
 
   <!-- Bottom: Skill columns -->
   <div class="confirm-button-row">
-    <button type="button" id="confirm-button" class="pill confirm-button locked">Confirmer</button>
+    <button type="button" id="confirm-button" class="pill confirm-button locked">{{ localize 'MoshQoL.UI.Confirm' }}</button>
   </div>
 
 </section>

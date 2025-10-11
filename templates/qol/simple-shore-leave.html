@@ -26,23 +26,23 @@
         {{#if tier.flavor.label}}
           <div class="pill reroll-flavor interactive">
             <i class="fas fa-dice"></i>
-            <span>Relancer Parfum</span>
+            <span>{{ localize 'MoshQoL.ShoreLeave.RerollFlavor' }}</span>
           </div>
         {{/if}}
         
         <div class="stress-description">
-          <strong>Conversion de Stress</strong>
+          <strong>{{ localize 'MoshQoL.ShoreLeave.StressConversion' }}</strong>
           <div class="text-highlight">{{tier.stressString}}</div>
         </div>
 
         <div class="stress-description">
-          <strong>Prix</strong>
+          <strong>{{ localize 'MoshQoL.ShoreLeave.Price' }}</strong>
           <div class="text-highlight">{{tier.priceString}}</div>
         </div>
 
         <div class="pill roll-price interactive" data-tier="{{tier.tier}}">
           <i class="fas fa-coins"></i>
-          <span>Lancer Prix</span>
+          <span>{{ localize 'MoshQoL.ShoreLeave.RollPrice' }}</span>
         </div>
 
       </label>
@@ -50,7 +50,7 @@
   </div>
   <!-- Confirm Button -->
   <div class="confirm-button-row">
-    <button type="button" id="confirm-button" class="pill confirm-button locked">Confirmer</button>
+    <button type="button" id="confirm-button" class="pill confirm-button locked">{{ localize 'MoshQoL.UI.Confirm' }}</button>
   </div>
  
 </form>

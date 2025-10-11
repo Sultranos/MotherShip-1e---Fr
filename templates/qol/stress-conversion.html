@@ -1,28 +1,28 @@
 <form class="greybeardqol stress-conversion-form" style="--theme-color: {{themeColor}}">
   <div class="card-grid" style="--col-count: 3;">
     <div class="card dialog-card interactive" data-attr="sanity">
-      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/sanity.png" alt="Icône Sanité">
-      <h3>Sanité</h3>
+      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/sanity.png" alt="{{ localize 'MoshQoL.Attributes.Sanity' }}">
+      <h3>{{ localize 'MoshQoL.Attributes.Sanity' }}</h3>
       <div id="counter-sanity" class="counter" style="margin-top:0.5em;">0</div>
     </div>
     <div class="card dialog-card interactive" data-attr="fear">
-      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/fear.png" alt="Icône Peur">
-      <h3>Peur</h3>
+      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/fear.png" alt="{{ localize 'MoshQoL.Attributes.Fear' }}">
+      <h3>{{ localize 'MoshQoL.Attributes.Fear' }}</h3>
       <div id="counter-fear" class="counter" style="margin-top:0.5em;">0</div>
     </div>
     <div class="card dialog-card interactive" data-attr="body">
-      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/body.png" alt="Icône Corps">
-      <h3>Corps</h3>
+      <img class="icon" src="systems/mothership-fr/images/icons/ui/attributes/body.png" alt="{{ localize 'MoshQoL.Attributes.Body' }}">
+      <h3>{{ localize 'MoshQoL.Attributes.Body' }}</h3>
       <div id="counter-body" class="counter" style="margin-top:0.5em;">0</div>
     </div>
   </div>
 
   <div class="remaining-points">
-    Points Restants [ <span id="remaining">0</span> ]
+    {{ localize 'MoshQoL.ConvertStress.RemainingPoints' }} [ <span id="remaining">0</span> ]
   </div>
   <!-- Confirm Button -->
   <div class="confirm-button-row">
-    <button type="button" id="confirm-button" class="pill confirm-button locked">Confirmer</button>
+    <button type="button" id="confirm-button" class="pill confirm-button locked">{{ localize 'MoshQoL.UI.Confirm' }}</button>
   </div>
   
 </form>

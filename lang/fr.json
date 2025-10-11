@@ -892,6 +892,7 @@
       "NoStress": "Aucun stress à convertir.",
       "DistributionTitle": "Distribution du Stress",
       "TotalStress": "Stress Total",
+      "RemainingPoints": "Points Restants",
       "Apply": "Appliquer",
       "Cancel": "Annuler",
       "Updated": "Stress mis à jour pour {name}.",
