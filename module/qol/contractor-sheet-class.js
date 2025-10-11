@@ -14,7 +14,7 @@ export class QoLContractorSheet extends ActorSheet {
     static get defaultOptions() {
         var options = {
             classes: ["mosh", "sheet", "actor", "creature"],
-            template: "modules/mosh-greybearded-qol/templates/contractor-sheet.html",
+            template: "systems/mothership-fr/templates/qol/contractor-sheet.html",
             width: 700,
             height: 650,
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "character" }]

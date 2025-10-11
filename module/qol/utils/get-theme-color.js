@@ -1,10 +1,10 @@
 export function getThemeColor() {
   // 1. GM-Setting
-  const global = String(game.settings.get("mosh-greybearded-qol", "themeColor") || "").trim();
+  const global = String(game.settings.get("mothership-fr", "themeColor") || "").trim();
   if (isValidCssColor(global)) return ensureContrast(global, "#111");
 
   // 2. Spieler-Override
-  const override = String(game.settings.get("mosh-greybearded-qol", "themeColorOverride") || "").trim();
+  const override = String(game.settings.get("mothership-fr", "themeColorOverride") || "").trim();
   if (isValidCssColor(override)) return ensureContrast(override, "#111");
   
   // 3. Spielerfarbe (Pixi-Zahl) in HEX umwandeln

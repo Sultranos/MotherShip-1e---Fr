@@ -68,13 +68,13 @@ Hooks.once("ready", () => {
   const BaseSheet = CONFIG.Actor.sheetClasses.character["mosh.MothershipActorSheet"].cls;
   StashSheet = defineStashSheet(BaseSheet);
 
-  Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
+  Actors.registerSheet("mothership-fr", StashSheet, {
     types: ["character"],
     label: "Stash Sheet",
     makeDefault: false
   });
 
-  Actors.registerSheet("mosh-greybearded-qol", QoLContractorSheet, {
+  Actors.registerSheet("mothership-fr", QoLContractorSheet, {
     types: ["creature"],
     label: "Contractor Sheet",
     makeDefault: false
@@ -85,7 +85,7 @@ Hooks.once("ready", () => {
 });
 
 Hooks.on("getActorDirectoryEntryContext", (html, options) => {
-  const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+  const enabled = game.settings.get("mothership-fr", "enableCharacterCreator");
   if (!enabled) return;
 
   options.push(
@@ -137,7 +137,7 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
 // Settings
 Hooks.once("init", () => {
   // Theme Colors
-  game.settings.register("mosh-greybearded-qol", "themeColor", {
+  game.settings.register("mothership-fr", "themeColor", {
     name: "Global Theme Color",
     hint: "If set, this will override the player colors.",
     scope: "world",
@@ -146,7 +146,7 @@ Hooks.once("init", () => {
     default: "#f50"
   });
 
-  game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
+  game.settings.register("mothership-fr", "themeColorOverride", {
     name: "Player Theme Color",
     hint: "If set, this will override the default color for this user.",
     scope: "client",
@@ -156,7 +156,7 @@ Hooks.once("init", () => {
   });
 
   // Config Stress Conversion
-  game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
+  game.settings.register("mothership-fr", "convertStress.noSanitySave", {
     name: "No Sanity Save",
     hint: "If enabled, stress will be converted without a sanity save.",
     scope: "world",
@@ -165,7 +165,7 @@ Hooks.once("init", () => {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
+  game.settings.register("mothership-fr", "convertStress.noStressRelieve", {
     name: "No Stress Relieve",
     hint: "If enabled, stress will not be reset to minimum after stress conversion.",
     scope: "world",
@@ -174,7 +174,7 @@ Hooks.once("init", () => {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
+  game.settings.register("mothership-fr", "convertStress.minStressConversion", {
     name: "Convert Minimum Stress",
     hint: "If enabled, stess conversion is capped at 0 instead of miminum stress.",
     scope: "world",
@@ -183,7 +183,7 @@ Hooks.once("init", () => {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
+  game.settings.register("mothership-fr", "convertStress.formula", {
     name: "Stress Conversion Formula",
     hint: "Fallback dice formula used to convert stress (useful for Homebrew-Makros).",
     scope: "world",
@@ -193,7 +193,7 @@ Hooks.once("init", () => {
   });
 
   // Config simple shore leave
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
+  game.settings.register("mothership-fr", "simpleShoreLeave.randomFlavor", {
     name: "Flovored shore leave activities",
     hint: "Enhance simple shore leave with random, flavored activities.",
     scope: "world",
@@ -202,7 +202,7 @@ Hooks.once("init", () => {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
+  game.settings.register("mothership-fr", "simpleShoreLeave.disableFlavor", {
     name: "Disable shore leave flavor",
     hint: "Disable the randomized flavor of shore leave activities.",
     scope: "client",
@@ -212,7 +212,7 @@ Hooks.once("init", () => {
   });
   
   // Config Shore Leave Tiers
-  game.settings.register("mosh-greybearded-qol", "shoreLeaveTiers", {
+  game.settings.register("mothership-fr", "shoreLeaveTiers", {
     name: "Shore Leave Tier Definitions",
     scope: "world",
     config: false,
@@ -220,7 +220,7 @@ Hooks.once("init", () => {
     default: SHORE_LEAVE_TIERS
   });
 
-  game.settings.registerMenu("mosh-greybearded-qol", "shoreLeaveEditor", {
+  game.settings.registerMenu("mothership-fr", "shoreLeaveEditor", {
     name: "Edit Shore Leave Tiers",
     label: "Edit Shore Leave...",
     hint: "Customize the tiers used in the simple shore leave system.",
@@ -230,7 +230,7 @@ Hooks.once("init", () => {
   });
 
   // ✅ Enable MoSh QoL Character Creator
-  game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
+  game.settings.register("mothership-fr", "enableCharacterCreator", {
     name: "Enable QoL Character Creator",
     hint: "If enabled, replaces the old character creation macro with the new QoL version.",
     scope: "world",
@@ -240,7 +240,7 @@ Hooks.once("init", () => {
   });
   
   // ✅ Enable Ship Crits (default: false)
-  game.settings.register("mosh-greybearded-qol", "enableShipCrits", {
+  game.settings.register("mothership-fr", "enableShipCrits", {
     name: "Enable 0e Ship Crits",
     hint: "If enabled, ship crit button appears and the 0e crit logic activates.",
     scope: "world",
@@ -290,7 +290,7 @@ Hooks.on("renderActorSheet", (sheet, html) => {
   /*
   if (
     actor?.type === "ship" &&
-    game.settings.get("mosh-greybearded-qol", "enableShipCrits")
+    game.settings.get("mothership-fr", "enableShipCrits")
   ) {
     const titleElem = html[0]?.querySelector(".window-header .window-title");
     if (!titleElem || titleElem.parentElement.querySelector(".ship-crit")) return;
@@ -300,7 +300,7 @@ Hooks.on("renderActorSheet", (sheet, html) => {
 
   if (actor?.type === "character") {
     // Hide Defualt Character Creator Button
-    const isCreatorEnabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+    const isCreatorEnabled = game.settings.get("mothership-fr", "enableCharacterCreator");
     const isStash = sheet instanceof StashSheet;
 
     if (isCreatorEnabled || isStash) {  

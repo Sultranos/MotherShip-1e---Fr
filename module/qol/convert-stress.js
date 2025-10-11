@@ -6,10 +6,10 @@ export async function convertStress(actor, formula, options = {}) {
   actor = actor || game.user.character;
   if (!actor) return ui.notifications.warn("Aucun acteur disponible pour la conversion de stress.");
 
-  formula = formula ?? game.settings.get("mosh-greybearded-qol", "convertStress.formula");
-  const noSanitySave = options.noSanitySave ?? game.settings.get("mosh-greybearded-qol", "convertStress.noSanitySave");
-  const noStressRelieve = options.noStressRelieve ?? game.settings.get("mosh-greybearded-qol", "convertStress.noStressRelieve");
-  const minStressConversion = options.minStressConversion ?? game.settings.get("mosh-greybearded-qol", "convertStress.minStressConversion");
+  formula = formula ?? game.settings.get("mothership-fr", "convertStress.formula");
+  const noSanitySave = options.noSanitySave ?? game.settings.get("mothership-fr", "convertStress.noSanitySave");
+  const noStressRelieve = options.noStressRelieve ?? game.settings.get("mothership-fr", "convertStress.noStressRelieve");
+  const minStressConversion = options.minStressConversion ?? game.settings.get("mothership-fr", "convertStress.minStressConversion");
   
   const stress = actor.system.other.stress;
   const currentStress = stress?.value ?? 0;

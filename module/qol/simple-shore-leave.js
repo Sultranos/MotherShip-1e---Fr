@@ -7,11 +7,11 @@ import { chatOutput } from "./utils/chat-output.js";
 
 export async function simpleShoreLeave(actor, randomFlavor) {
   if (!actor) return ui.notifications.warn("Aucun acteur fourni.");
-  const flavorDisabled = game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor");
-  randomFlavor = flavorDisabled ? false : (randomFlavor ?? game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor"));
+  const flavorDisabled = game.settings.get("mothership-fr", "simpleShoreLeave.disableFlavor");
+  randomFlavor = flavorDisabled ? false : (randomFlavor ?? game.settings.get("mothership-fr", "simpleShoreLeave.randomFlavor"));
 
-  // Load config from settings
-  const config = game.settings.get("mosh-greybearded-qol", "shoreLeaveTiers");
+  // Load the shore leave config
+  const config = game.settings.get("mothership-fr", "shoreLeaveTiers");
   const configArray = Object.values(config);
   const tiers = configArray.map(tier => {
     let base = {
@@ -30,7 +30,7 @@ export async function simpleShoreLeave(actor, randomFlavor) {
   });
 
   const themeColor = getThemeColor();
-  const content = await renderTemplate("modules/mosh-greybearded-qol/templates/simple-shore-leave.html", {
+  const content = await foundry.applications.handlebars.renderTemplate("systems/mothership-fr/templates/qol/simple-shore-leave.html", {
     tiers,
     themeColor
   });
