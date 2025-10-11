@@ -1768,6 +1768,7 @@ p {
 /* Adjust dialog content gap */
 .macro-popup-dialog .dialog-content.standard-form {
   gap: .5rem;
+  height: auto;
 }
 
 /* Adjust dialog form gap */
@@ -1921,4 +1922,94 @@ p {
 .macro-popup-dialog label:has(input[type="radio"]:checked) {
   background: inherit !important;
   box-shadow: none !important;
+}
+
+/* ========================================= */
+/* Corrections spécifiques pour les dialogues Avantage/Normal/Désavantage */
+/* ========================================= */
+
+/* Dialogue simple pour Test de Panique - Hauteur minimale pour afficher les boutons */
+.application.dialog .window-title:contains("Test de Panique") ~ * .dialog-form,
+.application.dialog[style*="height: 105px"] .dialog-form {
+  min-height: 150px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.application.dialog[style*="height: 105px"] .dialog-content {
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
+.application.dialog[style*="height: 105px"] .form-footer {
+  flex-shrink: 0 !important;
+  margin-top: auto !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: white !important;
+  padding: 10px !important;
+  border-top: 1px solid #ccc !important;
+  z-index: 10 !important;
+}
+
+/* Pour les dialogues de choix d'attribut avec beaucoup de contenu */
+.application.dialog .window-title:contains("Choisir un Attribut") ~ * .dialog-form,
+.application.dialog .window-title:contains("Sélectionner un Attribut") ~ * .dialog-form {
+  max-height: 80vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.application.dialog .window-title:contains("Choisir un Attribut") ~ * .dialog-content,
+.application.dialog .window-title:contains("Sélectionner un Attribut") ~ * .dialog-content {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  max-height: calc(80vh - 120px) !important;
+}
+
+.application.dialog .window-title:contains("Choisir un Attribut") ~ * .form-footer,
+.application.dialog .window-title:contains("Sélectionner un Attribut") ~ * .form-footer {
+  flex-shrink: 0 !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: white !important;
+  padding: 10px !important;
+  border-top: 1px solid #ccc !important;
+  z-index: 10 !important;
+  margin-top: auto !important;
+}
+
+/* Correction générale pour tous les dialogues avec des boutons avantage/normal/désavantage */
+.application.dialog .form-footer button[data-action="advantage"],
+.application.dialog .form-footer button[data-action="normal"], 
+.application.dialog .form-footer button[data-action="disadvantage"] {
+  background: rgb(230,230,230) !important;
+  color: #1A1915 !important;
+  border: 1px solid #222 !important;
+  border-radius: 4px !important;
+  padding: 8px 12px !important;
+  font-size: 11pt !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-height: 40px !important;
+}
+
+.application.dialog .form-footer button[data-action="advantage"]:hover,
+.application.dialog .form-footer button[data-action="normal"]:hover,
+.application.dialog .form-footer button[data-action="disadvantage"]:hover {
+  background: #444 !important;
+  color: #fff !important;
+  border-color: #111 !important;
+}
+
+/* Assurer que les form-footer restent visibles */
+.application.dialog .form-footer {
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  min-height: 50px !important;
+  align-items: center !important;
 }

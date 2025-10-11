@@ -1125,7 +1125,7 @@ export class MothershipActor extends Actor {
       //create final dialog data
       const dialogData = {
         window: {title: dlgTitle},
-        position: {width: 600,height: 105},
+        position: {width: 600, height: 160},
         content: `<h4>` + game.i18n.localize("SelectYourRollType") + `:</h4>`,
         buttons: [
           {
