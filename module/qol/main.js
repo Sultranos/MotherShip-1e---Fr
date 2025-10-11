@@ -134,8 +134,8 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
   );
 });
 
-// Settings
-Hooks.once("init", () => {
+// Export function for QoL settings
+export function registerQoLSettings() {
   // Theme Colors
   game.settings.register("mothership-fr", "themeColor", {
     name: "Global Theme Color",
@@ -248,6 +248,11 @@ Hooks.once("init", () => {
     type: Boolean,
     default: false
   });
+}
+
+// Settings
+Hooks.once("init", () => {
+  registerQoLSettings();
 });
 
 // Chat actions

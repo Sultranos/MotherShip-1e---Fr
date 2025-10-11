@@ -22,6 +22,7 @@ import { ShoreLeaveTierEditor } from "./qol/ui/edit-shore-leave-tiers.js";
 import { simpleShoreLeave } from "./qol/simple-shore-leave.js";
 import { SHORE_LEAVE_TIERS } from "./qol/config/default-shore-leave-tiers.js";
 import { startCharacterCreation } from "./qol/character-creator/character-creator.js";
+import { registerQoLSettings } from "./qol/main.js";
 import {
   checkReady,
   checkCompleted,
@@ -54,14 +55,7 @@ Hooks.once('init', async function () {
   registerSettings();
 
   // Enregistrer les paramètres QoL
-  game.settings.register("mosh-greybearded-qol", "enableCharacterCreator", {
-    name: "Activer le créateur de personnage",
-    hint: "Active le système de création de personnage QoL",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: true
-  });
+  registerQoLSettings();
 
   game.settings.register("mosh-greybearded-qol", "themeColor", {
     name: "Couleur du thème global",
