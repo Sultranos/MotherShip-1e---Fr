@@ -65,7 +65,7 @@ Hooks.once("ready", () => {
   game.moshGreybeardQol.startCharacterCreation = startCharacterCreation;
 
   // Register Stash Sheet
-  const BaseSheet = CONFIG.Actor.sheetClasses.character["mosh.MothershipActorSheet"].cls;
+  const BaseSheet = CONFIG.Actor.sheetClasses.character["mothership-fr.MothershipActorSheet"].cls;
   StashSheet = defineStashSheet(BaseSheet);
 
   Actors.registerSheet("mothership-fr", StashSheet, {
