@@ -3,7 +3,7 @@ export function defineStashSheet(BaseSheet) {
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["mosh", "sheet", "actor", "stash"],
-        template: "modules/mosh-greybearded-qol/templates/stash-sheet.html",
+        template: "systems/mothership-fr/templates/qol/stash-sheet.html",
         width: 700,
         height: 700,
         tabs: [

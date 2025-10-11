@@ -57,7 +57,7 @@ Hooks.once('init', async function () {
   // Enregistrer les paramètres QoL
   registerQoLSettings();
 
-  game.settings.register("mosh-greybearded-qol", "themeColor", {
+  game.settings.register("mothership-fr", "themeColor", {
     name: "Couleur du thème global",
     hint: "Si définie, cette couleur remplacera les couleurs des joueurs",
     scope: "world",
@@ -66,7 +66,7 @@ Hooks.once('init', async function () {
     default: "#f50"
   });
 
-  game.settings.register("mosh-greybearded-qol", "themeColorOverride", {
+  game.settings.register("mothership-fr", "themeColorOverride", {
     name: "Couleur du thème joueur",
     hint: "Si définie, cette couleur remplacera la couleur par défaut pour cet utilisateur",
     scope: "client",
@@ -76,7 +76,7 @@ Hooks.once('init', async function () {
   });
 
   // Paramètres de conversion du stress
-  game.settings.register("mosh-greybearded-qol", "convertStress.noSanitySave", {
+  game.settings.register("mothership-fr", "convertStress.noSanitySave", {
     name: "Pas de jet de sanité mentale",
     hint: "Si activé, le stress sera converti sans jet de sanité mentale",
     scope: "world",
@@ -85,7 +85,7 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.noStressRelieve", {
+  game.settings.register("mothership-fr", "convertStress.noStressRelieve", {
     name: "Pas de réduction de stress",
     hint: "Si activé, le stress ne sera pas remis au minimum après conversion",
     scope: "world",
@@ -94,7 +94,7 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.minStressConversion", {
+  game.settings.register("mothership-fr", "convertStress.minStressConversion", {
     name: "Convertir le stress minimum",
     hint: "Si activé, la conversion du stress est plafonnée à 0 au lieu du stress minimum",
     scope: "world",
@@ -103,7 +103,7 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "convertStress.formula", {
+  game.settings.register("mothership-fr", "convertStress.formula", {
     name: "Formule de conversion du stress",
     hint: "Formule de dés de secours utilisée pour convertir le stress",
     scope: "world",
@@ -112,7 +112,7 @@ Hooks.once('init', async function () {
     default: "1d10"
   });
 
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor", {
+  game.settings.register("mothership-fr", "simpleShoreLeave.randomFlavor", {
     name: "Texte d'ambiance aléatoire pour les permissions",
     hint: "Si activé, ajoute du texte d'ambiance aléatoire aux activités de permission",
     scope: "world",
@@ -121,7 +121,7 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor", {
+  game.settings.register("mothership-fr", "simpleShoreLeave.disableFlavor", {
     name: "Désactiver complètement le texte d'ambiance",
     hint: "Si activé, désactive tout texte d'ambiance pour les permissions",
     scope: "world", 
@@ -130,7 +130,7 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
-  game.settings.register("mosh-greybearded-qol", "shoreLeaveTiers", {
+  game.settings.register("mothership-fr", "shoreLeaveTiers", {
     name: "Shore Leave Tier Definitions",
     scope: "world",
     config: false,
@@ -248,13 +248,13 @@ Hooks.once("ready", async function () {
     const BaseSheet = CONFIG.Actor.sheetClasses.character["mothership-fr.MothershipActorSheet"].cls;
     const StashSheet = defineStashSheet(BaseSheet);
 
-    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", StashSheet, {
+    foundry.documents.collections.Actors.registerSheet("mothership-fr", StashSheet, {
       types: ["character"],
       label: "Stash Sheet",
       makeDefault: false
     });
 
-    foundry.documents.collections.Actors.registerSheet("mosh-greybearded-qol", QoLContractorSheet, {
+    foundry.documents.collections.Actors.registerSheet("mothership-fr", QoLContractorSheet, {
       types: ["creature"],
       label: "Contractor Sheet",
       makeDefault: false
@@ -866,7 +866,7 @@ Hooks.on("renderActorSheet", (sheet, html) => {
 
   if (actor?.type === "character") {
     // Masquer le bouton de création par défaut
-    const isCreatorEnabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+    const isCreatorEnabled = game.settings.get("mothership-fr", "enableCharacterCreator");
     
     if (isCreatorEnabled) {  
       const oldCreatorButton = html[0].querySelector(".configure-actor");
@@ -911,7 +911,7 @@ Hooks.on("createActor", async (actor, options, userId) => {
 
 // Hooks QoL pour les menus contextuels  
 Hooks.on("getActorDirectoryEntryContext", (html, options) => {
-  const enabled = game.settings.get("mosh-greybearded-qol", "enableCharacterCreator");
+  const enabled = game.settings.get("mothership-fr", "enableCharacterCreator");
   if (!enabled) return;
 
   options.push(
