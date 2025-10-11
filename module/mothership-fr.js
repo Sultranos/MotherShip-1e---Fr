@@ -136,6 +136,14 @@ Hooks.once('init', async function () {
     type: Boolean
   });
 
+  game.settings.register("mosh-greybearded-qol", "shoreLeaveTiers", {
+    name: "Shore Leave Tier Definitions",
+    scope: "world",
+    config: false,
+    type: Object,
+    default: SHORE_LEAVE_TIERS
+  });
+
 
   /**
    * Set an initiative formula for the system

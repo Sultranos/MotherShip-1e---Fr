@@ -910,7 +910,7 @@ export class MothershipActor extends Actor {
         dialogData.buttons = [
           {
             label: game.i18n.localize("Advantage"),
-            action: `action_advantage`,
+            action: "advantage",
             callback: (event, button, dialog) => {
               rollString = `1d100 [+]`;
               aimFor = `low`;
@@ -922,7 +922,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: (event, button, dialog) => {
               rollString = `1d100`;
               aimFor = `low`;
@@ -934,7 +934,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: (event, button, dialog) => {
               rollString = `1d100 [-]`;
               aimFor = `low`;
@@ -1057,7 +1057,7 @@ export class MothershipActor extends Actor {
         dialogData.buttons = [
           {
             label: game.i18n.localize("Advantage"),
-            action: `action_advantage`,
+            action: "advantage",
             callback: (event, button, dialog) => {
               rollString = `1d100 [+]`;
               skill = button.form.querySelector("input[name='skill']:checked")?.getAttribute("id");
@@ -1069,7 +1069,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Normal"),
-            action: `action_normal`,
+            action: "normal",
             callback: (event, button, dialog) => {
               rollString = `1d100`;
               skill = button.form.querySelector("input[name='skill']:checked")?.getAttribute("id");
@@ -1081,7 +1081,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Disadvantage"),
-            action: `action_disadvantage`,
+            action: "disadvantage",
             callback: (event, button, dialog) => {
               rollString = `1d100 [-]`;
               skill = button.form.querySelector("input[name='skill']:checked")?.getAttribute("id");
@@ -1130,7 +1130,7 @@ export class MothershipActor extends Actor {
         buttons: [
           {
             label: game.i18n.localize("Advantage"),
-			      action: `action_advantage`,
+			      action: "advantage",
             callback: (event, button, dialog) => {
               rollString = dieAdv;
               resolve([rollString]);
@@ -1140,7 +1140,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: (event, button, dialog) => {
               rollString = die;
               resolve([rollString]);
@@ -1150,7 +1150,7 @@ export class MothershipActor extends Actor {
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: (event, button, dialog) => { 
               rollString = dieDis;
               resolve([rollString]);
@@ -2629,19 +2629,19 @@ export class MothershipActor extends Actor {
         buttons: [
           {
             label: game.i18n.localize("Advantage"),
-			      action: `action_advantage`,
+			      action: "advantage",
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [+]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10`, `low`, true, false, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: () => this.rollTable(game.settings.get('mothership-fr', 'table1eDistressSignal'), `1d10 [-]`, `low`, true, false, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
           }
@@ -2670,19 +2670,19 @@ export class MothershipActor extends Actor {
         buttons: [
           {
             label: game.i18n.localize("Advantage"),
-			      action: `action_advantage`,
+			      action: "advantage",
             callback: () => this.rollTable(`maintenanceCheck`, `1d100 [+]`, `low`, null, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: () => this.rollTable(`maintenanceCheck`, `1d100`, `low`, null, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: () => this.rollTable(`maintenanceCheck`, `1d100 [-]`, `low`, null, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
           }
@@ -2711,19 +2711,19 @@ export class MothershipActor extends Actor {
         buttons: [
           {
             label: game.i18n.localize("Advantage"),
-			      action: `action_advantage`,
+			      action: "advantage",
             callback: () => this.rollCheck(`1d100 [+]`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: () => this.rollCheck(`1d100`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: () => this.rollCheck(`1d100 [-]`, `low`, `bankruptcySave`, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
           }
@@ -2787,19 +2787,19 @@ export class MothershipActor extends Actor {
         buttons: [
           {
             label: game.i18n.localize("Advantage"),
-			      action: `action_advantage`,
+			      action: "advantage",
             callback: () => this.rollCheck(`1d10 [+]`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-angle-double-up"></i>`
           },
           {
             label: game.i18n.localize("Normal"),
-			      action: `action_normal`,
+			      action: "normal",
             callback: () => this.rollCheck(`1d10`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-minus"></i>`
           },
           {
             label: game.i18n.localize("Disadvantage"),
-			      action: `action_disadvantage`,
+			      action: "disadvantage",
             callback: () => this.rollCheck(`1d10 [-]`, `high-equal`, `moraleCheck`, null, null, null),
             icon: `<i class="fas fa-angle-double-down"></i>`
           }
