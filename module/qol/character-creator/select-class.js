@@ -106,7 +106,7 @@ export async function selectClass(actor, applyStats = true) {
 
   return new Promise(resolve => {
     const dlg = new Dialog({
-      title: "Select Your Class",
+      title: game.i18n.localize("MoshQoL.UI.SelectClass"),
       content,
       buttons: {},
       close: () => resolve(null),

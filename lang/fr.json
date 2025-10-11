@@ -857,6 +857,7 @@
       "HealthRolled": "Santé Lancée",
       "SkillsSelected": "Compétences Sélectionnées",
       "SkillSelectionCancelled": "Sélection de compétences annulée.",
+      "LoadoutRolled": "Équipement Lancé",
       "Complete": "{name} a terminé la création de personnage."
     },
     "ShoreLeave": {

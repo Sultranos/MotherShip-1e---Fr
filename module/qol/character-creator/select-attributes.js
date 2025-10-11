@@ -20,7 +20,7 @@ export async function selectAttributes(actor, attributeChoices) {
 
   return new Promise((resolve, reject) => {
     const dlg = new Dialog({
-      title: "Select Attributes",
+      title: game.i18n.localize("MoshQoL.UI.SelectAttributes"),
       content: htmlContent,
       buttons: {}, // Keine Foundry-Buttons
       close: () => reject("Cancelled"),

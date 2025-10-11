@@ -94,7 +94,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   
   await chatOutput({
     actor,
-    title: "Loadout Rolled",
+    title: game.i18n.localize("MoshQoL.CharacterCreation.LoadoutRolled"),
     subtitle: actor.name,
     icon: "fa-dice",
     image: DEFAULT_IMAGES.Loadout,
