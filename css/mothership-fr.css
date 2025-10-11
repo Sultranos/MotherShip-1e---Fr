@@ -2013,3 +2013,47 @@ p {
   min-height: 50px !important;
   align-items: center !important;
 }
+
+/* Règles spécifiques pour les dialogues de jet */
+.application.dialog[data-tag="mothership-fr"] .form-footer,
+.application.dialog .window-content:has(button[data-action="advantage"]) .form-footer,
+.dialog.advantage-roll-dialog .form-footer,
+.dialog[data-type="roll"] .form-footer {
+  display: flex !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: var(--color-bg) !important;
+  border-top: 1px solid var(--color-border-light) !important;
+  padding: 8px !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  min-height: 50px !important;
+  align-items: center !important;
+  z-index: 1000 !important;
+  margin-top: auto !important;
+}
+
+/* Assurer que le contenu de la fenêtre laisse place au footer */
+.application.dialog .window-content:has(.form-footer) {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.application.dialog .window-content:has(.form-footer) > *:not(.form-footer) {
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
+/* Force l'affichage des boutons de jet spécifiques */
+.application.dialog button[data-action="advantage"],
+.application.dialog button[data-action="normal"],
+.application.dialog button[data-action="disadvantage"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 80px !important;
+  padding: 6px 12px !important;
+}

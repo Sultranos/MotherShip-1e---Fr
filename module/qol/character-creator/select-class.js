@@ -124,7 +124,7 @@ export async function selectClass(actor, applyStats = true) {
           if (!selected) return resolve(null);
 
           const classItem = await fromUuid(selected.uuid);
-          if (!classItem) return ui.notifications.error("Failed to load class data.");
+          if (!classItem) return ui.notifications.error("Échec du chargement des données de classe.");
 
           const updates = {
             "system.class.value": classItem.name,

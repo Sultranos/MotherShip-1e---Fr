@@ -100,7 +100,7 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         reset(actor);
-        ui.notifications.info(`Character Creator progress reset for: ${actor.name}`);
+        ui.notifications.info(`Progression du créateur de personnage réinitialisée pour : ${actor.name}`);
       }
     },
     {
@@ -114,7 +114,7 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         setReady(actor);
-        ui.notifications.info(`Character marked ready: ${actor.name}`);
+        ui.notifications.info(`Personnage marqué comme prêt : ${actor.name}`);
       }
     },
     {
@@ -128,7 +128,7 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
         const actor = game.actors.get(li.data("documentId"));
         if (!actor) return;
         setCompleted(actor);
-        ui.notifications.info(`Character marked completed: ${actor.name}`);
+        ui.notifications.info(`Personnage marqué comme terminé : ${actor.name}`);
       }
     }
   );
@@ -261,7 +261,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
       if (!action) return;
 
       const actor = game.user.character;
-      if (!actor) return ui.notifications.warn("No character assigned.");
+      if (!actor) return ui.notifications.warn("Aucun personnage assigné.");
 
       switch (action) {
         case "convertStress":
@@ -272,7 +272,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
           break;
         // Add more cases as needed
         default:
-          ui.notifications.warn(`Unknown action: ${action}`);
+          ui.notifications.warn(`Action inconnue : ${action}`);
       }
     });
   });

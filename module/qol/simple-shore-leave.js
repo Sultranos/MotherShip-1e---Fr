@@ -6,7 +6,7 @@ import { flavorizeShoreLeave } from "./utils/flavorize-shore-leave.js";
 import { chatOutput } from "./utils/chat-output.js";
 
 export async function simpleShoreLeave(actor, randomFlavor) {
-  if (!actor) return ui.notifications.warn("No actor provided.");
+  if (!actor) return ui.notifications.warn("Aucun acteur fourni.");
   const flavorDisabled = game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.disableFlavor");
   randomFlavor = flavorDisabled ? false : (randomFlavor ?? game.settings.get("mosh-greybearded-qol", "simpleShoreLeave.randomFlavor"));
 
@@ -106,7 +106,7 @@ export async function simpleShoreLeave(actor, randomFlavor) {
     
           const selected = html.find("input[name='shore-tier']:checked").val();
           const entry = tiers.find(t => t.tier === selected);
-          if (!entry) return ui.notifications.error("Invalid tier selected.");
+          if (!entry) return ui.notifications.error("Niveau sélectionné invalide.");
     
           const result = await convertStress(actor, entry.stressFormula);
           dlg.close();

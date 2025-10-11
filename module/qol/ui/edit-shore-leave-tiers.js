@@ -22,13 +22,13 @@ export class ShoreLeaveTierEditor extends FormApplication {
       const module = await import("../config/default-shore-leave-tiers.js");
       await game.settings.set("mosh-greybearded-qol", "shoreLeaveTiers", module.SHORE_LEAVE_TIERS);
       this.render();
-      ui.notifications.info("Shore Leave tiers reset to defaults.");
+      ui.notifications.info("Niveaux de congé à terre remis aux valeurs par défaut.");
     });
   }
 
   async _updateObject(event, formData) {
     const data = foundry.utils.expandObject(formData);
     await game.settings.set("mosh-greybearded-qol", "shoreLeaveTiers", data.tiers);
-    ui.notifications.info("Shore Leave Tiers updated.");
+    ui.notifications.info("Niveaux de congé à terre mis à jour.");
   }
 }

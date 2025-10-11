@@ -237,7 +237,7 @@ export async function selectSkills(actor, selectedClass) {
               });
           
               if (fulfilled.length === 0) {
-                ui.notifications.warn(`${depSkill.name} needs this skill to remain selected.`);
+                ui.notifications.warn(`${depSkill.name} a besoin de cette compétence pour rester sélectionnée.`);
                 return;
               }
             }

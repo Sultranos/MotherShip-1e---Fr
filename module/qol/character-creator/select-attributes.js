@@ -65,7 +65,7 @@ export async function selectAttributes(actor, attributeChoices) {
           });
 
           if (selections.length !== attributeSets.length) {
-            ui.notifications.warn("You must select one attribute per set.");
+            ui.notifications.warn("Vous devez sélectionner un attribut par groupe.");
             return reject("Incomplete selection");
           }
 

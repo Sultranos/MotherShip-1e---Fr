@@ -7,7 +7,7 @@ import { rollLoadout } from "./roll-loadout.js";
 
 export async function startCharacterCreation(actor) {
   if (!actor) {
-    ui.notifications.error("No actor provided.");
+    ui.notifications.error("Aucun acteur fourni.");
     return;
   }
   // ✅ Check if character is already completed
@@ -19,13 +19,13 @@ export async function startCharacterCreation(actor) {
       });
       if (resetConfirm) {
         await reset(actor);
-        ui.notifications.info(`Character creation for ${actor.name} has been reset.`);
+        ui.notifications.info(`Création de personnage pour ${actor.name} a été réinitialisée.`);
       } else {
-        ui.notifications.warn("Character creation cancelled.");
+        ui.notifications.warn("Création de personnage annulée.");
         return;
       }
     } else {
-      ui.notifications.warn("Character creation already completed.");
+      ui.notifications.warn("Création de personnage déjà terminée.");
       return;
     }
   }
@@ -62,11 +62,11 @@ export async function startCharacterCreation(actor) {
     });
   
     if (choice === "cancel") {
-      ui.notifications.warn("Character creation cancelled.");
+      ui.notifications.warn("Création de personnage annulée.");
       return;
     } else if (choice === "complete") {
       await setCompleted(actor, true);
-      ui.notifications.info(`${actor.name} has been marked as completed manually.`);
+      ui.notifications.info(`${actor.name} a été marqué comme terminé manuellement.`);
       return;
     } else if (choice === "overwrite") {
       await setReady(actor, true); // mark as ready and proceed
@@ -162,10 +162,10 @@ export async function startCharacterCreation(actor) {
     if (classUUID) {
       selectedClass = await fromUuid(classUUID);
       if (!selectedClass) {
-        ui.notifications.warn("Class UUID invalid. Please reselect.");
+        ui.notifications.warn("UUID de classe invalide. Veuillez resélectionner.");
       }
     } else {
-      ui.notifications.warn("No class UUID found. Please select a class.");
+      ui.notifications.warn("Aucun UUID de classe trouvé. Veuillez sélectionner une classe.");
     }
   }
   // If nothing was loaded -> selection dialog
@@ -173,7 +173,7 @@ export async function startCharacterCreation(actor) {
     console.log("📚 Selecting class...");
     selectedClass = await selectClass(actor);
     if (!selectedClass) {
-      ui.notifications.warn("Class selection cancelled.");
+      ui.notifications.warn("Sélection de classe annulée.");
       return;
     }
     await chatOutput({
@@ -192,10 +192,10 @@ export async function startCharacterCreation(actor) {
     if (choices.length > 0) {
       try {
         const adjustments = await selectAttributes(actor, choices);
-        if (!adjustments) return ui.notifications.warn("Attribute selection cancelled.");
+        if (!adjustments) return ui.notifications.warn("Sélection d'attributs annulée.");
       } catch (err) {
         console.warn("Attribute selection aborted:", err);
-        return ui.notifications.warn("Attribute selection cancelled.");
+        return ui.notifications.warn("Sélection d'attributs annulée.");
       }
     }
     await completeStep(actor, "selectedAttributes");
@@ -230,7 +230,7 @@ export async function startCharacterCreation(actor) {
   if (!checkStep(actor, "selectedSkills")) {
     const adjustments = await selectSkills(actor, selectedClass);
     if (!adjustments || adjustments.length === 0) {
-      return ui.notifications.warn("Skill selection cancelled.");
+      return ui.notifications.warn("Sélection de compétences annulée.");
     }
 
     await chatOutput({
@@ -261,6 +261,6 @@ export async function startCharacterCreation(actor) {
      
   // ✅ Final Step: Mark character creation as completed
   await setCompleted(actor, true);
-  ui.notifications.info(`${actor.name} has completed character creation.`);
+  ui.notifications.info(`${actor.name} a terminé la création de personnage.`);
 
 }

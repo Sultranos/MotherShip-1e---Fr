@@ -491,7 +491,7 @@ export class QoLContractorSheet extends ActorSheet {
     const result = MOTIVATION_TABLE.find(entry => rolledValue >= entry.min && rolledValue <= entry.max);
 
     if (!result) {
-      ui.notifications.warn("No matching motivation found.");
+      ui.notifications.warn("Aucune motivation correspondante trouvée.");
       return;
     }
 
