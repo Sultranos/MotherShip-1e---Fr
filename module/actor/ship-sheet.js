@@ -38,10 +38,10 @@ export class MothershipShipSheet extends foundry.appv1.sheets.ActorSheet {
             superData.settings = {};
         }
 
-        superData.settings.useCalm = game.settings.get("mosh", "useCalm");
-        superData.settings.hideWeight = game.settings.get("mosh", "hideWeight");
-        superData.settings.firstEdition = game.settings.get("mosh", "firstEdition");
-        superData.settings.androidPanic = game.settings.get("mosh", "androidPanic");
+        superData.settings.useCalm = game.settings.get("mothership-fr", "useCalm");
+        superData.settings.hideWeight = game.settings.get("mothership-fr", "hideWeight");
+        superData.settings.firstEdition = game.settings.get("mothership-fr", "firstEdition");
+        superData.settings.androidPanic = game.settings.get("mothership-fr", "androidPanic");
 
         let maxHull = superData.supplies.hull.max;
 

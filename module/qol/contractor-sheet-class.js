@@ -62,8 +62,8 @@ export class QoLContractorSheet extends ActorSheet {
       };
            
       if (actorData.system.settings == null) actorData.system.settings = {};
-      actorData.system.settings.hideWeight = game.settings.get("mosh", "hideWeight");
-      actorData.system.settings.firstEdition = game.settings.get("mosh", "firstEdition");
+      actorData.system.settings.hideWeight = game.settings.get("mothership-fr", "hideWeight");
+      actorData.system.settings.firstEdition = game.settings.get("mothership-fr", "firstEdition");
         
       actorData.enriched = {
         description: await TextEditor.enrichHTML(actorData.system.description, { async: true }),

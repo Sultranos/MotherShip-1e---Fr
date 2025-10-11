@@ -22,25 +22,25 @@ export class rolltableConfig extends FormApplication {
      */
     getData() {
         const tableSelection = super.getData();
-        tableSelection.table0ePanicStressNormal = game.settings.get("mosh", "table0ePanicStressNormal");
-        tableSelection.table0ePanicStressAndroid = game.settings.get("mosh", "table0ePanicStressAndroid");
-        tableSelection.table0ePanicCalmNormal = game.settings.get("mosh", "table0ePanicCalmNormal");
-        tableSelection.table0ePanicCalmAndroid = game.settings.get("mosh", "table0ePanicCalmAndroid");
-        tableSelection.table1ePanicStressNormal = game.settings.get("mosh", "table1ePanicStressNormal");
-        tableSelection.table1ePanicStressAndroid = game.settings.get("mosh", "table1ePanicStressAndroid");
-        tableSelection.table1ePanicCalmNormal = game.settings.get("mosh", "table1ePanicCalmNormal");
-        tableSelection.table1ePanicCalmAndroid = game.settings.get("mosh", "table1ePanicCalmAndroid");
-        tableSelection.table1eWoundBluntForce = game.settings.get("mosh", "table1eWoundBluntForce");
-        tableSelection.table1eWoundBleeding = game.settings.get("mosh", "table1eWoundBleeding");
-        tableSelection.table1eWoundGunshot = game.settings.get("mosh", "table1eWoundGunshot");
-        tableSelection.table1eWoundFireExplosives = game.settings.get("mosh", "table1eWoundFireExplosives");
-        tableSelection.table1eWoundGoreMassive = game.settings.get("mosh", "table1eWoundGoreMassive");
-        tableSelection.table0eDeath = game.settings.get("mosh", "table0eDeath");
-        tableSelection.table1eDeath = game.settings.get("mosh", "table1eDeath");
-        tableSelection.table1eDistressSignal = game.settings.get("mosh", "table1eDistressSignal");
-        tableSelection.table1eMegadamageEffects = game.settings.get("mosh", "table1eMegadamageEffects");
-        tableSelection.table1eMaintenance = game.settings.get("mosh", "table1eMaintenance");
-        tableSelection.table1eBankruptcy = game.settings.get("mosh", "table1eBankruptcy");
+        tableSelection.table0ePanicStressNormal = game.settings.get("mothership-fr", "table0ePanicStressNormal");
+        tableSelection.table0ePanicStressAndroid = game.settings.get("mothership-fr", "table0ePanicStressAndroid");
+        tableSelection.table0ePanicCalmNormal = game.settings.get("mothership-fr", "table0ePanicCalmNormal");
+        tableSelection.table0ePanicCalmAndroid = game.settings.get("mothership-fr", "table0ePanicCalmAndroid");
+        tableSelection.table1ePanicStressNormal = game.settings.get("mothership-fr", "table1ePanicStressNormal");
+        tableSelection.table1ePanicStressAndroid = game.settings.get("mothership-fr", "table1ePanicStressAndroid");
+        tableSelection.table1ePanicCalmNormal = game.settings.get("mothership-fr", "table1ePanicCalmNormal");
+        tableSelection.table1ePanicCalmAndroid = game.settings.get("mothership-fr", "table1ePanicCalmAndroid");
+        tableSelection.table1eWoundBluntForce = game.settings.get("mothership-fr", "table1eWoundBluntForce");
+        tableSelection.table1eWoundBleeding = game.settings.get("mothership-fr", "table1eWoundBleeding");
+        tableSelection.table1eWoundGunshot = game.settings.get("mothership-fr", "table1eWoundGunshot");
+        tableSelection.table1eWoundFireExplosives = game.settings.get("mothership-fr", "table1eWoundFireExplosives");
+        tableSelection.table1eWoundGoreMassive = game.settings.get("mothership-fr", "table1eWoundGoreMassive");
+        tableSelection.table0eDeath = game.settings.get("mothership-fr", "table0eDeath");
+        tableSelection.table1eDeath = game.settings.get("mothership-fr", "table1eDeath");
+        tableSelection.table1eDistressSignal = game.settings.get("mothership-fr", "table1eDistressSignal");
+        tableSelection.table1eMegadamageEffects = game.settings.get("mothership-fr", "table1eMegadamageEffects");
+        tableSelection.table1eMaintenance = game.settings.get("mothership-fr", "table1eMaintenance");
+        tableSelection.table1eBankruptcy = game.settings.get("mothership-fr", "table1eBankruptcy");
         
         return tableSelection;
     }
