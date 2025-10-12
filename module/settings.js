@@ -431,14 +431,14 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "UxAjAqUTjYTcCbS8"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eMegadamageEffects', {
     scope: 'world',
     config: false,
     type: String,
-    default: "AqGWwoWXzijFs427"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eMaintenance', {

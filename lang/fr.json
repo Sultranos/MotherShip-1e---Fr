@@ -677,6 +677,7 @@
     "Disabled": "Désactivé",
     "Disadvantage": "Désavantage",
     "DistressSignal": "Signal de Détresse",
+    "DistressSignalTableExplanation": "Lance cette table pour déterminer la réponse au signal de détresse envoyé par l'équipage.",
     "DoNotAddASkillToThisRoll": "N'ajoutez pas de compétence à ce jet.",
     "DMGReduction": "Réduction de Dégâts",
     "DR": "RD",
