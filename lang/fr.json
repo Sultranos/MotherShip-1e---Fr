@@ -1,0 +1,940 @@
+{
+  "Mosh": {
+    "table": {
+      "death_save": {
+        "roll": {
+          "android": "Vous frappez à la porte de la mort.",
+          "human": "Vous frappez à la porte de la mort."
+        }
+      },
+      "blunt_force_wound": {
+        "roll": {
+          "android": "Vous vous préparez au pire.",
+          "human": "Vous vous préparez au pire."
+        }
+      },
+      "bleeding_wound": {
+        "roll": {
+          "android": "Vous vous préparez au pire.",
+          "human": "Vous vous préparez au pire."
+        }
+      },
+      "gunshot_wound": {
+        "roll": {
+          "android": "Vous vous préparez au pire.",
+          "human": "Vous vous préparez au pire."
+        }
+      },
+      "fire_explosives_wound": {
+        "roll": {
+          "android": "Vous vous préparez au pire.",
+          "human": "Vous vous préparez au pire."
+        }
+      },
+      "gore_massive_wound": {
+        "roll": {
+          "android": "Vous vous préparez au pire.",
+          "human": "Vous vous préparez au pire."
+        }
+      },
+      "panic_check": {
+        "roll": {
+          "android": "Vous perdez le contrôle moteur pendant un moment tandis que vos capteurs clignotent.",
+          "human": "Votre cœur s'emballe et vous commencez à vous sentir étourdi."
+        },
+        "success": {
+          "android": "Les ressources système se stabilisent et vous reprenez le contrôle.",
+          "human": "Vous respirez profondément et retrouvez votre sang-froid."
+        }
+      },
+      "distress_signal": {
+        "roll": {
+          "human": "Vous mettez votre vaisseau en mode d'urgence, vous enfermez dans les cryopods, envoyez un Signal de Détresse et attendez de l'aide. C'est un pari risqué, mais parfois c'est la seule option. Serez-vous trouvé ?"
+        }
+      },
+      "maintenance_issues": {
+        "roll": {
+          "human": "Vous effectuez une inspection complète du vaisseau pour l'usure et les avaries."
+        },
+        "success": {
+          "human": "Vous ne trouvez rien de mal avec le vaisseau."
+        }
+      }
+    },
+    "item": {
+      "condition": {
+        "add": {
+          "android": "Vous souffrez maintenant de cette condition.",
+          "human": "Vous souffrez maintenant de cette condition."
+        },
+        "increase": {
+          "android": "Votre condition s'aggrave.",
+          "human": "Votre condition s'aggrave."
+        },
+        "bleed": {
+          "android": "Vos capteurs détectent une perte significative de nanofluide.",
+          "human": "Vous vous sentez étourdi en saignant."
+        },
+        "radiation": {
+          "android": "Perte catastrophique de données détectées",
+          "human": "Vous fixez l'obscurité et vous sentez complètement incapable d'en sortir."
+        },
+        "cryo": {
+          "android": "Vos systèmes échouent en raison des dommages de condensation.",
+          "human": "Vous vous réveillez gelé et raide, pouvant à peine bouger."
+        }
+      }
+    },
+    "attribute": {
+      "stress": {
+        "increase": {
+          "android": "Une surcharge d'énergie traverse votre noyau et vous commencez à surchauffer.",
+          "human": "Vous ressentez une oppression dans la poitrine et commencez à transpirer."
+        },
+        "increaseHeader": {
+          "android": "Stress Gagné",
+          "human": "Stress Gagné"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/macros/gain_stress.png",
+          "human": "systems/mothership-fr/images/icons/ui/macros/gain_stress.png"
+        },
+        "hitCeiling": {
+          "android": "Les performances système atteignent un point de défaillance.",
+          "human": "Vous touchez le fond du gouffre."
+        },
+        "pastCeiling": {
+          "android": "Vous ressentez une perte de données irréparable.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decrease": {
+          "android": "Vous faites une réinitialisation douce, purgeant les processus d'arrière-plan inutiles.",
+          "human": "Vous ressentez une sensation de calme vous envahir."
+        },
+        "decreaseHeader": {
+          "android": "Stress Soulagé",
+          "human": "Stress Soulagé"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/macros/relieve_stress.png",
+          "human": "systems/mothership-fr/images/icons/ui/macros/relieve_stress.png"
+        },
+        "hitFloor": {
+          "android": "Vous atteignez une concentration et une clarté parfaites.",
+          "human": "Vous atteignez une paix d'esprit complète."
+        },
+        "pastFloor": {
+          "android": "Vous êtes déjà aussi concentré que possible.",
+          "human": "Vous êtes déjà aussi calme que possible."
+        }
+      },
+      "calm": {
+        "increase": {
+          "android": "Vous faites une réinitialisation douce, purgeant les processus d'arrière-plan inutiles.",
+          "human": "Vous ressentez une sensation de calme vous envahir."
+        },
+        "increaseHeader": {
+          "android": "Calme Gagné",
+          "human": "Calme Gagné"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/macros/relieve_stress.png",
+          "human": "systems/mothership-fr/images/icons/ui/macros/relieve_stress.png"
+        },
+        "hitCeiling": {
+          "android": "Vous atteignez une concentration et une clarté parfaites.",
+          "human": "Vous atteignez une paix d'esprit complète."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà aussi concentré que possible.",
+          "human": "Vous êtes déjà aussi calme que possible."
+        },
+        "decrease": {
+          "android": "Une surcharge d'énergie traverse votre noyau et vous commencez à surchauffer.",
+          "human": "Vous ressentez une oppression dans la poitrine et commencez à transpirer."
+        },
+        "decreaseHeader": {
+          "android": "Calme Perdu",
+          "human": "Calme Perdu"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/macros/gain_stress.png",
+          "human": "systems/mothership-fr/images/icons/ui/macros/gain_stress.png"
+        },
+        "hitFloor": {
+          "android": "Les performances système atteignent un point de défaillance.",
+          "human": "Vous touchez le fond du gouffre."
+        },
+        "pastFloor": {
+          "android": "Vous ressentez une perte de données irréparable.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        }
+      },
+      "health": {
+        "increase": {
+          "android": "Les ressources système se stabilisent et vous vous sentez énergisé.",
+          "human": "Vous ressentez une explosion d'énergie."
+        },
+        "increaseHeader": {
+          "android": "Santé Gagnée",
+          "human": "Santé Gagnée"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/health.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/health.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant en pleine santé.",
+          "human": "Vous êtes maintenant en pleine santé."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà en pleine santé.",
+          "human": "Vous êtes déjà en pleine santé."
+        },
+        "decrease": {
+          "android": "Vos récepteurs de douleur indiquent des dommages au noyau.",
+          "human": "Vous grimaçez de douleur."
+        },
+        "decreaseHeader": {
+          "android": "Santé Perdue",
+          "human": "Santé Perdue"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/health.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/health.png"
+        },
+        "hitFloor": {
+          "android": "Vos récepteurs de douleur indiquent des dommages au noyau.",
+          "human": "Vos récepteurs de douleur indiquent des dommages au noyau."
+        },
+        "pastFloor": {
+          "android": "Vos récepteurs de douleur indiquent des dommages au noyau.",
+          "human": "Vos récepteurs de douleur indiquent des dommages au noyau."
+        }
+      },
+      "hits": {
+        "increase": {
+          "android": "@UUID[Compendium.mothership-fr.macros_hotbar_1e.ZzKgfEmRdvDfyBMS]{Faire un Test de Blessure}",
+          "human": "@UUID[Compendium.mothership-fr.macros_hotbar_1e.ZzKgfEmRdvDfyBMS]{Faire un Test de Blessure}"
+        },
+        "increaseHeader": {
+          "android": "Endommagé",
+          "human": "Blessé"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/health.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/health.png"
+        },
+        "hitCeiling": {
+          "android": "La fin est proche...<br><br>@UUID[Compendium.mothership-fr.macros_hotbar_1e.NsRHfRuuNGPfkYVf]{Faire une Sauvegarde de Mort}",
+          "human": "La fin est proche...<br><br>@UUID[Compendium.mothership-fr.macros_hotbar_1e.NsRHfRuuNGPfkYVf]{Faire une Sauvegarde de Mort}"
+        },
+        "pastCeiling": {
+          "android": "La fin est proche...<br><br>@UUID[Compendium.mothership-fr.macros_hotbar_1e.NsRHfRuuNGPfkYVf]{Faire une Sauvegarde de Mort}",
+          "human": "La fin est proche...<br><br>@UUID[Compendium.mothership-fr.macros_hotbar_1e.NsRHfRuuNGPfkYVf]{Faire une Sauvegarde de Mort}"
+        },
+        "decrease": {
+          "android": "Les ressources système se stabilisent et vous vous sentez énergisé.",
+          "human": "Vous ressentez une explosion d'énergie."
+        },
+        "decreaseHeader": {
+          "android": "Réparé",
+          "human": "Soigné"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/health.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/health.png"
+        },
+        "hitFloor": {
+          "android": "Vous êtes maintenant en pleine santé.",
+          "human": "Vous êtes maintenant en pleine santé."
+        },
+        "pastFloor": {
+          "android": "Vous êtes déjà en pleine santé.",
+          "human": "Vous êtes déjà en pleine santé."
+        }
+      },
+      "strength": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Force Augmentée",
+          "human": "Force Gagnée"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/strength.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/strength.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant à votre force maximum.",
+          "human": "Vous êtes maintenant à votre force maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà à votre force maximum.",
+          "human": "Vous êtes déjà à votre force maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Force Affaiblie",
+          "human": "Force Perdue"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/strength.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/strength.png"
+        },
+        "hitFloor": {
+          "android": "Vous n'avez plus de force.",
+          "human": "Vous n'avez plus de force."
+        },
+        "pastFloor": {
+          "android": "Votre force ne peut pas être plus basse.",
+          "human": "Votre force ne peut pas être plus basse."
+        }
+      },
+      "speed": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Vitesse Augmentée",
+          "human": "Vitesse Gagnée"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/speed.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/speed.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant à votre vitesse maximum.",
+          "human": "Vous êtes maintenant à votre vitesse maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà à votre vitesse maximum.",
+          "human": "Vous êtes déjà à votre vitesse maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Vitesse Affaiblie",
+          "human": "Vitesse Perdue"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/speed.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/speed.png"
+        },
+        "hitFloor": {
+          "android": "Vous vous sentez complètement léthargique.",
+          "human": "Vous vous sentez complètement léthargique."
+        },
+        "pastFloor": {
+          "android": "Votre vitesse ne peut pas être plus basse.",
+          "human": "Votre vitesse ne peut pas être plus basse."
+        }
+      },
+      "intellect": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Intellect Augmenté",
+          "human": "Intellect Gagné"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/intellect.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/intellect.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant à votre intellect maximum.",
+          "human": "Vous êtes maintenant à votre intellect maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà à votre intellect maximum.",
+          "human": "Vous êtes déjà à votre intellect maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Intellect Affaibli",
+          "human": "Intellect Perdu"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/intellect.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/intellect.png"
+        },
+        "hitFloor": {
+          "android": "Vous vous sentez totalement confus.",
+          "human": "Vous vous sentez totalement confus."
+        },
+        "pastFloor": {
+          "android": "Votre intellect ne peut pas être plus bas.",
+          "human": "Votre intellect ne peut pas être plus bas."
+        }
+      },
+      "combat": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Combat Augmenté",
+          "human": "Combat Gagné"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/combat.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/combat.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant au combat maximum.",
+          "human": "Vous êtes maintenant au combat maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà au combat maximum.",
+          "human": "Vous êtes déjà au combat maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Combat Affaibli",
+          "human": "Combat Perdu"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/combat.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/combat.png"
+        },
+        "hitFloor": {
+          "android": "Vous n'arrivez plus à imaginer vous battre.",
+          "human": "Vous n'arrivez plus à imaginer vous battre."
+        },
+        "pastFloor": {
+          "android": "Votre combat ne peut pas être plus bas.",
+          "human": "Votre combat ne peut pas être plus bas."
+        }
+      },
+      "instinct": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Instinct Augmenté",
+          "human": "Instinct Gagné"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/instinct.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/instinct.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant à votre instinct maximum.",
+          "human": "Vous êtes maintenant à votre instinct maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà à votre instinct maximum.",
+          "human": "Vous êtes déjà à votre instinct maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Instinct Affaibli",
+          "human": "Instinct Perdu"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/instinct.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/instinct.png"
+        },
+        "hitFloor": {
+          "android": "Vous avez perdu vos instincts.",
+          "human": "Vous avez perdu vos instincts."
+        },
+        "pastFloor": {
+          "android": "Votre instinct ne peut pas être plus bas.",
+          "human": "Votre instinct ne peut pas être plus bas."
+        }
+      },
+      "loyalty": {
+        "check": {
+          "android": "Vous gagnez un peu de confiance en vos capacités.",
+          "human": "Vous gagnez un peu de confiance en vos capacités."
+        },
+        "increase": {
+          "android": "Données récupérées. Partition centrale de données restaurée.",
+          "human": "Vous commencez à vous sentir comme avant."
+        },
+        "increaseHeader": {
+          "android": "Loyauté Augmentée",
+          "human": "Loyauté Gagnée"
+        },
+        "increaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/loyalty.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/loyalty.png"
+        },
+        "hitCeiling": {
+          "android": "Vous êtes maintenant à votre loyauté maximum.",
+          "human": "Vous êtes maintenant à votre loyauté maximum."
+        },
+        "pastCeiling": {
+          "android": "Vous êtes déjà à votre loyauté maximum.",
+          "human": "Vous êtes déjà à votre loyauté maximum."
+        },
+        "decrease": {
+          "android": "Dommage à la partition centrale détecté. Secteurs irrécupérables trouvés.",
+          "human": "Vous sentez une partie de vous-même s'éloigner."
+        },
+        "decreaseHeader": {
+          "android": "Loyauté Affaiblie",
+          "human": "Loyauté Perdue"
+        },
+        "decreaseImg": {
+          "android": "systems/mothership-fr/images/icons/ui/attributes/loyalty.png",
+          "human": "systems/mothership-fr/images/icons/ui/attributes/loyalty.png"
+        },
+        "hitFloor": {
+          "android": "Vous ne vous souciez que de vous-même.",
+          "human": "Vous ne vous souciez que de vous-même."
+        },
+        "pastFloor": {
+          "android": "Votre loyauté ne peut pas être plus basse.",
+          "human": "Votre loyauté ne peut pas être plus basse."
+        }
+      }
+    },
+    "macro": {
+      "wound": {
+        "bleeding": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.1DD8i6eCS6nx2Ip0]{Saignement}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.1DD8i6eCS6nx2Ip0]{Saignement}"
+        },
+        "bleeding_dis": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.xr2o2PU5vdrR6fxQ]{Saignement [-]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.xr2o2PU5vdrR6fxQ]{Saignement [-]}"
+        },
+        "bleeding_adv": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.tFcWNddtZvlv7tsg]{Saignement [+]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.tFcWNddtZvlv7tsg]{Saignement [+]}"
+        },
+        "blunt_force": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.TAjlQjA5AAy3qYL3]{Force Contondante}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.TAjlQjA5AAy3qYL3]{Force Contondante}"
+        },
+        "blunt_force_dis": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.k0zf8ZGivRguc0wb]{Force Contondante [-]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.k0zf8ZGivRguc0wb]{Force Contondante [-]}"
+        },
+        "blunt_force_adv": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.oL3GH0HoEPlP8vzG]{Force Contondante [+]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.oL3GH0HoEPlP8vzG]{Force Contondante [+]}"
+        },
+        "fire_explosives": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.bZi1qKmcKLFvnhZ2]{Feu & Explosifs}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.bZi1qKmcKLFvnhZ2]{Feu & Explosifs}"
+        },
+        "fire_explosives_dis": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.7rYhbDAaFeok1Daq]{Feu & Explosifs [-]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.7rYhbDAaFeok1Daq]{Feu & Explosifs [-]}"
+        },
+        "fire_explosives_adv": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.dJnQKDf0AlwK27QD]{Feu & Explosifs [+]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.dJnQKDf0AlwK27QD]{Feu & Explosifs [+]}"
+        },
+        "gore_massive": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.S9nnHKWYGSQmjQdp]{Carnage}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.S9nnHKWYGSQmjQdp]{Carnage}"
+        },
+        "gore_massive_dis": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.eQPuDgwv8evetFIk]{Carnage [-]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.eQPuDgwv8evetFIk]{Carnage [-]}"
+        },
+        "gore_massive_adv": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.DuVjNlE4lsnR7Emc]{Carnage [+]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.DuVjNlE4lsnR7Emc]{Carnage [+]}"
+        },
+        "gunshot": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.XgCOLv9UunBddUyW]{Blessure par Balle}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.XgCOLv9UunBddUyW]{Blessure par Balle}"
+        },
+        "gunshot_dis": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.LTpa1ZYVZl4m9k6z]{Blessure par Balle [-]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.LTpa1ZYVZl4m9k6z]{Blessure par Balle [-]}"
+        },
+        "gunshot_adv": {
+          "android": "@UUID[Compendium.mothership-fr.macros_triggered_1e.fnVATRHYJEUlS3pR]{Blessure par Balle [+]}",
+          "human": "@UUID[Compendium.mothership-fr.macros_triggered_1e.fnVATRHYJEUlS3pR]{Blessure par Balle [+]}"
+        }
+      }
+    },
+    "CharacterGenerator": {
+      "name": "Générateur de Personnage",
+      "CommonSkills": "Compétences Communes",
+      "CommonSkillExplanation": "Ceci est une liste de compétences usuelles pour cette classe, utilisées pour la génération aléatoire de personnages.",
+      "StatOption": "Attributs & Sauvegardes",
+      "StatOptionPopupTitle": "Option Attributs et Sauvegardes de Classe",
+      "StatOptionPopupText": "Choisissez où appliquer le bonus de :",
+      "SkillOption.Classerror": "Vous devez d'abord sélectionner une classe.",
+      "SkillOption.PopupTitle": "Choisissez vos compétences",
+      "SkillOption.PopupTrainedDescription": "Choisissez 1 compétence Formée",
+      "SkillOption.PopupExpertDescription": "Choisissez 1 compétence Experte",
+      "SkillOption.PopupMasterDescription": "Choisissez 1 compétence Maître",
+      "SkillOption.PopupFullMasterName": "Ensemble Maître",
+      "SkillOption.PopupFullMasterDescription": "Choisissez 1 compétence Maître, et un prérequis de compétence Experte et Formée.",
+      "SkillOption.PopupFullExpertName": "Ensemble Expert",
+      "SkillOption.PopupFullExperDescription": "Choisissez 1 compétence Experte, et prérequis de compétence Formée.",
+      "SkillOption.ChoiceWord": "Option",
+      "SkillOption.ChoiceText": "Choisissez 1 de ces options de bonus de compétence",
+      "Tables": "Tables",
+      "Table.Loadout": "Table d'Équipement",
+      "Table.Patch": "Table d'Écusson",
+      "Table.Trinket": "Table de Bibelot",
+      "Error.NoClass": "Vous devez d'abord sélectionner une classe."
+    },
+    "Add": "Ajouter",
+    "AddOr": "Ajouter ou",
+    "AddOption": "Ajouter Option",
+    "AddGroup": "Ajouter Groupe",
+    "AddASkill": "Ajouter une Compétence ?",
+    "Advantage": "Avantage",
+    "AllStatsAndSavesDecreasedBy": "Tous les attributs et sauvegardes diminués de",
+    "Ammo": "Munitions",
+    "Ammunition": "Munitions",
+    "AmmoType": "Type de Munitions",
+    "AntiArmorAcronym": "AA",
+    "AntiArmor": "Anti-blindage",
+    "AP": "PA",
+    "Armor": "Blindage",
+    "ArmorName": "Nom du Blindage",
+    "ArmorPoints": "Points de Blindage",
+    "Background": "Historique",
+    "Bankruptcy": "Faillite",
+    "BankruptcyCheck": "Test de Faillite",
+    "BankruptcySave": "Sauvegarde de Faillite",
+    "Base": "Base",
+    "Battle": "Bataille",
+    "Bio": "Bio",
+    "Body": "Corps",
+    "BodySave": "Sauvegarde de Corps",
+    "Bonus": "Bonus",
+    "Calm": "Calme",
+    "Cargo": "Cargaison",
+    "CarryingCapacity": "Capacité de Transport",
+    "CLASS": "CLASSE",
+    "Combat": "Combat",
+    "Condition": "Condition",
+    "Cost": "Coût",
+    "CreateCondition": "Créer Condition",
+    "CreateItem": "Créer Objet",
+    "CreateSkill": "Créer Compétence",
+    "CreateWeapon": "Créer Arme",
+    "CreatureSettings": "Paramètres de Créature",
+    "Credits": "Crédits",
+    "Crew": "Équipage",
+    "CriticalDamage": "Dégâts Critiques",
+    "Cryopods": "Pods de Cryogénie",
+    "CryofreezeDamage": "Dégâts de Cryocongélation",
+    "Current": "Actuel",
+    "CurrentShots": "Tirs Actuels",
+    "CurrentWeight": "Poids Actuel",
+    "Damage": "Dégâts",
+    "DeleteArmor": "Supprimer Blindage",
+    "DeleteCondition": "Supprimer Condition",
+    "DeleteItem": "Supprimer Objet",
+    "DeleteSkill": "Supprimer Compétence",
+    "DeleteWeapon": "Supprimer Arme",
+    "DeleteGroup": "Supprimer Groupe",
+    "DeleteOption": "Supprimer Option",
+    "Description": "Description",
+    "Disabled": "Désactivé",
+    "Disadvantage": "Désavantage",
+    "DistressSignal": "Signal de Détresse",
+    "DistressSignalTableExplanation": "Lance cette table pour déterminer la réponse au signal de détresse envoyé par l'équipage.",
+    "DoNotAddASkillToThisRoll": "N'ajoutez pas de compétence à ce jet.",
+    "DMGReduction": "Réduction de Dégâts",
+    "DR": "RD",
+    "Fuel": "Carburant",
+    "Feature": "Caractéristique",
+    "Features": "Caractéristiques",
+    "EditArmor": "Modifier Blindage",
+    "EditCondition": "Modifier Condition",
+    "EditItem": "Modifier Objet",
+    "EditSkill": "Modifier Compétence",
+    "EditWeapon": "Modifier Arme",
+    "Equipped": "Équipé",
+    "Emergency": "Urgence",
+    "Enabled": "Activé",
+    "EnemyShips": "Vaisseaux Ennemis",
+    "EscapePods": "Capsules d'Évacuation",
+    "Fear": "Peur",
+    "Finish": "Terminer",
+    "Finances": "Finances",
+    "Health": "Santé",
+    "HighScore": "Meilleur Score",
+    "Hits": "Touches",
+    "HullPoints": "Points de Coque",
+    "Installed": "Installé",
+    "Instinct": "Instinct",
+    "Intellect": "Intellect",
+    "ItemName": "Nom de l'Objet",
+    "Item": "Objet",
+    "Items": "Objets",
+    "Level": "Niveau",
+    "Loyalty": "Loyauté",
+    "Macros": "Macros",
+    "MaintenanceAndRepairs": "Maintenance & Réparations",
+    "MaintenanceCheck": "Vérification de Maintenance",
+    "Maximum": "Maximum",
+    "MaxShots": "Tirs Max",
+    "MaxO2": "O2 Max",
+    "Megadamage": "Mégadégâts",
+    "MegadamageEffects": "Effets des Mégadégâts",
+    "Minimum": "Minimum",
+    "ModuleName": "Nom du Module",
+    "MoraleCheck": "Test de Moral",
+    "MoraleCheckDescription": "Après tout round de vaisseau où un ennemi subit des MDMG, il doit faire un Test de Moral. Pour faire un Test de Moral, lancez 1d10. Si le résultat est inférieur aux MDMG actuels, ils peuvent envoyer une communication offrant un cessez-le-feu et reprendre les négociations.",
+    "NA": "N/A",
+    "Name": "Nom",
+    "Next": "Suivant",
+    "Normal": "Normal",
+    "Notes": "Notes",
+    "O2Remaining": "O2 Restant",
+    "OK": "OK",
+    "OpenDeckplan": "Ouvrir Plan de Pont",
+    "Other": "Autre",
+    "Oxygen": "Oxygène",
+    "PanicCheck": "Test de Panique",
+    "Pronouns": "Pronoms",
+    "Quantity": "Quantité",
+    "RadiationDamage": "Dégâts de Radiation",
+    "Range": "Portée",
+    "RANK": "RANG",
+    "Repairs": "Réparations",
+    "Resolve": "Résolution",
+    "Robotic": "Robotique",
+    "RollingForGeneric": "Lancement pour {name}",
+    "RollingForPanicEffect": "Lancement pour effet de panique...",
+    "RollingForMaintenanceIssue": "Lancement pour problème de maintenance...",
+    "Sanity": "Sanité",
+    "SaveBonus": "Bonus de Sauvegarde",
+    "Severity": "Sévérité",
+    "ShipIdentifier": "Identifiant du Vaisseau",
+    "ShipWeaponBonus": "Bonus d'Arme de Vaisseau",
+    "Shots": "Tirs",
+    "ShotsPerFiring": "Tirs par Tir",
+    "SkillBonus": "Bonus de Compétence",
+    "SkillName": "Nom de Compétence",
+    "SkillRank": "Rang de Compétence",
+    "SkillRankTrained": "Formé",
+    "SkillRankExpert": "Expert",
+    "SkillRankMaster": "Maître",
+    "Skills": "Compétences",
+    "SpecialAbilities": "Capacités Spéciales",
+    "Speed": "Vitesse",
+    "StatsAndSaves": "Attributs & Sauvegardes",
+    "Strength": "Force",
+    "Stress": "Stress",
+    "StressResponse": "Réponse au Stress",
+    "Systems": "Systèmes",
+    "Thrusters": "Propulseurs",
+    "Total": "Total",
+    "TraumaResponse": "Réponse au Trauma",
+    "Transponder": "Transpondeur",
+    "Treatment": "Traitement",
+    "Upgrades": "Améliorations",
+    "UsesAmmo": "Utilise Munitions",
+    "Value": "Valeur",
+    "WarpCores": "Noyaux de Distorsion",
+    "WeaponName": "Nom d'Arme",
+    "Weapons": "Armes",
+    "Weight": "Poids",
+    "Wounds": "Blessures",
+    "WoundEffect": "Effet de Blessure",
+    "XP": "XP",
+    "YouRolled90OrHigher": "Vous avez obtenu 90 ou plus, ce qui est toujours considéré comme un échec.",
+    "HEARTATTACKSHORTCIRCUITANDROIDS": "CRISE CARDIAQUE / COURT-CIRCUIT (ANDROÏDES).",
+    "SHORTCIRCUIT": "COURT-CIRCUIT.",
+    "HEARTATTACK": "CRISE CARDIAQUE.",
+    "SelectAStat": "Sélectionner un Attribut",
+    "ChooseTheStatForSkillCheck": "Choisissez l'Attribut qui correspond le mieux à la nature de ce Test de Compétence. Vous ajouterez le bonus de compétence à la valeur de l'Attribut pour ce jet",
+    "GivingYouAHigherNumber": "(vous donnant un nombre plus élevé sous lequel faire le jet).",
+    "StrengthSkillExample": "Maintenir les écoutilles fermées, porter des camarades tombés, escalader, pousser, sauter.",
+    "SpeedSkillExample": "Sortir de la soute avant que les portes explosives se ferment, agir avant quelqu'un (ou quelque chose) d'autre, courir.",
+    "IntellectSkillExample": "Se souvenir de votre formation et expérience sous pression, réfléchir à des problèmes difficiles, inventer ou réparer des choses.",
+    "CombatSkillExample": "Se battre pour sa vie.",
+    "SelectYourRollType": "Sélectionnez votre type de jet",
+    "ChooseAStat": "Choisir un Attribut",
+    "SwarmWoundShort": "B*",
+    "IfYouHaveARelevantSkill": "Si vous avez une Compétence pertinente pour la tâche, vous pouvez ajouter le bonus de cette Compétence à votre Attribut ou Sauvegarde avant de faire le jet",
+    "HeavyCover": "Couverture Lourde",
+    "Cover": "Couverture",
+    "NoCover": "Pas de Couverture",
+    "LightCover": "Couverture Légère",
+    "InsignificantCover": "Couverture Insignifiante",
+    "SelectYourCurrentCoverSituation": "Sélectionnez votre situation de couverture actuelle",
+    "TheEnvironmentCanProvideProtectionCalled": "L'environnement peut fournir une protection appelée",
+    "IfYouShotWhileInCover": "Si vous tirez en étant à couvert, vous serez considéré comme hors couverture jusqu'à votre prochain tour.",
+    "ItCanBeDestroyedLikeArmor": "Elle peut être détruite, comme le blindage, chaque fois qu'elle reçoit des dégâts supérieurs ou égaux à ses PA. La couverture protège normalement seulement contre les attaques à distance, mais dans certaines situations peut aider à bloquer une attaque au corps à corps.",
+    "YourCoverValuesAreDisplayedIn": "Vos valeurs de couverture sont affichées en",
+    "Orange": "orange",
+    "UnprotectedOutInTheOpen": "Non protégé, à découvert, etc.",
+    "WoodFurnitureDoorsShields": "Meubles/portes en bois, boucliers corporels, etc.",
+    "TreesBulkheadWallMetalFurniture": "Arbres, cloisons, meubles métalliques, etc.",
+    "AirlockDoorsCementBeamsShips": "Portes de sas, poutres de ciment, vaisseaux, etc.",
+    "WeaponReloaded": "Arme rechargée",
+    "Reload": "Recharger",
+    "OutOfAmmo": "Plus de munitions",
+    "OutOfAmmoNeedReload": "Plus de munitions, vous devez recharger",
+    "WeaponIssue": "Problème d'arme",
+    "YouAddThisToYourInventory": "Vous ajoutez ceci à votre inventaire.",
+    "YouLearnThisSkill": "Vous apprenez cette compétence",
+    "YouAddAnotherOfThisToYourInventory": "Vous ajoutez un autre de ceux-ci à votre inventaire.",
+    "HealthZeroMessage": "Votre santé a atteint zéro et vous devez subir une blessure.",
+    "HealthZeroMessage2": "Votre santé a atteint zéro et vous devez subir une blessure. Votre santé a été remise à ",
+    "YouSenseTheWeightOfYourSetbacks": "Vous ressentez le poids de vos revers.",
+    "Bankrupcy": "Faillite",
+    "BankrupcySave": "Sauvegarde de Faillite",
+    "RestSave": "Sauvegarde de Repos",
+    "Job": "Métier"
+  },
+  "MoshQoL": {
+    "GenericContractor": "Contractuel Générique",
+    "UniqueContractor": "Contractuel Unique",
+    "ContractorRole": "Profession",
+    "BaseSalary": "Salaire de Base",
+    "Motivation": "Motivation",
+    "EnterMotivation": "Ce qui pousse le Contractuel.",
+    "HiddenMotivation": "Motivation Secrète (MJ seulement)",
+    "EnterHiddenMotivation": "Visible uniquement par le MJ",
+    "LoyaltyRolled": "Loyauté Lancée",
+    "CharacterCreation": {
+      "NoActorProvided": "Aucun acteur fourni.",
+      "AlreadyCompleted": "Personnage Déjà Complété",
+      "AlreadyCompletedContent": "<p><strong>{name}</strong> a déjà terminé la création de personnage.<br>Voulez-vous réinitialiser et recommencer ?</p>",
+      "ResetComplete": "La création de personnage pour {name} a été réinitialisée.",
+      "Cancelled": "Création de personnage annulée.",
+      "AlreadyCompletedWarning": "Création de personnage déjà terminée.",
+      "Warning": "Créateur de Personnage : Avertissement",
+      "WarningContent": "<p>Aucune donnée valide de créateur de personnage trouvée pour <strong>{name}</strong> !</p><p>Continuer pourrait <strong><span style=\"color: #f55;\">écraser</span></strong> un personnage existant.</p><p>Veuillez choisir une action :</p>",
+      "Overwrite": "Écraser",
+      "MarkCompleted": "Marquer Complété",
+      "Cancel": "Annuler",
+      "MarkedCompleted": "{name} a été marqué comme complété manuellement.",
+      "StatsRolled": "Statistiques Lancées",
+      "Stats": "Stats",
+      "Saves": "Sauvegardes",
+      "ClassSelected": "Classe Sélectionnée",
+      "ClassSelectedContent": "{name} a choisi une classe : <label class=\"counter\">{className}</label>",
+      "ClassInvalid": "UUID de classe invalide. Veuillez resélectionner.",
+      "NoClassUUID": "Aucun UUID de classe trouvé. Veuillez sélectionner une classe.",
+      "ClassSelectionCancelled": "Sélection de classe annulée.",
+      "AttributeSelectionCancelled": "Sélection d'attributs annulée.",
+      "HealthRolled": "Santé Lancée",
+      "SkillsSelected": "Compétences Sélectionnées",
+      "SkillSelectionCancelled": "Sélection de compétences annulée.",
+      "LoadoutRolled": "Équipement Lancé",
+      "Complete": "{name} a terminé la création de personnage."
+    },
+    "ShoreLeave": {
+      "Title": "Sélectionner Niveau de Congé à Terre",
+      "NoActorProvided": "Aucun acteur fourni.",
+      "StressConversion": "Conversion de Stress",
+      "Price": "Prix",
+      "RollPrice": "Lancer le Prix",
+      "RerollFlavor": "Relancer le Parfum",
+      "Confirm": "Confirmer",
+      "ParticipateNow": "Participer Maintenant",
+      "InvalidTier": "Niveau invalide sélectionné.",
+      "Default": "Congé à Terre"
+    },
+    "ShipCrits": {
+      "NoCrit": "Aucun critique trouvé pour : {value}",
+      "CriticalHit": "{name} touché critique",
+      "CriticalHitGeneric": "Vaisseau touché critique",
+      "EscalateCrit": "Escalader Critique"
+    },
+    "StashSheet": {
+      "Title": "Réserve"
+    },
+    "EditShoreLeaveTiers": {
+      "Title": "Modifier Niveaux de Congé à Terre",
+      "Reset": "Niveaux de congé à terre réinitialisés aux valeurs par défaut.",
+      "Updated": "Niveaux de Congé à Terre mis à jour."
+    },
+    "ConvertStress": {
+      "Title": "Convertir le Stress",
+      "InvalidRatio": "Ratio de conversion invalide ou zéro.",
+      "NoStress": "Aucun stress à convertir.",
+      "DistributionTitle": "Distribution du Stress",
+      "TotalStress": "Stress Total",
+      "RemainingPoints": "Points Restants",
+      "Apply": "Appliquer",
+      "Cancel": "Annuler",
+      "Updated": "Stress mis à jour pour {name}.",
+      "ConvertedContent": "Stress Converti : <label class=\"counter\">{points}</label>"
+    },
+    "UI": {
+      "NoActorAvailable": "Aucun acteur disponible pour la sortie du chat.",
+      "Untitled": "Sans titre",
+      "SelectAttributes": "Sélectionner les Attributs",
+      "SelectClass": "Sélectionner la Classe",
+      "SelectSkills": "Sélectionner les Compétences",
+      "Confirm": "Confirmer",
+      "Cancel": "Annuler",
+      "Apply": "Appliquer",
+      "Save": "Sauvegarder",
+      "Reset": "Réinitialiser",
+      "Close": "Fermer"
+    },
+    "Skills": {
+      "Trained": "Entraîné",
+      "Expert": "Expert",
+      "Master": "Maître"
+    },
+    "Attributes": {
+      "Strength": "Force",
+      "Speed": "Vitesse",
+      "Intellect": "Intellect",
+      "Combat": "Combat",
+      "Sanity": "Sanité",
+      "Fear": "Peur",
+      "Body": "Corps"
+    },
+    "Settings": {
+      "ThemeColor": "Couleur du Thème",
+      "ThemeColorHint": "Couleur principale utilisée dans l'interface du module",
+      "RandomFlavor": "Parfum Aléatoire",
+      "RandomFlavorHint": "Activer le parfum aléatoire pour les congés à terre",
+      "DisableFlavor": "Désactiver le Parfum",
+      "DisableFlavorHint": "Désactiver complètement les éléments de parfum"
+    }
+  }
+}
