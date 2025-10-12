@@ -42,8 +42,21 @@ export class DLShipMegaDamage extends FormApplication {
 
         //A script to return the data from a table.
         let tableId = game.settings.get('mothership-fr','table1eMegadamageEffects');
+        
+        // Si aucune table n'est configurée, retourner des données vides
+        if (!tableId) {
+          console.warn('Table Megadamage non configurée. Utilisez les paramètres du système.');
+          return { megadamageHTML: "", entries: [] };
+        }
+        
         //get table data
         let tableData = await fromIdUuid(tableId,{type:"RollTable"});
+        
+        // Vérification si la table existe
+        if (!tableData) {
+          console.error(`Table Megadamage non trouvée pour l'ID: ${tableId}`);
+          return { megadamageHTML: "", entries: [] };
+        }
 
         let entries = Array.from(tableData.results.entries());
 

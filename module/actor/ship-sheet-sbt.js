@@ -178,6 +178,13 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
         const actorData = sheetData;
         //A script to return the data from a table.
         let tableId = game.settings.get('mothership-fr', 'table1eMegadamageEffects');
+        
+        // Si aucune table n'est configurée, retourner un HTML vide
+        if (!tableId) {
+          console.warn('Table Megadamage non configurée. Utilisez les paramètres du système.');
+          return "";
+        }
+        
         //get table data
         let tableData = await fromIdUuid(tableId,{type:"RollTable"});
 

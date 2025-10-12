@@ -39,7 +39,12 @@ export class DLShipSetup extends FormApplication {
         // Starting Conditions
         html.find('.conditions-button').click(ev => {
             //roll starting conditions
-            this.object.rollTable('kqz8GsFVPfjvqO0N','1d5+1','low',true,false,null,null);
+            let tableId = game.settings.get('mothership-fr', 'table1eMaintenance');
+            if (tableId) {
+                this.object.rollTable(tableId,'1d5+1','low',true,false,null,null);
+            } else {
+                ui.notifications.warn('Table de maintenance non configurée. Utilisez les paramètres du système.');
+            }
         });
 
         // Close Button

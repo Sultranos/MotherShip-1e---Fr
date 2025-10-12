@@ -445,14 +445,14 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "kqz8GsFVPfjvqO0N"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eBankruptcy', {
     scope: 'world',
     config: false,
     type: String,
-    default: "BsfdIl7CJNs1PViS"
+    default: ""
   });
 
 };
