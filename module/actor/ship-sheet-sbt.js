@@ -181,6 +181,13 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
         //get table data
         let tableData = await fromIdUuid(tableId,{type:"RollTable"});
 
+        // Vérification si la table existe
+        if (!tableData) {
+          console.error(`Table Megadamage non trouvée pour l'ID: ${tableId}`);
+          // Retourner un HTML vide ou par défaut si la table n'existe pas
+          return "";
+        }
+
         let megadamageHTML = "";
 
         let entries = Array.from(tableData.results.entries());

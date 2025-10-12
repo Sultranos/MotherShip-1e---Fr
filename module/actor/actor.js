@@ -521,6 +521,13 @@ export class MothershipActor extends Actor {
   async getRollTableData(tableId){
 
     let tableData = await fromIdUuid(tableId,{type:"RollTable"});
+    
+    // Vérification si la table existe
+    if (!tableData) {
+      console.error(`Table non trouvée pour l'ID: ${tableId}`);
+      return null;
+    }
+    
     //get table name
     let tableName = tableData.name;
     //get table name
@@ -682,6 +689,14 @@ export class MothershipActor extends Actor {
       }
 
       let tableData = await fromIdUuid(tableId,{type:"RollTable"});
+      
+      // Vérification si la table existe
+      if (!tableData) {
+        console.error(`Table non trouvée pour l'ID: ${tableId}`);
+        ui.notifications.error(`Table non trouvée. Vérifiez que les compendiums sont correctement chargés.`);
+        return;
+      }
+      
       //get current compendium
       //get table name
       let tableName = tableData.name;
@@ -1659,6 +1674,12 @@ export class MothershipActor extends Actor {
           let tableId = game.settings.get('mothership-fr','table1eBankruptcy');
           //get Table Data
           let tableData = await fromIdUuid(tableId,{type:"RollTable"});
+          
+          // Vérification si la table existe
+          if (!tableData) {
+            console.error(`Table Bankruptcy non trouvée pour l'ID: ${tableId}`);
+            flavorText = "Table de bankruptcy non trouvée.";
+          } else {
           //prep text for success
           if (parsedRollResult.success && parsedRollResult.critical) {
             //flavor text
@@ -1676,6 +1697,7 @@ export class MothershipActor extends Actor {
             //flavor text
             flavorText = tableData.getResultsForRoll(3)[0].text;
           }
+          } // Fermeture de l'else pour vérification tableData
         }
         //morale check
         if (specialRoll === 'moraleCheck') {
@@ -2156,6 +2178,13 @@ export class MothershipActor extends Actor {
     let chatId = (game.release.generation >= 12 ? foundry.utils.randomID(): randomID())
     //get item data
     let itemData = await fromIdUuid(itemId,{type:"Item"});
+    
+    // Vérification si l'item existe
+    if (!itemData) {
+      console.error(`Item non trouvé pour l'ID: ${itemId}`);
+      return [null, null, null];
+    }
+    
     //add or increase the count of the item, depending on type, if the actor has it
     if (this.items.getName(itemData.name)) {
       //if this is an item, increase the count
@@ -2619,7 +2648,7 @@ export class MothershipActor extends Actor {
     //wrap the whole thing in a promise, so that it waits for the form to be interacted with
     return new Promise(async (resolve) => {
       //create pop-up HTML
-      let msgContent = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/distres-signal-dialog.html');
+      let msgContent = await foundry.applications.handlebars.renderTemplate('systems/mothership-fr/templates/dialogs/distress-signal-dialog.html');
       
       //create final dialog data
       const dialogData = {
@@ -2773,7 +2802,7 @@ export class MothershipActor extends Actor {
       </style>
       <div class ="macro_window" style="margin-bottom : 7px;">
         <div class="grid grid-2col" style="grid-template-columns: 150px auto">
-          <div class="macro_img"><img src="icon_file_macro_momnsrale_check.png" style="border:none"/></div>
+          <div class="macro_img"><img src="systems/mothership-fr/images/icons/ui/macros/morale_check.png" style="border:none"/></div>
           <div class="macro_desc"><h3>${moraleCheck}</h3>${moraleCheckDescription}</div>
         </div>
       </div>
