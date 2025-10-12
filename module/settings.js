@@ -431,28 +431,28 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: ""
+    default: "UxAjAqUTjYTcCbS8"
   });
 
   game.settings.register('mothership-fr', 'table1eMegadamageEffects', {
     scope: 'world',
     config: false,
     type: String,
-    default: ""
+    default: "AqGWwoWXzijFs427"
   });
 
   game.settings.register('mothership-fr', 'table1eMaintenance', {
     scope: 'world',
     config: false,
     type: String,
-    default: ""
+    default: "kqz8GsFVPfjvqO0N"
   });
 
   game.settings.register('mothership-fr', 'table1eBankruptcy', {
     scope: 'world',
     config: false,
     type: String,
-    default: ""
+    default: "BsfdIl7CJNs1PViS"
   });
 
 };
