@@ -84,7 +84,7 @@ export async function selectSkills(actor, selectedClass) {
 
   return new Promise((resolve) => {
     const dlg = new Dialog({
-      title: `Select Skills for ${actor.name}`,
+      title: `Sélection des Compétences pour ${actor.name}`,
       content: html,
       buttons: {},
       close: () => {

@@ -4,17 +4,17 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   if (!actor || !selectedClass) return false;
 
   const DEFAULT_IMAGES = {
-    Loadout: "modules/mothership-fr/icons/rolltables/loadouts.png",
-    Patches: "modules/mothership-fr/icons/rolltables/patch.png",
-    Trinkets: "modules/mothership-fr/icons/rolltables/trinket.png"
+    Loadout: "modules/mothership-fr/images/icons/rolltables/loadouts.png",
+    Patches: "modules/mothership-fr/images/icons/rolltables/patch.png",
+    Trinkets: "modules/mothership-fr/images/icons/rolltables/trinket.png"
   };
 
   const classData = selectedClass.system ?? selectedClass; // Support for Item or raw data
   const tableUUIDs = [
-    classData.roll_tables?.loadout,
-    classData.roll_tables?.patch,
-    classData.roll_tables?.trinket
-  ].filter(Boolean);
+  classData.roll_tables?.equipement,
+  classData.roll_tables?.patchs,
+  classData.roll_tables?.bibelots
+].filter(Boolean);
 
   const allItems = { Weapons: [], Armor: [], Items: [] };
   const itemsToCreate = [];
@@ -69,7 +69,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   }
 
   if (itemsToCreate.length > 0) {
-    await actor.createEmbeddedDocuments("Item", itemsToCreate);
+    await actor.createEmbeddedDocuments("Item", [loadoutItemData]);
   }
 
   // 💬 Chat output
