@@ -4,9 +4,9 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   if (!actor || !selectedClass) return false;
 
   const DEFAULT_IMAGES = {
-    Loadout: "modules/fvtt_mosh_1e_psg/icons/rolltables/loadouts.png",
-    Patches: "modules/fvtt_mosh_1e_psg/icons/rolltables/patch.png",
-    Trinkets: "modules/fvtt_mosh_1e_psg/icons/rolltables/trinket.png"
+    Loadout: "modules/mothership-fr/icons/rolltables/loadouts.png",
+    Patches: "modules/mothership-fr/icons/rolltables/patch.png",
+    Trinkets: "modules/mothership-fr/icons/rolltables/trinket.png"
   };
 
   const classData = selectedClass.system ?? selectedClass; // Support for Item or raw data

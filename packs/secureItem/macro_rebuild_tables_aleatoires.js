@@ -13,61 +13,585 @@
     
     // Données sécurisées des tables aléatoires françaises
     const tablesAleatoiresFR = {
-        "0iX1VnkeNXniWqR6": {
-            name: "Équipement : Marine",
-            img: "systems/mothership-fr/images/icons/rolltables/loadouts.png",
-            description: "<p>Votre <strong>Équipement</strong> contient les armes, l'armure et les autres équipements avec lesquels vous commencez. Certains sont meilleurs que d'autres, mais tous sont utiles entre les mains d'une personne désespérée.</p>",
-            formula: "1d10-1",
-            replacement: true,
-            displayRoll: true,
-            results: [
-                {
+       "0iX1VnkeNXniWqR6": {
+                name: "Équipement : Marine",
+                img: "systems/mothership-fr/images/icons/rolltables/loadouts.png",
+                description: "<p>Votre <strong>Équipement</strong> contient les armes, l'armure et les autres équipements avec lesquels vous commencez. Certains sont meilleurs que d'autres, mais tous sont utiles entre les mains d'une personne désespérée.</p>",
+                formula: "1d10-1",
+                replacement: true,
+                displayRoll: true,
+                results: [
+                    {
                     "_id": "Jf796fNk6locbbAV",
                     "type": 2,
-                    "documentCollection": "mothership-fr.armures_1e",
+                    "documentCollection": "mothership-fr.items_armor_1e",
                     "documentId": "xHChDb3VBytV5CKV",
-                    "text": "Débardeur & Pantalon de Camouflage",
+                    "text": "Tank Top & Camo Pants",
                     "img": "systems/mothership-fr/images/icons/armor/tank_top_&_camo_pants.png",
                     "weight": 1,
                     "range": [0, 0],
                     "drawn": false
-                },
-                {
+                    },
+                    {
+                    "_id": "UTBxfFRl6kaFffMA",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "EkA39xa1vq6SghtP",
+                    "text": "Stimpak",
+                    "img": "systems/mothership-fr/images/icons/equipment/stimpak.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "N5DbNxPDqhcguI1k",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "EkA39xa1vq6SghtP",
+                    "text": "Stimpak",
+                    "img": "systems/mothership-fr/images/icons/equipment/stimpak.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "bw6Afoqw7hdm2b0l",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "EkA39xa1vq6SghtP",
+                    "text": "Stimpak",
+                    "img": "systems/mothership-fr/images/icons/equipment/stimpak.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "Xz45m6NVum7l2138",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "EkA39xa1vq6SghtP",
+                    "text": "Stimpak",
+                    "img": "systems/mothership-fr/images/icons/equipment/stimpak.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "tLJc7hsI8IhFTXNb",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "EkA39xa1vq6SghtP",
+                    "text": "Stimpak",
+                    "img": "systems/mothership-fr/images/icons/equipment/stimpak.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "A9T4RAEATrcCE9iF",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "RSfzogv0n9ur74E0",
+                    "text": "Combat Knife",
+                    "img": "systems/mothership-fr/images/icons/weapons/combat_knife.png",
+                    "weight": 1,
+                    "range": [0, 0],
+                    "drawn": false
+                    },
+                    {
                     "_id": "VlBTdYIgihAJ5CUZ",
                     "type": 2,
-                    "documentCollection": "mothership-fr.armures_1e",
+                    "documentCollection": "mothership-fr.items_armor_1e",
                     "documentId": "PYtrGqOBhX6AGqMi",
-                    "text": "Tenue de Combat Avancée",
+                    "text": "Advanced Battle Dress",
                     "img": "systems/mothership-fr/images/icons/armor/advanced_battle_dress.png",
                     "weight": 1,
                     "range": [1, 1],
                     "drawn": false
-                },
-                {
+                    },
+                    {
                     "_id": "fVyMIMqhm0NLWOuc",
                     "type": 2,
-                    "documentCollection": "mothership-fr.armes_1e",
+                    "documentCollection": "mothership-fr.items_weapons_1e",
                     "documentId": "cnqca4oK4UQbADZm",
-                    "text": "Hache d'Abordage",
+                    "text": "Boarding Axe",
                     "img": "systems/mothership-fr/images/icons/weapons/boarding_axe.png",
                     "weight": 1,
                     "range": [1, 1],
                     "drawn": false
-                },
-                {
+                    },
+                    {
                     "_id": "VaUAvYoC8sDlTLSV",
                     "type": 2,
-                    "documentCollection": "mothership-fr.armes_1e",
+                    "documentCollection": "mothership-fr.items_weapons_1e",
                     "documentId": "EljnbOGT1jJzDliD",
-                    "text": "Lance-Flammes",
+                    "text": "Flamethrower",
                     "img": "systems/mothership-fr/images/icons/weapons/flamethrower.png",
                     "weight": 1,
                     "range": [1, 1],
                     "drawn": false
+                    },
+                    {
+                    "_id": "tj9Bo87I93hgWraE",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "jNUG7pjCIi7O0NPZ",
+                    "text": "Standard Battle Dress",
+                    "img": "systems/mothership-fr/images/icons/armor/standard_battle_dress.png",
+                    "weight": 1,
+                    "range": [2, 2],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "scPhlQbX1kKxPtOA",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "COXIh1YyOTYWICFp",
+                    "text": "Camping Gear",
+                    "img": "systems/mothership-fr/images/icons/equipment/camping_gear.png",
+                    "weight": 1,
+                    "range": [2, 2],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "pVDs6h0S1xIkpowW",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XibKV1zaiMMY8jrn",
+                    "text": "Rucksack",
+                    "img": "systems/mothership-fr/images/icons/equipment/rucksack.png",
+                    "weight": 1,
+                    "range": [2, 2],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "rKTxSQws1tuEuK3Z",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "vtIyOvQKdtuqHkRM",
+                    "text": "Combat Shotgun",
+                    "img": "systems/mothership-fr/images/icons/weapons/combat_shotgun.png",
+                    "weight": 1,
+                    "range": [2, 2],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "TiPj9JMEJyvSwoNr",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "jNUG7pjCIi7O0NPZ",
+                    "text": "Standard Battle Dress",
+                    "img": "systems/mothership-fr/images/icons/armor/standard_battle_dress.png",
+                    "weight": 1,
+                    "range": [3, 3],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "dZUDmT3edh4s5zpT",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [3, 3],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "1XeC5BKpd0nyzhx1",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [3, 3],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "1D0zDmcYhMGtc4PM",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "Paw9q0OG6YIl5941",
+                    "text": "Infrared Goggles",
+                    "img": "systems/mothership-fr/images/icons/equipment/infrared_goggles.png",
+                    "weight": 1,
+                    "range": [3, 3],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "LTNRLF3wqhBEi7Y0",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "wTfDJR33Qkqyu7yp",
+                    "text": "Pulse Rifle",
+                    "img": "systems/mothership-fr/images/icons/weapons/pulse_rifle.png",
+                    "weight": 1,
+                    "range": [3, 3],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "B2cU3QmRWR0gUu8N",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "jNUG7pjCIi7O0NPZ",
+                    "text": "Standard Battle Dress",
+                    "img": "systems/mothership-fr/images/icons/armor/standard_battle_dress.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "0nJKvVVSB9L5a3ko",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "SGQEzgLb5x3mYfYd",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "F7zAPf9CuEpZcTIC",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "a39zXRy6E5cTbDoA",
+                    "text": "Binoculars",
+                    "img": "systems/mothership-fr/images/icons/equipment/binoculars.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "tY6SYeynOJSflLxE",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "nvJvf6EbBIFpJ94E",
+                    "text": "Personal Locator",
+                    "img": "systems/mothership-fr/images/icons/equipment/personal_locator.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "OFEAoQyvsIQWWM7b",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "tJImioEC7juWlCQ9",
+                    "text": "Smart Rifle",
+                    "img": "systems/mothership-fr/images/icons/weapons/smart_rifle.png",
+                    "weight": 1,
+                    "range": [4, 4],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "Tfy7g6v9ortGWA8N",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "jNUG7pjCIi7O0NPZ",
+                    "text": "Standard Battle Dress",
+                    "img": "systems/mothership-fr/images/icons/armor/standard_battle_dress.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "DPXpHQF4P4kNt1I3",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "u04jgZZpxMMfR554",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "vTSkx5HdwwFC4Vkp",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "gZG2iaMez96zXIQF",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "aGfyLobD9kfhveew",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "9FQsQ6ZEmmrOaqzg",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "Ivnp9VDTNZHAXYtk",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "UZimTr0zMUOGqRnZ",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "oX6YLm1S5EIbOnWp",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "XJvPld6W5IHUSMxo",
+                    "text": "MRE",
+                    "img": "systems/mothership-fr/images/icons/equipment/mre.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "xnQcoY3hAehW91Mz",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "boqUPFJbGBET0Th5",
+                    "text": "SMG",
+                    "img": "systems/mothership-fr/images/icons/weapons/smg.png",
+                    "weight": 1,
+                    "range": [5, 5],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "BHAj383X3WSBDR4e",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "gIP02dvRhyoS7N5k",
+                    "text": "Fatigues",
+                    "img": "systems/mothership-fr/images/icons/armor/fatigues.png",
+                    "weight": 1,
+                    "range": [6, 6],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "9j6QEQVDDmI7truL",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "kWAgoLy1AuhUln9f",
+                    "text": "Dog",
+                    "img": "systems/mothership-fr/images/icons/equipment/dog.png",
+                    "weight": 1,
+                    "range": [6, 6],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "FFFhcImsoKf1UBvo",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "4ZD7sSOQGFJrue8P",
+                    "text": "Leash",
+                    "img": "systems/mothership-fr/images/icons/equipment/leash.png",
+                    "weight": 1,
+                    "range": [6, 6],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "lmqxsq80PYExTPgn",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "Nu9fQh3kQWukvrls",
+                    "text": "Tennis Ball",
+                    "img": "systems/mothership-fr/images/icons/equipment/tennis_ball.png",
+                    "weight": 1,
+                    "range": [6, 6],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "j4XoWjLN1PrtEAzW",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "vtIyOvQKdtuqHkRM",
+                    "text": "Combat Shotgun",
+                    "img": "systems/mothership-fr/images/icons/weapons/combat_shotgun.png",
+                    "weight": 1,
+                    "range": [6, 6],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "xblt2OP8RIi9pDGx",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "gIP02dvRhyoS7N5k",
+                    "text": "Fatigues",
+                    "img": "systems/mothership-fr/images/icons/armor/fatigues.png",
+                    "weight": 1,
+                    "range": [7, 7],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "b6wdHZJZ4DHhsbgp",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "GnBHxFDlKW5q621M",
+                    "text": "Ammo",
+                    "img": "systems/mothership-fr/images/icons/equipment/ammo.png",
+                    "weight": 1,
+                    "range": [7, 7],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "sdRepk9B04aGapZp",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "vSXi8pqFh99goyiy",
+                    "text": "Frag Grenade",
+                    "img": "systems/mothership-fr/images/icons/weapons/frag_grenade.png",
+                    "weight": 1,
+                    "range": [7, 7],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "VRmNUm6c7wE2TwSZ",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "TlUbDBpALeBvrVZb",
+                    "text": "Revolver",
+                    "img": "systems/mothership-fr/images/icons/weapons/revolver.png",
+                    "weight": 1,
+                    "range": [7, 7],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "IG7iS8lf5ZCfC6Sp",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "5XT5Y1nCMSslpK7j",
+                    "text": "Dress Uniform",
+                    "img": "systems/mothership-fr/images/icons/armor/dress_uniform.png",
+                    "weight": 1,
+                    "range": [8, 8],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "tl48yqlzynQSFMko",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "NpVPgi5XxNlAuKd4",
+                    "text": "Challenge Coin",
+                    "img": "systems/mothership-fr/images/icons/equipment/challenge_coin.png",
+                    "weight": 1,
+                    "range": [8, 8],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "kf1i5pb3nf0kOPXL",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "TlUbDBpALeBvrVZb",
+                    "text": "Revolver",
+                    "img": "systems/mothership-fr/images/icons/weapons/revolver.png",
+                    "weight": 1,
+                    "range": [8, 8],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "ATsIjiGXgBVhsqW1",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_armor_1e",
+                    "documentId": "PYtrGqOBhX6AGqMi",
+                    "text": "Advanced Battle Dress",
+                    "img": "systems/mothership-fr/images/icons/armor/advanced_battle_dress.png",
+                    "weight": 1,
+                    "range": [9, 9],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "yLK4Mt68i34NfjoR",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_equipment_1e",
+                    "documentId": "DkMgyZ7cAAafwyI7",
+                    "text": "Heads-Up Display (HUD)",
+                    "img": "systems/mothership-fr/images/icons/equipment/heads_up_display_hud.png",
+                    "weight": 1,
+                    "range": [9, 9],
+                    "drawn": false
+                    },
+                    {
+                    "_id": "IGicEGfkoak4kOAK",
+                    "type": 2,
+                    "documentCollection": "mothership-fr.items_weapons_1e",
+                    "documentId": "8sy2u0XE4p8FWJ5Y",
+                    "text": "General-Purpose Machine Gun",
+                    "img": "systems/mothership-fr/images/icons/weapons/general_purpose_machine_gun.png",
+                    "weight": 1,
+                    "range": [9, 9],
+                    "drawn": false
+                    }
+                ],
+                "_stats": {
+                    "systemId": "mothership-fr",
+                    "systemVersion": "0.4.0",
+                    "coreVersion": "11.308",
+                    "createdTime": 1685936572185,
+                    "modifiedTime": 1693515520278,
+                    "lastModifiedBy": "6EeM38DJkcBWNAmw"
                 }
-                // Plus de résultats...
-            ]
-        },
+                },
         
         "1gHk2PlmNXfiWqS7": {
             name: "Équipement : Scientifique",
