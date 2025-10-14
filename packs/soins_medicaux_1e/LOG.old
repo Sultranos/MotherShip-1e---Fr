@@ -1,3 +1,5 @@
-2025/10/14-08:52:42.298 c4e4 Recovering log #16
-2025/10/14-08:52:42.307 c4e4 Delete type=0 #16
-2025/10/14-08:52:42.307 c4e4 Delete type=3 #14
+2025/10/14-22:16:54.356 ad30 Recovering log #21
+2025/10/14-22:16:54.356 ad30 Level-0 table #23: started
+2025/10/14-22:16:54.361 ad30 Level-0 table #23: 2999 bytes OK
+2025/10/14-22:16:54.369 ad30 Delete type=0 #21
+2025/10/14-22:16:54.369 ad30 Delete type=3 #20
