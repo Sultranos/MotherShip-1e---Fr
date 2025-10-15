@@ -52,6 +52,15 @@ Hooks.once('init', async function () {
     ShoreLeaveTierEditor
   };
 
+  // Expose rollLoadout dans l'API du module
+  try {
+    const { rollLoadout } = await import('./qol/character-creator/roll-loadout.js');
+    if (!game.modules.get('mothership-fr').api) game.modules.get('mothership-fr').api = {};
+    game.modules.get('mothership-fr').api.rollLoadout = rollLoadout;
+  } catch (e) {
+    console.warn('Impossible d\'importer rollLoadout pour l\'API :', e);
+  }
+
   registerSettings();
 
   // Enregistrer les paramètres QoL

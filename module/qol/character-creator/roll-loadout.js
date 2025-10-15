@@ -14,15 +14,24 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
 
   // Support Item ou data brut
   const classData = selectedClass.system ?? selectedClass;
-  // Tables à rouler (FR: equipement, ecussons, bibelots)
-  const tableUUIDs = [
-    classData.roll_tables?.equipement,
-    classData.roll_tables?.ecussons,
-    classData.roll_tables?.bibelots
-  ].filter(Boolean);
+  // Tables à rouler (supporte tous les champs possibles)
+  const tableUUIDs = [];
+  // Ajout dynamique des tables de loadout
+  if (classData.roll_tables) {
+    for (const key of Object.keys(classData.roll_tables)) {
+      if (classData.roll_tables[key]) tableUUIDs.push(classData.roll_tables[key]);
+    }
+  }
+  if (tableUUIDs.length === 0) {
+    ui.notifications.error("Aucune table de loadout trouvée dans la classe. Vérifiez la configuration des roll_tables dans le compendium de classes.");
+    console.warn("[QoL] Aucun UUID de table trouvé dans la classe:", classData);
+    return false;
+  }
 
   const allItems = { Weapons: [], Armor: [], Items: [] };
   const itemsToCreate = [];
+  // Debug: log table UUIDs
+  console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
 
   // Nettoyage inventaire si demandé
   if (clearItems) {
@@ -38,7 +47,10 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   // Rouler sur chaque table
   for (const uuid of tableUUIDs) {
     const table = await fromUuid(uuid);
-    if (!table) continue;
+    if (!table) {
+      console.warn(`[QoL] Table non trouvée pour UUID: ${uuid}`);
+      continue;
+    }
     const results = (await table.roll()).results;
 
     for (const result of results) {
@@ -78,7 +90,11 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
 
   // Création des items sur l'acteur
   if (itemsToCreate.length > 0) {
+    console.log("[QoL] Items à créer sur l'acteur:", itemsToCreate);
     await actor.createEmbeddedDocuments("Item", itemsToCreate);
+  } else {
+    ui.notifications.error("Aucun objet de loadout n'a pu être ajouté à l'acteur. Vérifiez la configuration des tables et des compendiums.");
+    console.warn("[QoL] Aucun item à ajouter. Table UUIDs:", tableUUIDs, "ItemsToCreate:", itemsToCreate);
   }
 
   // Affichage résumé dans le chat
