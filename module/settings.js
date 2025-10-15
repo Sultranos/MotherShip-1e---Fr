@@ -289,8 +289,8 @@ export const registerSettings = function () {
   });
 
   game.settings.register('mothership-fr', 'androidPanic', {
-    name: "Use Android Panic Tables?",
-    hint: "Adds android-specific tables for Panic and Calm checks.",
+    name: "Utiliser les tables de panique Android?",
+    hint: "Ajoute des tables spécifiques aux androids pour les tests de panique.",
     default: false,
     scope: 'world',
     type: Boolean,
@@ -302,8 +302,8 @@ export const registerSettings = function () {
   });
 
   game.settings.register('mothership-fr', 'autoStress', {
-    name: "Auto Stress Gain on Failures?",
-    hint: "Automatically handles stress gain on a failed roll.",
+    name: "Gain de Stress Automatique?",
+    hint: "Gère automatiquement le gain de stress lors d'un échec.",
     default: true,
     scope: 'world',
     type: Boolean,
@@ -315,53 +315,95 @@ export const registerSettings = function () {
   });
 
   game.settings.registerMenu('mothership-fr', 'rolltableSelector', {
-    name: "Sélection des tables aléatoires",
-    label: "Choisir des tables",
-    hint: "Personnalisez les tables aléatoires utilisées.",
+    name: "Configuration des tables",
+    label: "Choisir les tables",
+    hint: "Personnalisez les tables de dés utilisées.",
     icon: "fa-solid fa-list",
     type: rolltableConfig
+  });
+
+  game.settings.register('mothership-fr', 'table0ePanicStressNormal', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "1vCm4ElRPotQXgNB"
+  });
+
+  game.settings.register('mothership-fr', 'table0ePanicStressAndroid', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "egJ11m2mJM3HBd6d"
+  });
+
+  game.settings.register('mothership-fr', 'table0ePanicCalmNormal', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "kqKpQAXyLTEEyz6Z"
+  });
+
+  game.settings.register('mothership-fr', 'table0ePanicCalmAndroid', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "VW6HQ29T7zClNIZ6"
   });
 
   game.settings.register('mothership-fr', 'table1ePanicStressNormal', {
     scope: 'world',
     config: false,
     type: String,
-    default: "dCCBZKRD1IYxXLTn"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.dCCBZKRD1IYxXLTn"
   });
 
   game.settings.register('mothership-fr', 'table1ePanicStressAndroid', {
     scope: 'world',
     config: false,
     type: String,
-    default: "aBnY19jlhPXzibCt"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.KaYEiIP4VMHJwT0U"
+  });
+
+  game.settings.register('mothership-fr', 'table1ePanicCalmNormal', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: ""
+  });
+
+  game.settings.register('mothership-fr', 'table1ePanicCalmAndroid', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "GCtYeCCQVQJ5M6SE"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundBluntForce', {
     scope: 'world',
     config: false,
     type: String,
-    default: "fwWWBsRF35Vmjc2z"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.fwWWBsRF35Vmjc2z"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundBleeding', {
     scope: 'world',
     config: false,
     type: String,
-    default: "qzn1VVpLGa8oSmZ7"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.qzn1VVpLGa8oSmZ7"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundGunshot', {
     scope: 'world',
     config: false,
     type: String,
-    default: "H5GJFM2B7HmJwKSf"
+    default: "XjDU2xFOWEasaZK0"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundFireExplosives', {
     scope: 'world',
     config: false,
     type: String,
-    default: "s2wcefhNyZ2k3TWa"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.s2wcefhNyZ2k3TWa"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundGoreMassive', {
@@ -371,39 +413,46 @@ export const registerSettings = function () {
     default: "uVfC1CqYdojaJ7yR"
   });
 
+  game.settings.register('mothership-fr', 'table0eDeath', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: "cZOHlhEJcYGZsQBM"
+  });
+
   game.settings.register('mothership-fr', 'table1eDeath', {
     scope: 'world',
     config: false,
     type: String,
-    default: "WdX3LR05ajq3V539"
+    default: "W36WFIpCfMknKgHy"
   });
 
   game.settings.register('mothership-fr', 'table1eDistressSignal', {
     scope: 'world',
     config: false,
     type: String,
-    default: "UxAjAqUTjYTcCbS8"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.TjyhTaIioj7JdVwC"
   });
 
   game.settings.register('mothership-fr', 'table1eMegadamageEffects', {
     scope: 'world',
     config: false,
     type: String,
-    default: "JvWzdkB0fxxEn9jb"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.JvWzdkB0fxxEn9jb"
   });
 
   game.settings.register('mothership-fr', 'table1eMaintenance', {
     scope: 'world',
     config: false,
     type: String,
-    default: "kqz8GsFVPfjvqO0N"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eBankruptcy', {
     scope: 'world',
     config: false,
     type: String,
-    default: "svjXOcBSJDSdPC6d"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.svjXOcBSJDSdPC6d"
   });
 
 };
