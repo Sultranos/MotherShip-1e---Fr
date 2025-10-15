@@ -5,6 +5,114 @@ import { fromIdUuid } from "../mothership-fr.js";
  * @extends {Actor}
  */
 export class MothershipActor extends Actor {
+  /**
+   * Roll loadout, patches, trinkets and add items to actor inventory (compatible v13+)
+   * @param {Object} selectedClass - The class item or data
+   * @param {Object} options - { rollCredits: boolean, clearItems: boolean }
+   */
+  async rollLoadout(selectedClass, { rollCredits = false, clearItems = false } = {}) {
+    if (!this || !selectedClass) return false;
+
+    const DEFAULT_IMAGES = {
+      Loadout: "modules/mothership-fr/images/icons/rolltables/loadouts.png",
+      Patches: "modules/mothership-fr/images/icons/rolltables/patch.png",
+      Trinkets: "modules/mothership-fr/images/icons/rolltables/trinket.png"
+    };
+
+    const classData = selectedClass.system ?? selectedClass;
+    const tableUUIDs = [
+      classData.roll_tables?.loadout,
+      classData.roll_tables?.patch,
+      classData.roll_tables?.trinket
+    ].filter(Boolean);
+
+    const allItems = { Armes: [], Armures: [], Équipements: [] };
+    const itemsToCreate = [];
+
+    if (clearItems) {
+      const deletableTypes = ["weapon", "armor", "item"];
+      const idsToDelete = this.items
+        .filter(i => deletableTypes.includes(i.type))
+        .map(i => i.id);
+      if (idsToDelete.length > 0) {
+        await this.deleteEmbeddedDocuments("Item", idsToDelete);
+      }
+    }
+
+    for (const uuid of tableUUIDs) {
+      const table = await fromUuid(uuid);
+      if (!table) continue;
+      const results = (await table.roll()).results;
+
+      for (const result of results) {
+        let fullItem = null;
+        let itemUuid = result.documentUuid;
+        // Compatibilité v13+ et fallback ancien format
+        if (!itemUuid && result.documentCollection && result.documentId) {
+          itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
+        }
+        if (itemUuid) {
+          try {
+            fullItem = await fromUuid(itemUuid);
+          } catch (error) {
+            console.warn(`Failed to load item from UUID: ${itemUuid}`, error);
+          }
+        }
+        if (fullItem) {
+          const itemData = fullItem.toObject(false);
+          itemsToCreate.push(itemData);
+          if (itemData.type === "weapon") allItems.Armes.push({ name: itemData.name, img: itemData.img });
+          else if (itemData.type === "armor") allItems.Armures.push({ name: itemData.name, img: itemData.img });
+          else allItems.Équipements.push({ name: itemData.name, img: itemData.img });
+          continue;
+        }
+        // fallback pour résultat texte
+        const cleanText = (result.description || result.name)?.replace(/<br\s*\/?>/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
+        if (cleanText) {
+          itemsToCreate.push({ name: cleanText, type: "item", img: DEFAULT_IMAGES.Loadout, system: {}, effects: [], flags: {} });
+          allItems.Équipements.push({ name: cleanText, img: DEFAULT_IMAGES.Loadout });
+        }
+      }
+    }
+
+    if (itemsToCreate.length > 0) {
+      await this.createEmbeddedDocuments("Item", itemsToCreate);
+    }
+
+    // Résumé pour le chat
+    let itemSummary = "";
+    for (const [category, items] of Object.entries(allItems)) {
+      if (items.length > 0) {
+        itemSummary += `<h3>${category}</h3>`;
+        itemSummary += items.map(i => `
+          <p><img src="${i.img}" style="height:2.5em; vertical-align:middle; margin-right:0.4em;"> ${i.name}</p>
+        `).join("");
+      }
+    }
+
+    // Jet pour les Crédits de Départ
+    if (rollCredits) {
+      const creditRoll = new Roll("2d10 * 10");
+      await creditRoll.evaluate();
+      const startingCredits = creditRoll.total;
+      await this.update({ system: { credits: { value: startingCredits } } });
+      itemSummary += `<br><strong>${game.i18n.localize("MoshQoL.CharacterCreation.StartingCredits")}:</strong> <label class="counter">${startingCredits}</label> cr`;
+    }
+
+    // Affichage chat
+    if (typeof ui !== "undefined" && ui.notifications) {
+      ui.notifications.info(game.i18n.localize("MoshQoL.CharacterCreation.EquipmentGenerated"));
+    }
+    if (typeof ChatMessage !== "undefined") {
+      ChatMessage.create({
+        speaker: { actor: this.id },
+        content: itemSummary,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER
+      });
+    }
+
+    return true;
+  }
 
   //Augment the basic actor data with additional dynamic data.
   prepareData() {

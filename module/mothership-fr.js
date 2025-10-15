@@ -524,15 +524,24 @@ async function initRollTable(tableId,rollString,aimFor,zeroBased,checkCrit,rollA
 
 //find and tell the actor to run the rollCheck function
 async function initRollCheck(rollString,aimFor,attribute,skill,skillValue,weapon) {
+  // Vérification existence game.mothershipFr et rollCheck
+  if (!game.mothershipFr || typeof game.mothershipFr.noCharSelected !== "function") {
+    ui.notifications?.error("Erreur système : game.mothershipFr non initialisé ou rollCheck absent.");
+    console.error("initRollCheck: game.mothershipFr non initialisé ou rollCheck absent.");
+    return;
+  }
   //determine who to run the macro for
   if (game.settings.get('mothership-fr','macroTarget') === 'character') {
     //is there a selected character? warn if no
     if (!game.user.character) {
       //warn player
       game.mothershipFr.noCharSelected();
-    } else {
+    } else if (typeof game.user.character.rollCheck === "function") {
       //run the function for the player's 'Selected Character'
       game.user.character.rollCheck(rollString,aimFor,attribute,skill,skillValue,weapon);
+    } else {
+      ui.notifications?.error("Erreur : la fonction rollCheck n'est pas disponible sur l'acteur.");
+      console.error("initRollCheck: rollCheck n'est pas disponible sur l'acteur.");
     }
   } else if (game.settings.get('mothership-fr','macroTarget') === 'token') {
     //is there a selected character? warn if no
@@ -542,7 +551,12 @@ async function initRollCheck(rollString,aimFor,attribute,skill,skillValue,weapon
     } else {
       //run the function for all selected tokens
       canvas.tokens.controlled.forEach(function(token){
-        token.actor.rollCheck(rollString,aimFor,attribute,skill,skillValue,weapon);
+        if (typeof token.actor.rollCheck === "function") {
+          token.actor.rollCheck(rollString,aimFor,attribute,skill,skillValue,weapon);
+        } else {
+          ui.notifications?.error("Erreur : la fonction rollCheck n'est pas disponible sur l'acteur du token.");
+          console.error("initRollCheck: rollCheck n'est pas disponible sur l'acteur du token.");
+        }
       });
     }
   }

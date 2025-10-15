@@ -1,24 +1,30 @@
+
 import { chatOutput } from "../utils/chat-output.js";
+
 
 export async function rollLoadout(actor, selectedClass, { rollCredits = false, clearItems = false } = {}) {
   if (!actor || !selectedClass) return false;
 
+  // Chemins d'images FR
   const DEFAULT_IMAGES = {
     Loadout: "modules/mothership-fr/images/icons/rolltables/loadouts.png",
     Patches: "modules/mothership-fr/images/icons/rolltables/patch.png",
     Trinkets: "modules/mothership-fr/images/icons/rolltables/trinket.png"
   };
 
-  const classData = selectedClass.system ?? selectedClass; // Support for Item or raw data
+  // Support Item ou data brut
+  const classData = selectedClass.system ?? selectedClass;
+  // Tables à rouler (FR: equipement, ecussons, bibelots)
   const tableUUIDs = [
-  classData.roll_tables?.equipement,
-  classData.roll_tables?.patchs,
-  classData.roll_tables?.bibelots
-].filter(Boolean);
+    classData.roll_tables?.equipement,
+    classData.roll_tables?.ecussons,
+    classData.roll_tables?.bibelots
+  ].filter(Boolean);
 
   const allItems = { Weapons: [], Armor: [], Items: [] };
   const itemsToCreate = [];
 
+  // Nettoyage inventaire si demandé
   if (clearItems) {
     const deletableTypes = ["weapon", "armor", "item"];
     const idsToDelete = actor.items
@@ -29,6 +35,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
   }
 
+  // Rouler sur chaque table
   for (const uuid of tableUUIDs) {
     const table = await fromUuid(uuid);
     if (!table) continue;
@@ -36,17 +43,18 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
 
     for (const result of results) {
       let fullItem = null;
-      let uuid = result.documentUuid;
-      
-      if (!uuid && result.documentCollection && result.documentId) {
-        uuid = `Compendium.${result.documentCollection}.${result.documentId}`;
+      let itemUuid = result.documentUuid;
+
+      // Correction: construction UUID si absent
+      if (!itemUuid && result.documentCollection && result.documentId) {
+        itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
       }
-      
-      if (uuid) {
+
+      if (itemUuid) {
         try {
-          fullItem = await fromUuid(uuid);
+          fullItem = await fromUuid(itemUuid);
         } catch (error) {
-          console.warn(`Failed to load item from UUID: ${uuid}`, error);
+          console.warn(`Échec chargement item depuis UUID: ${itemUuid}`, error);
         }
       }
 
@@ -59,8 +67,8 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
         continue;
       }
 
-      // fallback for text-only results
-      const cleanText = result.text?.replace(/<br\s*\/?>/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
+      // Fallback: résultat texte simple
+      const cleanText = result.text?.replace(/<br\s*\/?/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
       if (cleanText) {
         itemsToCreate.push({ name: cleanText, type: "item", img: DEFAULT_IMAGES.Loadout, system: {}, effects: [], flags: {} });
         allItems.Items.push({ name: cleanText, img: DEFAULT_IMAGES.Loadout });
@@ -68,11 +76,12 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
   }
 
+  // Création des items sur l'acteur
   if (itemsToCreate.length > 0) {
-    await actor.createEmbeddedDocuments("Item", [loadoutItemData]);
+    await actor.createEmbeddedDocuments("Item", itemsToCreate);
   }
 
-  // 💬 Chat output
+  // Affichage résumé dans le chat
   let itemSummary = "";
   for (const [category, items] of Object.entries(allItems)) {
     if (items.length > 0) {
@@ -83,15 +92,15 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
   }
 
-  // Roill for Staring Credits
+  // Roll crédits de départ
   if (rollCredits) {
     const creditRoll = new Roll("2d10 * 10");
     await creditRoll.evaluate();
     const startingCredits = creditRoll.total;
     await actor.update({ system: { credits: { value: startingCredits } } });
-    itemSummary += `<br><strong>Starting Credits:</strong> <label class="counter">${startingCredits}</label> cr`;
+    itemSummary += `<br><strong>Crédits de départ:</strong> <label class="counter">${startingCredits}</label> cr`;
   }
-  
+
   await chatOutput({
     actor,
     title: game.i18n.localize("MoshQoL.CharacterCreation.LoadoutRolled"),

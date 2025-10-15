@@ -257,6 +257,6 @@ export async function startCharacterCreation(actor) {
      
   // ✅ Final Step: Mark character creation as completed
   await setCompleted(actor, true);
-  ui.notifications.info(game.i18n.format("MoshQoL.CharacterCreation.Complete", {name: actor.name}));
+  ui.notifications.info(game.i18n.format("Vous êtes prêt à rejoindre les froideurs de l'espace", {name: actor.name}));
 
 }

@@ -315,46 +315,18 @@ export const registerSettings = function () {
   });
 
   game.settings.registerMenu('mothership-fr', 'rolltableSelector', {
-    name: "Rolltable Configuration",
-    label: "Choose Tables",
-    hint: "Customize which rolltables are used.",
+    name: "Sélection des tables aléatoires",
+    label: "Choisir des tables",
+    hint: "Personnalisez les tables aléatoires utilisées.",
     icon: "fa-solid fa-list",
     type: rolltableConfig
-  });
-
-  game.settings.register('mothership-fr', 'table0ePanicStressNormal', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "1vCm4ElRPotQXgNB"
-  });
-
-  game.settings.register('mothership-fr', 'table0ePanicStressAndroid', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "egJ11m2mJM3HBd6d"
-  });
-
-  game.settings.register('mothership-fr', 'table0ePanicCalmNormal', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "kqKpQAXyLTEEyz6Z"
-  });
-
-  game.settings.register('mothership-fr', 'table0ePanicCalmAndroid', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "VW6HQ29T7zClNIZ6"
   });
 
   game.settings.register('mothership-fr', 'table1ePanicStressNormal', {
     scope: 'world',
     config: false,
     type: String,
-    default: "ypcoikqHLhnc9tNs"
+    default: "dCCBZKRD1IYxXLTn"
   });
 
   game.settings.register('mothership-fr', 'table1ePanicStressAndroid', {
@@ -364,46 +336,32 @@ export const registerSettings = function () {
     default: "aBnY19jlhPXzibCt"
   });
 
-  game.settings.register('mothership-fr', 'table1ePanicCalmNormal', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "MOYI6Ntj5OVFYk06"
-  });
-
-  game.settings.register('mothership-fr', 'table1ePanicCalmAndroid', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "GCtYeCCQVQJ5M6SE"
-  });
-
   game.settings.register('mothership-fr', 'table1eWoundBluntForce', {
     scope: 'world',
     config: false,
     type: String,
-    default: "31YibfjueXuZdNLb"
+    default: "fwWWBsRF35Vmjc2z"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundBleeding', {
     scope: 'world',
     config: false,
     type: String,
-    default: "ata3fRz3uoPfNCLh"
+    default: "qzn1VVpLGa8oSmZ7"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundGunshot', {
     scope: 'world',
     config: false,
     type: String,
-    default: "XjDU2xFOWEasaZK0"
+    default: "H5GJFM2B7HmJwKSf"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundFireExplosives', {
     scope: 'world',
     config: false,
     type: String,
-    default: "lqiaWwh5cGcJhvnu"
+    default: "s2wcefhNyZ2k3TWa"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundGoreMassive', {
@@ -413,18 +371,11 @@ export const registerSettings = function () {
     default: "uVfC1CqYdojaJ7yR"
   });
 
-  game.settings.register('mothership-fr', 'table0eDeath', {
-    scope: 'world',
-    config: false,
-    type: String,
-    default: "cZOHlhEJcYGZsQBM"
-  });
-
   game.settings.register('mothership-fr', 'table1eDeath', {
     scope: 'world',
     config: false,
     type: String,
-    default: "W36WFIpCfMknKgHy"
+    default: "WdX3LR05ajq3V539"
   });
 
   game.settings.register('mothership-fr', 'table1eDistressSignal', {
@@ -438,7 +389,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "AqGWwoWXzijFs427"
+    default: "JvWzdkB0fxxEn9jb"
   });
 
   game.settings.register('mothership-fr', 'table1eMaintenance', {
@@ -452,7 +403,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "BsfdIl7CJNs1PViS"
+    default: "svjXOcBSJDSdPC6d"
   });
 
 };
