@@ -136,7 +136,7 @@ export async function selectClass(actor, applyStats = true) {
           
           if (applyStats) {
             const base = classItem.system.base_adjustment || {};
-            const allStats = ["strength", "speed", "intellect", "combat", "sanity", "fear", "body"];
+            const allStats = ["Force", "Vitesse", "Intellect", "Combat", "Sanité", "Peur", "Corps"];
             for (const stat of allStats) {
               const val = parseInt(base[stat], 10);
               if (!isNaN(val) && val !== 0) {

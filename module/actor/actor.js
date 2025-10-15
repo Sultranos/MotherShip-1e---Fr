@@ -14,9 +14,9 @@ export class MothershipActor extends Actor {
     if (!this || !selectedClass) return false;
 
     const DEFAULT_IMAGES = {
-      Loadout: "modules/mothership-fr/images/icons/rolltables/loadouts.png",
-      Patches: "modules/mothership-fr/images/icons/rolltables/patch.png",
-      Trinkets: "modules/mothership-fr/images/icons/rolltables/trinket.png"
+  Loadout: "systems/mothership-fr/images/icons/rolltables/loadouts.png",
+  Patches: "systems/mothership-fr/images/icons/rolltables/patch.png",
+  Trinkets: "systems/mothership-fr/images/icons/rolltables/trinket.png"
     };
 
     const classData = selectedClass.system ?? selectedClass;
@@ -921,27 +921,27 @@ export class MothershipActor extends Actor {
       }
       //append Calm effects for Critical Panic Failure
       if (useCalm && !parsedRollResult.success && parsedRollResult.critical) {
-        tableResultFooter = `<br><br>You lose 1d10 Calm because you critically failed.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}`;
+        tableResultFooter = `<br><br>You lose 1d10 Calm because you critically failed.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}`;
       }
       //append effects for Stress + Maintenance Check Failure
       if (specialRoll === 'maintenanceCheck' && !useCalm && !parsedRollResult.success && !parsedRollResult.critical) {
-        tableResultFooter = `<br><br>Everyone on board the ship takes 1 Stress.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.dvJR9DYXI2kV0BbR]{+1 Stress}`;
+        tableResultFooter = `<br><br>Everyone on board the ship takes 1 Stress.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.dvJR9DYXI2kV0BbR]{+1 Stress}`;
       }
       //append effects for Stress + Critical Maintenance Check Failure
       if (specialRoll === 'maintenanceCheck' && !useCalm && !parsedRollResult.success && parsedRollResult.critical) {
-        tableResultFooter = `<br><br>Everyone on board the ship takes 1 Stress. You must roll for another maintenance issue because you critically failed.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.dvJR9DYXI2kV0BbR]{+1 Stress}<br><br>@UUID[Compendium.mosh.macros_triggered_1e.hRapiXGVW8WZQH12]{Roll for Maintenance Issue}`;
+        tableResultFooter = `<br><br>Everyone on board the ship takes 1 Stress. You must roll for another maintenance issue because you critically failed.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.dvJR9DYXI2kV0BbR]{+1 Stress}<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.hRapiXGVW8WZQH12]{Roll for Maintenance Issue}`;
       }
       //append effects for Calm + Maintenance Check Failure
       if (specialRoll === 'maintenanceCheck' && useCalm && !parsedRollResult.success && !parsedRollResult.critical) {
-        tableResultFooter = `<br><br>Everyone on board the ship loses 1d10 Calm.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}`;
+        tableResultFooter = `<br><br>Everyone on board the ship loses 1d10 Calm.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}`;
       }
       //append effects for Calm + Critical Maintenance Check Failure
       if (specialRoll === 'maintenanceCheck' && useCalm && !parsedRollResult.success && parsedRollResult.critical) {
-        tableResultFooter = `<br><br>Everyone on board the ship loses 1d10 Calm. You must roll for another maintenance issue because you critically failed.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}<br><br>@UUID[Compendium.mosh.macros_triggered_1e.hRapiXGVW8WZQH12]{Roll for Maintenance Issue}`;
+        tableResultFooter = `<br><br>Everyone on board the ship loses 1d10 Calm. You must roll for another maintenance issue because you critically failed.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.jHyqXb2yDFTNWxpy]{-1d10 Calm}<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.hRapiXGVW8WZQH12]{Roll for Maintenance Issue}`;
       }
       //append effects for Calm + Critical Maintenance Check Success
       if (specialRoll === 'maintenanceCheck' && useCalm && parsedRollResult.success && parsedRollResult.critical) {
-        flavorText = flavorText + ` Gain 1d10 Calm.<br><br>@UUID[Compendium.mosh.macros_triggered_1e.k2TtLFOG9mGaWVx3]{+1d10 Calm}`;
+        flavorText = flavorText + ` Gain 1d10 Calm.<br><br>@UUID[Compendium.mothership-fr.macros_triggered_1e.k2TtLFOG9mGaWVx3]{+1d10 Calm}`;
       }
     //set table result type (using first value)
     if (tableResult[0].type === 0 || tableResult[0].type === 'text') {
@@ -1479,11 +1479,11 @@ export class MothershipActor extends Actor {
           //replace ' [-]' and ' [+]'
         woundEffect = woundEffect.replaceAll(' [-]', '_dis').replaceAll(' [+]', '_adv');
           //simplify wounds
-        woundEffect = woundEffect.replace('Bleeding', 'bleeding');
-        woundEffect = woundEffect.replace('Blunt Force', 'blunt_force');
-        woundEffect = woundEffect.replace('Fire & Explosives', 'fire_explosives');
-        woundEffect = woundEffect.replace('Gore & Massive', 'gore_massive');
-        woundEffect = woundEffect.replace('Gunshot', 'gunshot');
+        woundEffect = woundEffect.replace('Bleeding', 'bleeding').replace('Saignement', 'saignement').replace('Saignements', 'saignements');
+        woundEffect = woundEffect.replace('Blunt Force', 'blunt_force').replace('Contondant', 'contondant').replace('Contondante', 'contondante').replace('Contondants', 'contondants');
+        woundEffect = woundEffect.replace('Fire & Explosives', 'fire_explosives').replace('Feu & Explosifs', 'feu_explosifs');
+        woundEffect = woundEffect.replace('Gore & Massive', 'gore_massive').replace('Gore & Massif', 'gore_massif').replace('Gore & Massive', 'gore_massive');
+        woundEffect = woundEffect.replace('Gunshot', 'gunshot').replace('Balles', 'balles').replace('Balle', 'balle');
           //split string
           let woundArray = woundEffect.split(' ');
         //loop through this string and replace each wound effect with macro UUID
