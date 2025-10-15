@@ -3,6 +3,17 @@ import { chatOutput } from "../utils/chat-output.js";
 
 
 export async function rollLoadout(actor, selectedClass, { rollCredits = false, clearItems = false } = {}) {
+  // Utilitaire pour charger le compendium si besoin
+  async function ensureCompendiumLoaded(uuid) {
+    const match = uuid?.match(/^Compendium\.([^.]+)\.(.+)$/);
+    if (!match) return;
+    const packName = match[1];
+    const pack = game.packs.get(packName);
+    if (pack && !pack.index.size) {
+      console.log(`[QoL] Chargement du compendium ${packName} pour UUID: ${uuid}`);
+      await pack.getDocuments();
+    }
+  }
   if (!actor || !selectedClass) return false;
 
   // Chemins d'images FR
@@ -25,7 +36,9 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
 
     let itemsToCreate = [];
     // Tirage du loadout : tous les résultats de la table
-    const loadoutTable = await fromUuid(tableUUIDs[0]);
+  await ensureCompendiumLoaded(tableUUIDs[0]);
+  console.log(`[QoL] Tirage table loadout, UUID: ${tableUUIDs[0]}`);
+  const loadoutTable = await fromUuid(tableUUIDs[0]);
     if (!loadoutTable) {
       console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[0]}`);
       itemsToCreate.push({
@@ -58,7 +71,9 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
 
     // Tirage du bibelot
-    const bibelotTable = await fromUuid(tableUUIDs[1]);
+  await ensureCompendiumLoaded(tableUUIDs[1]);
+  console.log(`[QoL] Tirage table bibelot, UUID: ${tableUUIDs[1]}`);
+  const bibelotTable = await fromUuid(tableUUIDs[1]);
     if (!bibelotTable) {
       console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[1]}`);
       itemsToCreate.push({
@@ -90,7 +105,9 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
 
     // Tirage de l'écusson
-    const ecussonTable = await fromUuid(tableUUIDs[2]);
+  await ensureCompendiumLoaded(tableUUIDs[2]);
+  console.log(`[QoL] Tirage table écusson, UUID: ${tableUUIDs[2]}`);
+  const ecussonTable = await fromUuid(tableUUIDs[2]);
     if (!ecussonTable) {
       console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[2]}`);
       itemsToCreate.push({
