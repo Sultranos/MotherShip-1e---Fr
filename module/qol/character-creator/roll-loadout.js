@@ -23,47 +23,97 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     const tableUUIDs = [loadoutUUID, bibelotUUID, ecussonUUID].filter(Boolean);
     console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
 
-    // Nouvelle logique : roll sur chaque table et créer les items une seule fois
     let itemsToCreate = [];
-    for (let i = 0; i < tableUUIDs.length; i++) {
-      const uuid = tableUUIDs[i];
-      const table = await fromUuid(uuid);
-      if (!table) {
-        console.warn(`[QoL] Table non trouvée pour UUID: ${uuid}`);
-        // Fallback si table non trouvée
-        if (i === 1) { // bibelot
+    // Tirage du loadout : tous les résultats de la table
+    const loadoutTable = await fromUuid(tableUUIDs[0]);
+    if (!loadoutTable) {
+      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[0]}`);
+      itemsToCreate.push({
+        _id: randomID(),
+        name: "Équipement inconnu",
+        type: "item",
+        img: DEFAULT_IMAGES.Loadout,
+        system: { description: "Aucun équipement n'a pu être généré." },
+        effects: [],
+        flags: {}
+      });
+    } else {
+      const roll = await loadoutTable.roll();
+      for (const result of roll.results) {
+        if (result.documentUuid) {
+          const itemData = await fromUuid(result.documentUuid);
+          if (itemData) itemsToCreate.push(itemData.toObject(false));
+        } else {
           itemsToCreate.push({
-            name: "Bibelot inconnu",
+            _id: randomID(),
+            name: result.name || "Équipement inconnu",
             type: "item",
-            img: "systems/mothership-fr/images/icons/rolltables/trinket.png",
-            system: { description: "Aucun bibelot n'a pu être généré." },
-            effects: [],
-            flags: {}
-          });
-        } else if (i === 2) { // écusson
-          itemsToCreate.push({
-            name: "Écusson inconnu",
-            type: "item",
-            img: "systems/mothership-fr/images/icons/rolltables/patch.png",
-            system: { description: "Aucun écusson n'a pu être généré." },
+            img: loadoutTable.img || DEFAULT_IMAGES.Loadout,
+            system: { description: result.name || "Item généré par table aléatoire" },
             effects: [],
             flags: {}
           });
         }
-        continue;
       }
-      // Roll sur la table
-      const roll = await table.roll();
+    }
+
+    // Tirage du bibelot
+    const bibelotTable = await fromUuid(tableUUIDs[1]);
+    if (!bibelotTable) {
+      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[1]}`);
+      itemsToCreate.push({
+        _id: randomID(),
+        name: "Bibelot inconnu",
+        type: "item",
+        img: DEFAULT_IMAGES.Trinkets,
+        system: { description: "Aucun bibelot n'a pu être généré." },
+        effects: [],
+        flags: {}
+      });
+    } else {
+      const roll = await bibelotTable.roll();
       const result = roll.results[0];
       if (result.documentUuid) {
         const itemData = await fromUuid(result.documentUuid);
-        if (itemData) itemsToCreate.push(itemData);
+        if (itemData) itemsToCreate.push(itemData.toObject(false));
       } else {
-        // Fallback: créer un item texte
         itemsToCreate.push({
-          name: result.name || "Item inconnu",
+          _id: randomID(),
+          name: result.name || "Bibelot inconnu",
           type: "item",
-          img: table.img || "systems/mothership-fr/images/icons/rolltables/loadouts.png",
+          img: bibelotTable.img || DEFAULT_IMAGES.Trinkets,
+          system: { description: result.name || "Item généré par table aléatoire" },
+          effects: [],
+          flags: {}
+        });
+      }
+    }
+
+    // Tirage de l'écusson
+    const ecussonTable = await fromUuid(tableUUIDs[2]);
+    if (!ecussonTable) {
+      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[2]}`);
+      itemsToCreate.push({
+        _id: randomID(),
+        name: "Écusson inconnu",
+        type: "item",
+        img: DEFAULT_IMAGES.Patches,
+        system: { description: "Aucun écusson n'a pu être généré." },
+        effects: [],
+        flags: {}
+      });
+    } else {
+      const roll = await ecussonTable.roll();
+      const result = roll.results[0];
+      if (result.documentUuid) {
+        const itemData = await fromUuid(result.documentUuid);
+        if (itemData) itemsToCreate.push(itemData.toObject(false));
+      } else {
+        itemsToCreate.push({
+          _id: randomID(),
+          name: result.name || "Écusson inconnu",
+          type: "item",
+          img: ecussonTable.img || DEFAULT_IMAGES.Patches,
           system: { description: result.name || "Item généré par table aléatoire" },
           effects: [],
           flags: {}
