@@ -7,29 +7,83 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
 
   // Chemins d'images FR
   const DEFAULT_IMAGES = {
-    Loadout: "modules/mothership-fr/images/icons/rolltables/loadouts.png",
-    Patches: "modules/mothership-fr/images/icons/rolltables/patch.png",
-    Trinkets: "modules/mothership-fr/images/icons/rolltables/trinket.png"
+    Loadout: "systems/mothership-fr/images/icons/rolltables/loadouts.png",
+    Patches: "systems/mothership-fr/images/icons/rolltables/patch.png",
+    Trinkets: "systems/mothership-fr/images/icons/rolltables/trinket.png"
   };
 
   // Support Item ou data brut
   const classData = selectedClass.system ?? selectedClass;
-  // Tables à rouler (supporte tous les champs possibles)
-  const tableUUIDs = [];
-  // Ajout dynamique des tables de loadout
-  if (classData.roll_tables) {
-    for (const key of Object.keys(classData.roll_tables)) {
-      if (classData.roll_tables[key]) tableUUIDs.push(classData.roll_tables[key]);
+
+    // Correction : UUIDs fixes pour bibelot et écusson
+    const loadoutUUID = classData?.roll_tables?.loadout;
+    const bibelotUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.y7GfG60wX1DmuOl3";
+    const ecussonUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.agsuYLWd9CWViRom";
+
+    const tableUUIDs = [loadoutUUID, bibelotUUID, ecussonUUID].filter(Boolean);
+    console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
+
+    // Charger les tables
+    const tables = await Promise.all(tableUUIDs.map(async uuid => {
+      const table = await fromUuid(uuid);
+      if (!table) {
+        console.warn(`[QoL] Table non trouvée pour UUID: ${uuid}`);
+      }
+      return table;
+    }));
+
+    // Roll sur chaque table
+    let itemsToCreate = [];
+    for (let i = 0; i < tables.length; i++) {
+      const table = tables[i];
+      let itemData = null;
+      if (table) {
+        const roll = await table.roll();
+        const result = roll.results[0];
+        if (result.documentUuid) {
+          itemData = await fromUuid(result.documentUuid);
+        } else {
+          // Fallback: créer un item texte
+          itemData = {
+            name: result.name || "Item inconnu",
+            type: "item",
+            img: table.img || "systems/mothership-fr/images/icons/rolltables/loadouts.png",
+            system: { description: result.name || "Item généré par table aléatoire" },
+            effects: [],
+            flags: {}
+          };
+        }
+      } else {
+        // Fallback si table non trouvée
+        if (i === 1) { // bibelot
+          itemData = {
+            name: "Bibelot inconnu",
+            type: "item",
+            img: "systems/mothership-fr/images/icons/rolltables/trinket.png",
+            system: { description: "Aucun bibelot n'a pu être généré." },
+            effects: [],
+            flags: {}
+          };
+        } else if (i === 2) { // écusson
+          itemData = {
+            name: "Écusson inconnu",
+            type: "item",
+            img: "systems/mothership-fr/images/icons/rolltables/patch.png",
+            system: { description: "Aucun écusson n'a pu être généré." },
+            effects: [],
+            flags: {}
+          };
+        }
+      }
+      if (itemData) itemsToCreate.push(itemData);
     }
-  }
-  if (tableUUIDs.length === 0) {
-    ui.notifications.error("Aucune table de loadout trouvée dans la classe. Vérifiez la configuration des roll_tables dans le compendium de classes.");
-    console.warn("[QoL] Aucun UUID de table trouvé dans la classe:", classData);
-    return false;
-  }
+
+    console.log("[QoL] Items à créer sur l'acteur:", itemsToCreate);
+    if (itemsToCreate.length > 0) {
+      await actor.createEmbeddedDocuments("Item", itemsToCreate);
+    }
 
   const allItems = { Weapons: [], Armor: [], Items: [] };
-  const itemsToCreate = [];
   // Debug: log table UUIDs
   console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
 
