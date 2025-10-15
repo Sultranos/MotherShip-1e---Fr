@@ -42,7 +42,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     if (!loadoutTable) {
       console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[0]}`);
       itemsToCreate.push({
-        _id: randomID(),
+  _id: foundry.utils.randomID(),
         name: "Équipement inconnu",
         type: "item",
         img: DEFAULT_IMAGES.Loadout,
@@ -93,7 +93,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
         if (itemData) itemsToCreate.push(itemData.toObject(false));
       } else {
         itemsToCreate.push({
-          _id: randomID(),
+          _id: foundry.utils.randomID(),
           name: result.name || "Bibelot inconnu",
           type: "item",
           img: bibelotTable.img || DEFAULT_IMAGES.Trinkets,
@@ -111,7 +111,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     if (!ecussonTable) {
       console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[2]}`);
       itemsToCreate.push({
-        _id: randomID(),
+  _id: foundry.utils.randomID(),
         name: "Écusson inconnu",
         type: "item",
         img: DEFAULT_IMAGES.Patches,
@@ -127,7 +127,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
         if (itemData) itemsToCreate.push(itemData.toObject(false));
       } else {
         itemsToCreate.push({
-          _id: randomID(),
+          _id: foundry.utils.randomID(),
           name: result.name || "Écusson inconnu",
           type: "item",
           img: ecussonTable.img || DEFAULT_IMAGES.Patches,
@@ -143,9 +143,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
     }
 
   const allItems = { Weapons: [], Armor: [], Items: [] };
-  // Debug: log table UUIDs
-  console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
-
+  // Suppression de la double boucle : chaque table est roulée une seule fois ci-dessus (loadout, bibelot, écusson)
   // Nettoyage inventaire si demandé
   if (clearItems) {
     const deletableTypes = ["weapon", "armor", "item"];
@@ -156,50 +154,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
       await actor.deleteEmbeddedDocuments("Item", idsToDelete);
     }
   }
-
-  // Rouler sur chaque table
-  for (const uuid of tableUUIDs) {
-    const table = await fromUuid(uuid);
-    if (!table) {
-      console.warn(`[QoL] Table non trouvée pour UUID: ${uuid}`);
-      continue;
-    }
-    const results = (await table.roll()).results;
-
-    for (const result of results) {
-      let fullItem = null;
-      let itemUuid = result.documentUuid;
-
-      // Correction: construction UUID si absent
-      if (!itemUuid && result.documentCollection && result.documentId) {
-        itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
-      }
-
-      if (itemUuid) {
-        try {
-          fullItem = await fromUuid(itemUuid);
-        } catch (error) {
-          console.warn(`Échec chargement item depuis UUID: ${itemUuid}`, error);
-        }
-      }
-
-      if (fullItem) {
-        const itemData = fullItem.toObject(false);
-        itemsToCreate.push(itemData);
-        if (itemData.type === "weapon") allItems.Weapons.push({ name: itemData.name, img: itemData.img });
-        else if (itemData.type === "armor") allItems.Armor.push({ name: itemData.name, img: itemData.img });
-        else allItems.Items.push({ name: itemData.name, img: itemData.img });
-        continue;
-      }
-
-      // Fallback: résultat texte simple
-      const cleanText = result.text?.replace(/<br\s*\/?/gi, " ").replace(/@UUID\[[^\]]+\]/g, "").trim();
-      if (cleanText) {
-        itemsToCreate.push({ name: cleanText, type: "item", img: DEFAULT_IMAGES.Loadout, system: {}, effects: [], flags: {} });
-        allItems.Items.push({ name: cleanText, img: DEFAULT_IMAGES.Loadout });
-      }
-    }
-  }
+  // Les items sont déjà ajoutés dans itemsToCreate ci-dessus
 
   // Création des items sur l'acteur
   if (itemsToCreate.length > 0) {
