@@ -7,6 +7,9 @@
           "human": "Vous frappez à la porte de la mort."
         }
       },
+          "Mosh.SkillsFixed": "Compétences Fixes",
+          "Mosh.SkillsOptionalAnd": "Compétences Sélectionnées (ET)",
+          "Mosh.SkillsOptionalOr": "Compétences Optionnelles (OU)",
       "blunt_force_wound": {
         "roll": {
           "android": "Vous vous préparez au pire.",

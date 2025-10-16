@@ -14,8 +14,8 @@ export async function selectClass(actor, applyStats = true) {
     const prefix = value > 0 ? '+' : '';
     return `${prefix}${Math.abs(value) < 10 ? "\u00A0" : ''}${value}  ${label}`;
   };
-  const stats = ['strength', 'speed', 'intellect', 'combat'];
-  const saves = ['sanity', 'fear', 'body'];
+  const stats = ['force', 'vitesse', 'intellect', 'combat'];
+  const saves = ['sanité', 'peur', 'corps'];
 
   // Load all the classes
   const compendiumPacks = [
@@ -40,8 +40,8 @@ export async function selectClass(actor, applyStats = true) {
 
   // Compile processed class data
   const processedClasses = sortedClasses.map(cls => {
-    const description = stripHtml(cls.system.description || "No description available.");
-    const trauma = normalizeCaps(stripHtml(cls.system.trauma_response || "No trauma specified."));
+    const description = stripHtml(cls.system.description || "Aucune description disponible.");
+    const trauma = normalizeCaps(stripHtml(cls.system.trauma_response || "pas de trauma spécifié."));
     const base = cls.system.base_adjustment || {};
     const selected = cls.system.selected_adjustment || {};
     const attr = [];
@@ -50,7 +50,7 @@ export async function selectClass(actor, applyStats = true) {
       const values = group.map(stat => base[stat] || 0);
       const allEqual = values.every(v => v === values[0]);
       if (allEqual && values[0] !== 0) {
-        attr.push(formatAttribute(values[0], group === stats ? "All Stats" : "All Saves"));
+        attr.push(formatAttribute(values[0], group === stats ? "Toutes les Stats" : "Toutes les Saves"));
       } else {
         for (const stat of group) {
           const value = base[stat] || 0;
@@ -67,10 +67,10 @@ export async function selectClass(actor, applyStats = true) {
       for (const choice of selected.choose_stat) {
         const isAllStats = stats.every(stat => choice.stats.includes(stat));
         const isAllSaves = saves.every(save => choice.stats.includes(save));
-        const label = isAllStats ? "Any Stat" : isAllSaves ? "Any Save" :
+        const label = isAllStats ? "toute Stat" : isAllSaves ? "toute Save" :
           choice.stats.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ');
         const mod = parseInt(choice.modification, 10) || 0;
-        attr.push(formatAttribute(mod, `Choose 1: ${label}`));
+        attr.push(formatAttribute(mod, `Choisir 1: ${label}`));
       }
     }
   
