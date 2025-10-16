@@ -28,7 +28,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   // Correction : UUIDs fixes pour bibelot et écusson
   const loadoutUUID = classData?.roll_tables?.loadout;
   const bibelotUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.y7GfG60wX1DmuOl3";
-  const ecussonUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.agsuYLWd9CWViRom";
+  const ecussonUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.DExTTeyuav52NmOt";
 
   const tableUUIDs = [loadoutUUID, bibelotUUID, ecussonUUID].filter(Boolean);
   console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
