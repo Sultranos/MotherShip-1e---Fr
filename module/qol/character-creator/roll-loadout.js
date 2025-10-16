@@ -1,7 +1,6 @@
 
 import { chatOutput } from "../utils/chat-output.js";
 
-
 export async function rollLoadout(actor, selectedClass, { rollCredits = false, clearItems = false } = {}) {
   // Utilitaire pour charger le compendium si besoin
   async function ensureCompendiumLoaded(uuid) {
@@ -26,124 +25,16 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   // Support Item ou data brut
   const classData = selectedClass.system ?? selectedClass;
 
-    // Correction : UUIDs fixes pour bibelot et écusson
-    const loadoutUUID = classData?.roll_tables?.loadout;
-    const bibelotUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.y7GfG60wX1DmuOl3";
-    const ecussonUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.agsuYLWd9CWViRom";
+  // Correction : UUIDs fixes pour bibelot et écusson
+  const loadoutUUID = classData?.roll_tables?.loadout;
+  const bibelotUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.y7GfG60wX1DmuOl3";
+  const ecussonUUID = "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.agsuYLWd9CWViRom";
 
-    const tableUUIDs = [loadoutUUID, bibelotUUID, ecussonUUID].filter(Boolean);
-    console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
+  const tableUUIDs = [loadoutUUID, bibelotUUID, ecussonUUID].filter(Boolean);
+  console.log("[QoL] Table UUIDs pour le loadout:", tableUUIDs);
 
-    let itemsToCreate = [];
-    // Tirage du loadout : tous les résultats de la table
-  await ensureCompendiumLoaded(tableUUIDs[0]);
-  console.log(`[QoL] Tirage table loadout, UUID: ${tableUUIDs[0]}`);
-  const loadoutTable = await fromUuid(tableUUIDs[0]);
-    if (!loadoutTable) {
-      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[0]}`);
-      itemsToCreate.push({
-  _id: foundry.utils.randomID(),
-        name: "Équipement inconnu",
-        type: "item",
-        img: DEFAULT_IMAGES.Loadout,
-        system: { description: "Aucun équipement n'a pu être généré." },
-        effects: [],
-        flags: {}
-      });
-    } else {
-      const roll = await loadoutTable.roll();
-      for (const result of roll.results) {
-        if (result.documentUuid) {
-          const itemData = await fromUuid(result.documentUuid);
-          if (itemData) itemsToCreate.push(itemData.toObject(false));
-        } else {
-          itemsToCreate.push({
-            _id: randomID(),
-            name: result.name || "Équipement inconnu",
-            type: "item",
-            img: loadoutTable.img || DEFAULT_IMAGES.Loadout,
-            system: { description: result.name || "Item généré par table aléatoire" },
-            effects: [],
-            flags: {}
-          });
-        }
-      }
-    }
+  let itemsToCreate = [];
 
-    // Tirage du bibelot
-  await ensureCompendiumLoaded(tableUUIDs[1]);
-  console.log(`[QoL] Tirage table bibelot, UUID: ${tableUUIDs[1]}`);
-  const bibelotTable = await fromUuid(tableUUIDs[1]);
-    if (!bibelotTable) {
-      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[1]}`);
-      itemsToCreate.push({
-        _id: randomID(),
-        name: "Bibelot inconnu",
-        type: "item",
-        img: DEFAULT_IMAGES.Trinkets,
-        system: { description: "Aucun bibelot n'a pu être généré." },
-        effects: [],
-        flags: {}
-      });
-    } else {
-      const roll = await bibelotTable.roll();
-      const result = roll.results[0];
-      if (result.documentUuid) {
-        const itemData = await fromUuid(result.documentUuid);
-        if (itemData) itemsToCreate.push(itemData.toObject(false));
-      } else {
-        itemsToCreate.push({
-          _id: foundry.utils.randomID(),
-          name: result.name || "Bibelot inconnu",
-          type: "item",
-          img: bibelotTable.img || DEFAULT_IMAGES.Trinkets,
-          system: { description: result.name || "Item généré par table aléatoire" },
-          effects: [],
-          flags: {}
-        });
-      }
-    }
-
-    // Tirage de l'écusson
-  await ensureCompendiumLoaded(tableUUIDs[2]);
-  console.log(`[QoL] Tirage table écusson, UUID: ${tableUUIDs[2]}`);
-  const ecussonTable = await fromUuid(tableUUIDs[2]);
-    if (!ecussonTable) {
-      console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[2]}`);
-      itemsToCreate.push({
-  _id: foundry.utils.randomID(),
-        name: "Écusson inconnu",
-        type: "item",
-        img: DEFAULT_IMAGES.Patches,
-        system: { description: "Aucun écusson n'a pu être généré." },
-        effects: [],
-        flags: {}
-      });
-    } else {
-      const roll = await ecussonTable.roll();
-      const result = roll.results[0];
-      if (result.documentUuid) {
-        const itemData = await fromUuid(result.documentUuid);
-        if (itemData) itemsToCreate.push(itemData.toObject(false));
-      } else {
-        itemsToCreate.push({
-          _id: foundry.utils.randomID(),
-          name: result.name || "Écusson inconnu",
-          type: "item",
-          img: ecussonTable.img || DEFAULT_IMAGES.Patches,
-          system: { description: result.name || "Item généré par table aléatoire" },
-          effects: [],
-          flags: {}
-        });
-      }
-    }
-    console.log("[QoL] Items à créer sur l'acteur:", itemsToCreate);
-    if (itemsToCreate.length > 0) {
-      await actor.createEmbeddedDocuments("Item", itemsToCreate);
-    }
-
-  const allItems = { Weapons: [], Armor: [], Items: [] };
-  // Suppression de la double boucle : chaque table est roulée une seule fois ci-dessus (loadout, bibelot, écusson)
   // Nettoyage inventaire si demandé
   if (clearItems) {
     const deletableTypes = ["weapon", "armor", "item"];
@@ -154,11 +45,145 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
       await actor.deleteEmbeddedDocuments("Item", idsToDelete);
     }
   }
-  // Les items sont déjà ajoutés dans itemsToCreate ci-dessus
 
-  // Création des items sur l'acteur
+  // Tirage du loadout
+  await ensureCompendiumLoaded(tableUUIDs[0]);
+  console.log(`[QoL] Tirage table loadout, UUID: ${tableUUIDs[0]}`);
+  const loadoutTable = await fromUuid(tableUUIDs[0]);
+  if (!loadoutTable) {
+    console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[0]}`);
+    itemsToCreate.push({
+      _id: foundry.utils.randomID(),
+      name: "Équipement inconnu",
+      type: "item",
+      img: DEFAULT_IMAGES.Loadout,
+      system: { description: "Aucun équipement n'a pu être généré." },
+      effects: [],
+      flags: {}
+    });
+  } else {
+    const roll = await loadoutTable.roll();
+    for (const result of roll.results) {
+      let itemData = null;
+      let itemUuid = result.documentUuid;
+      if (!itemUuid && result.documentCollection && result.documentId) {
+        itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
+      }
+      if (itemUuid) {
+        try {
+          itemData = await fromUuid(itemUuid);
+        } catch (error) {
+          console.warn(`Échec chargement item depuis UUID: ${itemUuid}`, error);
+        }
+      }
+      if (itemData) {
+        itemsToCreate.push(itemData.toObject(false));
+      } else {
+        itemsToCreate.push({
+          _id: foundry.utils.randomID(),
+          name: result.name || "Équipement inconnu",
+          type: "item",
+          img: loadoutTable.img || DEFAULT_IMAGES.Loadout,
+          system: { description: result.name || "Item généré par table aléatoire" },
+          effects: [],
+          flags: {}
+        });
+      }
+    }
+  }
+
+  // Tirage du bibelot
+  await ensureCompendiumLoaded(tableUUIDs[1]);
+  console.log(`[QoL] Tirage table bibelot, UUID: ${tableUUIDs[1]}`);
+  const bibelotTable = await fromUuid(tableUUIDs[1]);
+  if (!bibelotTable) {
+    console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[1]}`);
+    itemsToCreate.push({
+      _id: foundry.utils.randomID(),
+      name: "Bibelot inconnu",
+      type: "item",
+      img: DEFAULT_IMAGES.Trinkets,
+      system: { description: "Aucun bibelot n'a pu être généré." },
+      effects: [],
+      flags: {}
+    });
+  } else {
+    const roll = await bibelotTable.roll();
+    const result = roll.results[0];
+    let itemData = null;
+    let itemUuid = result.documentUuid;
+    if (!itemUuid && result.documentCollection && result.documentId) {
+      itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
+    }
+    if (itemUuid) {
+      try {
+        itemData = await fromUuid(itemUuid);
+      } catch (error) {
+        console.warn(`Échec chargement item depuis UUID: ${itemUuid}`, error);
+      }
+    }
+    if (itemData) {
+      itemsToCreate.push(itemData.toObject(false));
+    } else {
+      itemsToCreate.push({
+        _id: foundry.utils.randomID(),
+        name: result.name || "Bibelot inconnu",
+        type: "item",
+        img: bibelotTable.img || DEFAULT_IMAGES.Trinkets,
+        system: { description: result.name || "Item généré par table aléatoire" },
+        effects: [],
+        flags: {}
+      });
+    }
+  }
+
+  // Tirage de l'écusson
+  await ensureCompendiumLoaded(tableUUIDs[2]);
+  console.log(`[QoL] Tirage table écusson, UUID: ${tableUUIDs[2]}`);
+  const ecussonTable = await fromUuid(tableUUIDs[2]);
+  if (!ecussonTable) {
+    console.warn(`[QoL] Table non trouvée pour UUID: ${tableUUIDs[2]}`);
+    itemsToCreate.push({
+      _id: foundry.utils.randomID(),
+      name: "Écusson inconnu",
+      type: "item",
+      img: DEFAULT_IMAGES.Patches,
+      system: { description: "Aucun écusson n'a pu être généré." },
+      effects: [],
+      flags: {}
+    });
+  } else {
+    const roll = await ecussonTable.roll();
+    const result = roll.results[0];
+    let itemData = null;
+    let itemUuid = result.documentUuid;
+    if (!itemUuid && result.documentCollection && result.documentId) {
+      itemUuid = `Compendium.${result.documentCollection}.${result.documentId}`;
+    }
+    if (itemUuid) {
+      try {
+        itemData = await fromUuid(itemUuid);
+      } catch (error) {
+        console.warn(`Échec chargement item depuis UUID: ${itemUuid}`, error);
+      }
+    }
+    if (itemData) {
+      itemsToCreate.push(itemData.toObject(false));
+    } else {
+      itemsToCreate.push({
+        _id: foundry.utils.randomID(),
+        name: result.name || "Écusson inconnu",
+        type: "item",
+        img: ecussonTable.img || DEFAULT_IMAGES.Patches,
+        system: { description: result.name || "Item généré par table aléatoire" },
+        effects: [],
+        flags: {}
+      });
+    }
+  }
+
+  console.log("[QoL] Items à créer sur l'acteur:", itemsToCreate);
   if (itemsToCreate.length > 0) {
-    console.log("[QoL] Items à créer sur l'acteur:", itemsToCreate);
     await actor.createEmbeddedDocuments("Item", itemsToCreate);
   } else {
     ui.notifications.error("Aucun objet de loadout n'a pu être ajouté à l'acteur. Vérifiez la configuration des tables et des compendiums.");
@@ -166,15 +191,7 @@ export async function rollLoadout(actor, selectedClass, { rollCredits = false, c
   }
 
   // Affichage résumé dans le chat
-  let itemSummary = "";
-  for (const [category, items] of Object.entries(allItems)) {
-    if (items.length > 0) {
-      itemSummary += `<h3>${category}</h3>`;
-      itemSummary += items.map(i => `
-        <p><img src="${i.img}" style="height:2.5em; vertical-align:middle; margin-right:0.4em;"> ${i.name}</p>
-      `).join("");
-    }
-  }
+  let itemSummary = itemsToCreate.map(i => `<p><img src="${i.img}" style="height:2.5em; vertical-align:middle; margin-right:0.4em;"> ${i.name}</p>`).join("");
 
   // Roll crédits de départ
   if (rollCredits) {
