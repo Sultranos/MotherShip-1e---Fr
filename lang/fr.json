@@ -1,6 +1,20 @@
 {
   "Mosh": {
     "table": {
+      
+      },
+      "bankruptcy_save": {
+        "roll": {
+          "human": "Vous tentez de sauver votre entreprise de la faillite. Lancez la table pour voir le résultat.",
+          "android": "Vous tentez de sauver votre entreprise de la faillite. Lancez la table pour voir le résultat. (android)"
+        },
+      
+      "morale_check": {
+        "roll": {
+          "human": "Après tout round de vaisseau où un ennemi subit des MDMG, il doit faire un Test de Moral. Pour faire un Test de Moral, lancez 1d10. Si le résultat est inférieur aux MDMG actuels, ils peuvent envoyer une communication offrant un cessez-le-feu et reprendre les négociations.",
+          "android": "Après tout round de vaisseau où un ennemi subit des MDMG, il doit faire un Test de Moral. (android)"
+        }
+      },
       "death_save": {
         "roll": {
           "android": "Vous frappez à la porte de la mort.",
@@ -681,6 +695,7 @@
     "Disadvantage": "Désavantage",
     "DistressSignal": "Signal de Détresse",
     "DistressSignalTableExplanation": "Lance cette table pour déterminer la réponse au signal de détresse envoyé par l'équipage.",
+       
     "DoNotAddASkillToThisRoll": "N'ajoutez pas de compétence à ce jet.",
     "DMGReduction": "Réduction de Dégâts",
     "DR": "RD",
