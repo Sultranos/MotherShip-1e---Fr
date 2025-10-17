@@ -2,7 +2,7 @@
   "id": "mothership-fr",
   "title": "Mothership - Français",
   "description": "Le système Mothership en français avec des modules intégrés - un jeu de rôle de science-fiction d'horreur. Le jeu ou personne ne vous entendra criez dans l'espace ... en Francais.",
-  "version": "1.6.63",
+  "version": "2.0.0",
   "esmodules": [
     "module/mothership-fr.js"
   ],
@@ -205,11 +205,11 @@
   "license": "LICENSE.txt",
   "authors": [
     {
-      "name": "Système Unifié par Sultranos et Assistant IA",
+      "name": "Système Unifié par Sultranos",
       "flags": {}
     },
     {
-      "name": "Basé sur les travaux de Futilrevenge, hollowphoton, GreybeardGM",
+      "name": "Basé sur les travaux de Futilrevenge, hollowphoton, GreybeardGM.  Traduction et adaptation par Sultranos.  Discord:sultradice_95139",
       "flags": {}
     }
   ],

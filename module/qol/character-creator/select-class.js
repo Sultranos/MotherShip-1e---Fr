@@ -14,8 +14,8 @@ export async function selectClass(actor, applyStats = true) {
     const prefix = value > 0 ? '+' : '';
     return `${prefix}${Math.abs(value) < 10 ? "\u00A0" : ''}${value}  ${label}`;
   };
-  const stats = ['force', 'vitesse', 'intellect', 'combat'];
-  const saves = ['sanité', 'peur', 'corps'];
+  const stats = ['strength', 'speed', 'intellect', 'combat'];
+  const saves = ['sanity', 'fear', 'body'];
 
   // Load all the classes
   const compendiumPacks = [
@@ -50,7 +50,7 @@ export async function selectClass(actor, applyStats = true) {
       const values = group.map(stat => base[stat] || 0);
       const allEqual = values.every(v => v === values[0]);
       if (allEqual && values[0] !== 0) {
-        attr.push(formatAttribute(values[0], group === stats ? "Toutes les Stats" : "Toutes les Saves"));
+        attr.push(formatAttribute(values[0], group === stats ? "All Stats" : "All Saves"));
       } else {
         for (const stat of group) {
           const value = base[stat] || 0;
@@ -67,10 +67,10 @@ export async function selectClass(actor, applyStats = true) {
       for (const choice of selected.choose_stat) {
         const isAllStats = stats.every(stat => choice.stats.includes(stat));
         const isAllSaves = saves.every(save => choice.stats.includes(save));
-        const label = isAllStats ? "toute Stat" : isAllSaves ? "toute Save" :
+        const label = isAllStats ? "Any Stat" : isAllSaves ? "Any Save" :
           choice.stats.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ');
         const mod = parseInt(choice.modification, 10) || 0;
-        attr.push(formatAttribute(mod, `Choisir 1: ${label}`));
+        attr.push(formatAttribute(mod, `Choose 1: ${label}`));
       }
     }
   
@@ -136,7 +136,7 @@ export async function selectClass(actor, applyStats = true) {
           
           if (applyStats) {
             const base = classItem.system.base_adjustment || {};
-            const allStats = ["Force", "Vitesse", "Intellect", "Combat", "Sanité", "Peur", "Corps"];
+            const allStats = ["strength", "speed", "intellect", "combat", "sanity", "fear", "body"];
             for (const stat of allStats) {
               const val = parseInt(base[stat], 10);
               if (!isNaN(val) && val !== 0) {
