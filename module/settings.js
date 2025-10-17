@@ -326,28 +326,28 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "1vCm4ElRPotQXgNB"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table0ePanicStressAndroid', {
     scope: 'world',
     config: false,
     type: String,
-    default: "egJ11m2mJM3HBd6d"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table0ePanicCalmNormal', {
     scope: 'world',
     config: false,
     type: String,
-    default: "kqKpQAXyLTEEyz6Z"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table0ePanicCalmAndroid', {
     scope: 'world',
     config: false,
     type: String,
-    default: "VW6HQ29T7zClNIZ6"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1ePanicStressNormal', {
@@ -375,7 +375,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "GCtYeCCQVQJ5M6SE"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eWoundBluntForce', {
@@ -396,7 +396,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "XjDU2xFOWEasaZK0"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.H5GJFM2B7HmJwKSf"
   });
 
   game.settings.register('mothership-fr', 'table1eWoundFireExplosives', {
@@ -410,21 +410,21 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "uVfC1CqYdojaJ7yR"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.jPl7bba6vTcnxFAw"
   });
 
   game.settings.register('mothership-fr', 'table0eDeath', {
     scope: 'world',
     config: false,
     type: String,
-    default: "cZOHlhEJcYGZsQBM"
+    default: ""
   });
 
   game.settings.register('mothership-fr', 'table1eDeath', {
     scope: 'world',
     config: false,
     type: String,
-    default: "W36WFIpCfMknKgHy"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.WdX3LR05ajq3V539"
   });
 
   game.settings.register('mothership-fr', 'table1eDistressSignal', {
