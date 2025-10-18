@@ -1,10 +1,11 @@
+
 import { rolltableConfig } from "./windows/settings-rolltables.js";
 
 export const registerSettings = function () {
   
   game.settings.register('mothership-fr', 'firstEdition', {
     name: "1e Rules",
-    hint: "Use the 1st edition rules and character sheet.",
+    hint: "utiliser les règles de la première édition de MotherShip.",
     default: true,
     scope: 'world',
     type: Boolean,
@@ -85,47 +86,65 @@ export const registerSettings = function () {
     }
   });
 
+    // Sélection de la langue (pour usage futur, une seule langue disponible)
+  game.settings.register('mothership-fr', 'language', {
+    name: "Langue de l'interface",
+    hint: "Choisissez la langue de l'interface du système. (Actuellement, seul le français est disponible)",
+    default: "fr",
+    scope: 'world',
+    type: String,
+    choices: {
+      "fr": "Français"
+    },
+    config: true,
+    onChange: value => {
+      //log the change
+      console.log("Langue du système définie sur " + value);
+      // Ici, on pourrait recharger l'interface ou appliquer la langue si plusieurs étaient disponibles
+    }
+  });
+  
   game.settings.register('mothership-fr', 'macroTarget', {
-    name: "Macro Target",
-    hint: "Who should be the target for macros?",
+    name: "Cible de Macro",
+    hint: "Qui devrait être la cible des macros?",
     default: "character",
     scope: 'world',
     type: String,
     choices: {
-      "character": "Currently selected character for the player",
-      "token": "Currently selected token(s) in the scene"
+      "character": "Personnage actuellement sélectionné pour le joueur",
+      "token": "Token actuellement sélectionnés dans la scène"
     },
     config: true,
     onChange: value => {
       //log the change
-      console.log("Macro target set to " + value)
+      console.log("Cible de macro définie sur " + value)
     }
   });
 
   game.settings.register('mothership-fr', 'critDamage', {
-    name: "Critical Hit Damage",
-    hint: "What should the damage be on a critical hit?",
+    name: "Dégâts de Coup Critique",
+    hint: "Quel devrait être le montant des dégâts en cas de coup critique?",
     default: "advantage",
     scope: 'world',
     type: String,
     choices: {
-      "advantage": "Roll with advantage",
-      "doubleDamage": "Double the damage result",
-      "doubleDice": "Double the damage dice",
-      "maxDamage": "Maximum possible damage result",
-      "weaponValue": "Defer to each weapon's critical damage",
-      "none": "No critical damage"
+      "advantage": "Lancer avec avantage",
+      "doubleDamage": "Double le résultat des dégâts",
+      "doubleDice": "Double les dés de dégâts",
+      "maxDamage": "Résultat de dégâts maximum possible",
+      "weaponValue": "Se référer aux dégâts critiques de chaque arme",
+      "none": "Pas de dégâts critiques"
     },
     config: true,
     onChange: value => {
       //log the change
-      console.log("Critical hits set to " + value)
+      console.log("Dégâts critiques définis sur " + value)
     }
   });
 
   game.settings.register('mothership-fr', 'damageDiceTheme', {
-    name: "Damage Dice Theme",
-    hint: "If DiceSoNice is installed, what theme should be applied to damage dice?",
+    name: "Thème des Dés de Dégâts",
+    hint: "Si DiceSoNice est installé, quel thème doit être appliqué aux dés de dégâts?",
     default: "damage",
     scope: 'world',
     type: String,
@@ -317,7 +336,7 @@ export const registerSettings = function () {
   game.settings.registerMenu('mothership-fr', 'rolltableSelector', {
     name: "Configuration des tables",
     label: "Choisir les tables",
-    hint: "Personnalisez les tables de dés utilisées.",
+    hint: "Personnalisez les tables aléatoires utilisées.",
     icon: "fa-solid fa-list",
     type: rolltableConfig
   });
@@ -445,7 +464,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: ""
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.gxoouD18a527UHru"
   });
 
   game.settings.register('mothership-fr', 'table1eBankruptcy', {

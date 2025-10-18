@@ -1463,9 +1463,9 @@ export class MothershipActor extends Actor {
       //prepare flavortext
       if (weapon.system.damage === "Str/10" && this.type === 'character') {
         //determine the damage string
-        flavorText = 'You strike your target for <strong>[[floor(' + this.system.stats.strength.value + '/10)]] damage</strong>.';
+        flavorText = 'Vous frappez votre cible pour <strong>[[floor(' + this.system.stats.strength.value + '/10)]] damage</strong>.';
       } else {
-        flavorText = 'You inflict [[' + parsedDamageString + '[' + dsnTheme + ']' + critMod + ']] points of damage.';
+        flavorText = 'Vous infligez [[' + parsedDamageString + '[' + dsnTheme + ']' + critMod + ']] points de Dégâts.';
       }
       //determine if this roll needs a description area
       if (weapon.system.description || weapon.system.woundEffect) {
@@ -1542,16 +1542,16 @@ export class MothershipActor extends Actor {
       //set comparison based on aimFor
       if (aimFor === 'low') {
         comparison = '<';
-        comparisonText = 'less than';
+        comparisonText = 'moins que';
       } else if (aimFor === 'low-equal') {
         comparison = '<=';
-        comparisonText = 'less than or equal to';
+        comparisonText = 'moins que ou égal à';
       } else if (aimFor === 'high') {
         comparison = '>';
-        comparisonText = 'greater than';
+        comparisonText = 'plus que';
       } else if (aimFor === 'high-equal') {
         comparison = '>=';
-        comparisonText = 'greater than or equal to';
+        comparisonText = 'plus que ou égal à';
       }
       //interpret the results
     let parsedRollResult = this.parseRollResult(rollString, rollResult, zeroBased, checkCrit, rollTarget, comparison, specialRoll);
@@ -1567,9 +1567,9 @@ export class MothershipActor extends Actor {
     //set chat message text
       //set roll result as greater than or less than
       if (parsedRollResult.success) {
-        outcomeVerb = `rolled`;
+        outcomeVerb = `obtenu`;
       } else {
-        outcomeVerb = `did not roll`;
+        outcomeVerb = `n'avez pas obtenu`;
       }
       //prepare flavor text for attacks
       if (weapon) {
@@ -1605,9 +1605,9 @@ export class MothershipActor extends Actor {
           //if success
           if (weapon.system.damage === "Str/10" && this.type === 'character') {
             //determine the damage string
-            flavorText = 'You strike your target for <strong>[[floor(' + this.system.stats.strength.value + '/10)]] damage</strong>.';
+            flavorText = 'vous infligez à votre cible <strong>[[floor(' + this.system.stats.strength.value + '/10)]] damage</strong>.';
           } else {
-            flavorText = 'You inflict [[' + parsedDamageString + '[' + dsnTheme + ']' + critMod + ']] points of damage.';
+            flavorText = 'Vous infligez [[' + parsedDamageString + '[' + dsnTheme + ']' + critMod + ']] points de Dégâts.';
           }
         } else if (parsedRollResult.success === false && this.type === 'character') {
           //if first edition
@@ -1818,10 +1818,10 @@ export class MothershipActor extends Actor {
           //prep text based on success or failure
           if (!parsedRollResult.success) {
             //flavor text
-            flavorText = `The crew, once focused on their tasks, now exchange anxious glances as the reality of the situation set in. Struggling to maintain composure in the chaos, the crew decides to send a hail and hope for mercy.`;
+            flavorText = `L'équipage, autrefois concentré sur ses tâches, échange maintenant des regards anxieux alors que la réalité de la situation s'installe. Luttant pour garder son sang-froid dans le chaos, l'équipage décide d'envoyer un appel et d'espérer la clémence de l'ennemi.`;
           } else {
-          //flavor texattributes/
-            flavorText = `As the ship shudders under the impact of enemy fire, a sense of urgency fills the control room. Alarms blare, emergency lights bath the crew in a stark glow, but there is no panic. The crew, seasoned and unyielding, maintain their focus on the task at hand.`;
+          //flavor text
+            flavorText = `Alors que le vaisseau tremble sous l'impact des tirs ennemis, un sentiment d'urgence envahit la salle de contrôle. Les alarmes retentissent, les lumières d'urgence baignent l'équipage dans une lueur vive, mais il n'y a pas de panique. L'équipage, aguerri et inflexible, maintient son attention sur la tâche à accomplir.`;
           }
         }
       //prepare flavor text for regular checks
@@ -2030,12 +2030,12 @@ export class MothershipActor extends Actor {
           //get flavor text
           if (modifyChange > 0) {
         msgFlavor = this.getFlavorText('attribute', fieldId, 'increase');
-            msgChange = 'increased';
+            msgChange = 'augmente';
         msgHeader = fieldPrefix + this.getFlavorText('attribute', fieldId, 'increaseHeader');
         msgImgPath = this.getFlavorText('attribute', fieldId, 'increaseImg');
           } else if (modifyChange < 0) {
         msgFlavor = this.getFlavorText('attribute', fieldId, 'decrease');
-            msgChange = 'decreased';
+            msgChange = 'diminué';
         msgHeader = fieldPrefix + this.getFlavorText('attribute', fieldId, 'decreaseHeader');
         msgImgPath = this.getFlavorText('attribute', fieldId, 'decreaseImg');
           }
