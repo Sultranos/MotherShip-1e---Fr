@@ -2531,15 +2531,21 @@ export class MothershipActor extends Actor {
   //make the player take bleeding damage
   async takeBleedingDamage() {
     //init vars
-    let chatId = (game.release.generation >= 12 ? foundry.utils.randomID() : randomID())
+    let chatId = (game.release.generation >= 12 ? foundry.utils.randomID() : randomID());
+    // Sécurise l'accès à l'item 'Bleeding'
+    const bleedingItem = this.items.getName("Bleeding");
+    if (!bleedingItem || !bleedingItem.system) {
+      ui.notifications.warn(game.i18n.localize("Mosh.warning.noBleedingItem"));
+      return;
+    }
     //determine bleeding amount
-    let healthLost = this.items.getName("Bleeding").system.severity * -1;
+    let healthLost = bleedingItem.system.severity * -1;
     //run the function for the player's 'Selected Character'
     let modification = await this.modifyActor('system.health.value', healthLost, null, false);
     //get flavor text
     let msgFlavor = this.getFlavorText('item', 'condition', 'bleed');
     let msgOutcome = modification[1];
-    let healthLostText = game.i18n.localize("Mosh.attribute.health.decreaseHeader.human")
+    let healthLostText = game.i18n.localize("Mosh.attribute.health.decreaseHeader.human");
     //create chat message text
     let messageContent = `
     <div class="mosh">
@@ -2548,7 +2554,7 @@ export class MothershipActor extends Actor {
           <div class="rollweaponh1">${healthLostText}</div>
           <div style="text-align: right"><img class="roll-image" src="systems/foundry-mothership/images/icons/ui/attributes/health.png" /></div>
           </div>
-          <div class="description"" style="margin-bottom: 20px;">
+          <div class="description" style="margin-bottom: 20px;">
           <div class="body">
           ${msgFlavor}
           <br><br>
@@ -2797,7 +2803,37 @@ export class MothershipActor extends Actor {
     return new Promise(async (resolve) => {
       //create pop-up HTML
       let msgContent = `
-
+        <style>
+        .macro_window{
+          background: rgb(230,230,230);
+          border-radius: 9px;
+        }
+        .macro_img{
+          display: flex;
+          justify-content: center;
+        }
+        .macro_desc{
+          font-family: "Roboto", sans-serif;
+          font-size: 10.5pt;
+          font-weight: 400;
+          padding-top: 8px;
+          padding-right: 8px;
+          padding-bottom: 8px;
+        }
+        .grid-2col {
+          display: grid;
+          grid-column: span 2 / span 2;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 2px;
+          padding: 0;
+        }
+      </style>
+      <div class ="macro_window" style="margin-bottom : 7px;">
+        <div class="grid grid-2col" style="grid-template-columns: 150px auto">
+          <div class="macro_img"><img src="systems/mothership-fr/images/icons/ui/macros/maintenance_check.png" style="border:none"/></div>
+          <div class="macro_desc"><h3>${game.i18n.localize("Mosh.MaintenanceCheck")}</h3>
+            <div>${game.i18n.localize("Mosh.MaintenanceCheckDescription")}</div>
+          </div>
       `;
       //create final dialog data
       const dialogData = {
@@ -2838,7 +2874,37 @@ export class MothershipActor extends Actor {
     return new Promise(async (resolve) => {
       //create pop-up HTML
       let msgContent = `
-      
+        <style>
+        .macro_window{
+          background: rgb(230,230,230);
+          border-radius: 9px;
+        }
+        .macro_img{
+          display: flex;
+          justify-content: center;
+        }
+        .macro_desc{
+          font-family: "Roboto", sans-serif;
+          font-size: 10.5pt;
+          font-weight: 400;
+          padding-top: 8px;
+          padding-right: 8px;
+          padding-bottom: 8px;
+        }
+        .grid-2col {
+          display: grid;
+          grid-column: span 2 / span 2;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 2px;
+          padding: 0;
+        }
+      </style>
+      <div class ="macro_window" style="margin-bottom : 7px;">
+        <div class="grid grid-2col" style="grid-template-columns: 150px auto">
+          <div class="macro_img"><img src="systems/mothership-fr/images/icons/ui/macros/bankruptcy_save.png" style="border:none"/></div>
+          <div class="macro_desc"><h3>${game.i18n.localize("Mosh.BankrupcySave")}</h3>
+            <div>${game.i18n.localize("Mosh.BankrupcySaveDescription")}</div>
+          </div>
       `;
       //create final dialog data
       const dialogData = {
