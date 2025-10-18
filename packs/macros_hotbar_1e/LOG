@@ -1,3 +1,5 @@
-2025/10/17-14:41:46.294 c4e0 Recovering log #43
-2025/10/17-14:41:46.303 c4e0 Delete type=0 #43
-2025/10/17-14:41:46.303 c4e0 Delete type=3 #42
+2025/10/18-09:36:07.223 1bb0 Recovering log #45
+2025/10/18-09:36:07.223 1bb0 Level-0 table #47: started
+2025/10/18-09:36:07.231 1bb0 Level-0 table #47: 151240 bytes OK
+2025/10/18-09:36:07.241 1bb0 Delete type=0 #45
+2025/10/18-09:36:07.241 1bb0 Delete type=3 #44
