@@ -17,9 +17,9 @@
 						  <span class="high-failure">{{ localize 'Mosh.YouRolled90OrHigher' }}</span>
                     {{else}}
                         {{#if (compare 'int' skillValue '>' 0)}}
-                        You {{{outcomeVerb}}} {{{comparisonText}}} your <strong>{{{attribute}}}</strong> plus <strong>{{{skill}}}</strong> skill bonus.
+                        Vous {{{outcomeVerb}}} {{{comparisonText}}} votre <strong>{{{attribute}}}</strong> plus <strong>{{{skill}}}</strong> bonus de compétence.
                         {{else}}
-                        You {{{outcomeVerb}}} {{{comparisonText}}} your <strong>{{{attribute}}}</strong>.
+                        Vous {{{outcomeVerb}}} {{{comparisonText}}} votre <strong>{{{attribute}}}</strong>.
                         {{/if}}
                     {{/if}}
                 </div>
