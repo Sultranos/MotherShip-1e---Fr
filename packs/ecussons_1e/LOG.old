@@ -1,5 +1,3 @@
-2025/10/17-14:41:46.250 9d8c Recovering log #3
-2025/10/17-14:41:46.250 9d8c Level-0 table #5: started
-2025/10/17-14:41:46.257 9d8c Level-0 table #5: 36881 bytes OK
-2025/10/17-14:41:46.265 9d8c Delete type=0 #3
-2025/10/17-14:41:46.265 9d8c Delete type=3 #2
+2025/10/18-20:25:12.432 512c Recovering log #12
+2025/10/18-20:25:12.450 512c Delete type=0 #12
+2025/10/18-20:25:12.450 512c Delete type=3 #11
