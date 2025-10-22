@@ -30,6 +30,17 @@ export class MothershipClassSheet extends MothershipItemSheet {
       data.system.base_adjustment.skills_granted=[];
     }
 
+    // Initialisation stricte de choose_skill_and
+    if (typeof data.system.selected_adjustment.choose_skill_and !== 'object' || data.system.selected_adjustment.choose_skill_and === null) {
+      data.system.selected_adjustment.choose_skill_and = {};
+    }
+    const andFields = ["trained", "expert", "master", "expert_full_set", "master_full_set"];
+    for (const field of andFields) {
+      if (typeof data.system.selected_adjustment.choose_skill_and[field] === 'undefined') {
+        data.system.selected_adjustment.choose_skill_and[field] = 0;
+      }
+    }
+
     //Create placeholder for the skills object, to get the info of the skill
     data.system.base_adjustment.skills_granted_object = [];
     for (const skill of data.system.base_adjustment.skills_granted){ 
@@ -270,7 +281,7 @@ export class MothershipClassSheet extends MothershipItemSheet {
             callback: (event, button, dialog) => {
               
             let new_stat_option = {
-              modification: button.form.querySelector('[id=\"modification\"]').prop("value"),
+                modification: button.form.querySelector('[id="modification"]').value,
               stats: [],
             }
             if (button.form.querySelector('[id=\"strength\"]')?.checked){
