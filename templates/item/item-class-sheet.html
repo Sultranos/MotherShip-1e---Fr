@@ -284,7 +284,7 @@
     </div>
         
     {{!-- skills Tab --}}
-    <div class="tab grid"  id="skills.selected.or" data-group="primary" data-tab="skills.selected.or">
+  <div class="tab grid {{#if (eq activeTab 'skills.selected.or')}}active{{/if}}" id="skills.selected.or" data-group="primary" data-tab="skills.selected.or">
       <div class="skill-name">
         <a class="item-control skills-group-add" title="{{ localize 'Mosh.AddGroup' }}" data-type="skill"><i
             class="fas fa-plus"></i> {{ localize 'Mosh.AddGroup' }}</a>
@@ -343,7 +343,7 @@
     </div>
 
     <!-- Tables -->
-    <div class="tab" data-group="primary" data-tab="tables">
+  <div class="tab {{#if (eq activeTab 'tables')}}active{{/if}}" data-group="primary" data-tab="tables">
       </divclass>
       <br />
       <!-- PatchTable -->
