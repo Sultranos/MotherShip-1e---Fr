@@ -335,22 +335,48 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
                             default: return 0;
                         }
                     };
-                    const skillOptions = skills.map(skill => ({
-                        label: `${skill.name} (${getSkillBonus(skill.system.rank)})`,
-                        callback: () => selectedSkill = skill
-                    }));
-                    skillOptions.push({
-                        label: game.i18n.localize("Mosh.NoSkill"),
-                        callback: () => selectedSkill = null
+                    // Render the template
+                    let content = await foundry.applications.handlebars.renderTemplate("systems/mothership-fr/templates/dialogs/choose-skill-dialog-header.html");
+                    // Add skill options
+                    skills.forEach((skill, index) => {
+                        content += `
+                        <label for="skill-${index}">
+                        <div class="macro_window" style="margin-bottom: 7px; vertical-align: middle; padding-left: 3px;">
+                            <div class="grid grid-2col" style="grid-template-columns: 20px auto">
+                            <input type="radio" id="skill-${index}" name="skill" value="${index + 1}">
+                            <div class="macro_desc" style="display: table;">
+                                <span style="display: table-cell; vertical-align: middle;">
+                                <p>${skill.name} (${getSkillBonus(skill.system.rank)})</p>
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+                        </label>`;
                     });
-                    await Dialog.wait({
-                        title: game.i18n.localize("Mosh.SelectSkill"),
-                        content: `<p>${game.i18n.localize("Mosh.SelectSkillForRoll")}</p>`,
-                        buttons: skillOptions.reduce((acc, option, index) => {
-                            acc[index] = option;
-                            return acc;
-                        }, {})
-                    });
+                    const dialogData = {
+                        window: {title: game.i18n.localize("Mosh.SelectSkill")},
+                        content: content,
+                        buttons: [
+                            {
+                                label: game.i18n.localize("OK"),
+                                action: "submit",
+                                callback: (event, button, dialog) => {
+                                    const form = button.form;
+                                    const selectedValue = form.skill.value;
+                                    let selectedSkill = null;
+                                    let skillBonus = null;
+                                    if (selectedValue !== "0") {
+                                        selectedSkill = skills[parseInt(selectedValue) - 1];
+                                        skillBonus = getSkillBonus(selectedSkill.system.rank);
+                                    }
+                                    this.actor.rollCheck(null, 'low', statName, selectedSkill ? selectedSkill.name : null, skillBonus, null);
+                                }
+                            }
+                        ]
+                    };
+                    const dialog = new foundry.applications.api.DialogV2(dialogData).render({force: true});
+                } else {
+                    this.actor.rollCheck(null, 'low', statName, null, null, null);
                 }
             }
             this.actor.rollCheck(null, 'low', statName, selectedSkill ? selectedSkill.name : null, selectedSkill ? getSkillBonus(selectedSkill.system.rank) : null, null);
