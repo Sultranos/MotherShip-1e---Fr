@@ -1917,7 +1917,7 @@ export class MothershipActor extends Actor {
       keepId: true
     });
       //is DSN active?
-    if (game.modules.get("dice-so-nice").active) {
+    if (game.modules.has("dice-so-nice") && game.modules.get("dice-so-nice").active) {
         //log what was done
         console.log(`Rolled a check on: ${attribute}, with: rollString:${rollString}, aimFor:${aimFor}, skill:${skill}, skillValue:${skillValue}.`);
         //return messageData
