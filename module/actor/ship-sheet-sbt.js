@@ -211,7 +211,7 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
             } else if (index != 0) {
                 // megadamageHTML += `<i class="fa-solid fa-wrench megadamage-button rollable" data-key="${index}"></i> &nbsp`;
                 megadamageHTML += `<div class="grey"><i class="far fa-circle megadamage-button rollable grey" data-key="${index}"></i> &nbsp`;
-                megadamageHTML += `<b>${index} |</b> ${entry[1].name} <br/> <br/></div>`;
+                megadamageHTML += `<b>${index} |</b> ${entry[1].text} <br/> <br/></div>`;
             }
             index++;
         }
