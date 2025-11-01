@@ -841,7 +841,12 @@
     "Bankrupcy": "Faillite",
     "BankrupcySave": "Sauvegarde de Faillite",
     "RestSave": "Sauvegarde de Repos",
-    "Job": "Métier"
+    "Job": "Métier",
+    "MaintenanceCheckDescription": "Effectuez une vérification complète du vaisseau pour l'usure et les avaries.",
+    "BankrupcySaveDescription": "Vous tentez de sauver votre entreprise de la faillite. Lancez la table pour voir le résultat.",
+    "SelectSkill": "Sélectionner une Compétence",
+    "SelectSkillForRoll": "Sélectionnez une compétence à ajouter au jet",
+    "NoSkill": "Aucune Compétence"
   },
   "MoshQoL": {
     "GenericContractor": "Contractuel Générique",

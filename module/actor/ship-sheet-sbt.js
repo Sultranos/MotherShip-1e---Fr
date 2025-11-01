@@ -327,8 +327,16 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
             if (character) {
                 const skills = character.items.filter(i => i.type === 'skill');
                 if (skills.length > 0) {
+                    const getSkillBonus = (rank) => {
+                        switch(rank) {
+                            case 'trained': return 10;
+                            case 'expert': return 15;
+                            case 'master': return 20;
+                            default: return 0;
+                        }
+                    };
                     const skillOptions = skills.map(skill => ({
-                        label: `${skill.name} (${skill.system.value})`,
+                        label: `${skill.name} (${getSkillBonus(skill.system.rank)})`,
                         callback: () => selectedSkill = skill
                     }));
                     skillOptions.push({
@@ -345,7 +353,7 @@ export class MothershipShipSheetSBT extends  foundry.appv1.sheets.ActorSheet {
                     });
                 }
             }
-            this.actor.rollCheck(null, 'low', statName, selectedSkill ? selectedSkill.name : null, selectedSkill ? selectedSkill.system.value : null, null);
+            this.actor.rollCheck(null, 'low', statName, selectedSkill ? selectedSkill.name : null, selectedSkill ? getSkillBonus(selectedSkill.system.rank) : null, null);
         });
 
         //Weapons

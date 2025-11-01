@@ -2984,7 +2984,7 @@ export class MothershipActor extends Actor {
       `;
       //create final dialog data
       const dialogData = {
-        window: {title: `Morale Check`},
+        window: {title: game.i18n.localize("Mosh.MoraleCheck")},
         position: {width: 600,height: 265},
         content: msgContent,
         buttons: [
