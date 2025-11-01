@@ -148,10 +148,33 @@ export class MothershipShipSheet extends foundry.appv1.sheets.ActorSheet {
         });
 
         // Rollable Attributes
-        html.find('.stat-roll').click(ev => {
+        html.find('.stat-roll').click(async ev => {
             const div = $(ev.currentTarget);
             const statName = div.data("key");
-            this.actor.rollCheck(null, 'low', statName, null, null, null);
+            const character = game.user.character;
+            let selectedSkill = null;
+            if (character) {
+                const skills = character.items.filter(i => i.type === 'skill');
+                if (skills.length > 0) {
+                    const skillOptions = skills.map(skill => ({
+                        label: `${skill.name} (${skill.system.value})`,
+                        callback: () => selectedSkill = skill
+                    }));
+                    skillOptions.push({
+                        label: game.i18n.localize("Mosh.NoSkill"),
+                        callback: () => selectedSkill = null
+                    });
+                    await Dialog.wait({
+                        title: game.i18n.localize("Mosh.SelectSkill"),
+                        content: `<p>${game.i18n.localize("Mosh.SelectSkillForRoll")}</p>`,
+                        buttons: skillOptions.reduce((acc, option, index) => {
+                            acc[index] = option;
+                            return acc;
+                        }, {})
+                    });
+                }
+            }
+            this.actor.rollCheck(null, 'low', statName, selectedSkill ? selectedSkill.name : null, selectedSkill ? selectedSkill.system.value : null, null);
         });
 
         //Weapons
