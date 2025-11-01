@@ -464,7 +464,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: false,
     type: String,
-    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.gxoouD18a527UHru"
+    default: "Compendium.mothership-fr.tables_aleatoires_1e.RollTable.4YxKHaNEBZjnuL09"
   });
 
   game.settings.register('mothership-fr', 'table1eBankruptcy', {
